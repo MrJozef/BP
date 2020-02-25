@@ -1,5 +1,6 @@
 <?php
-    //nieco
+    include "wcm/model/DBWrap.php";
+    DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
 ?>
 
 <!DOCTYPE html>
