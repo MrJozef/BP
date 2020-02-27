@@ -1,7 +1,7 @@
 <?php
 
 
-class Manager
+abstract class Manager
 {
     private function checkLength($x, $maxLength, $minLength) {
         if(strlen($x) >= $minLength && strlen($x) <= $maxLength) {
