@@ -17,45 +17,86 @@ const MAIL_ERROR = "Zadali ste nevalídnu E-mailovú adresu!";
 const MAIL_ALREADY_EXISTS = "Na túto E-mailovú adresu je už registrovaný iný užívateľ!";
 
 const ERROR_LOGIN = "Zadali ste zlé meno alebo heslo!";
+const ERROR_ADD_NEW_USER = "Pri registrácii nastala chyba!";
 
 class ManagerUser extends Manager
 {
     public function userSignUp($nick, $passwd, $passwd2, $mail) {
-        $this->checkMail($mail);
+
+        if ($this->checkNick($nick)) {
+            if ($this->checkMail($mail)) {
+                if ($this->checkTwoPasswd($passwd, $passwd2)) {
+
+                    if (!$this->checkMailInDb($mail)) {
+
+                        if (!$this->checkNickInDb($nick)) {
+                            $hash = password_hash($passwd, PASSWORD_DEFAULT);
+
+                            try {
+                                $this->addNewUser($nick, $hash, $mail);
+                                //todo poslanie mailu a vsetky tieto veci
+                            }
+                            catch(PDOException $exception) {
+                                $this->createMessage(ERROR_ADD_NEW_USER);
+                            }
+                        }
+                        else {
+                            $this->createMessage(NICK_ALREADY_EXISTS);
+                        }
+                    }
+                    else {
+                        $this->createMessage(MAIL_ALREADY_EXISTS);
+                    }
+                }
+            }
+        }
+    }
+
+    private function addNewUser($nick, $hash, $mail) {
+        $task = 'INSERT INTO user (nick, password, mail) VALUES(?, ?, ?)';
+
+        return DBWrap::queryUniversal($task, [$nick, $hash, $mail]);
+    }
+
+    private function checkNick($nick) {
+        return $this->checkLengthWMsg($nick, NICK_MAX_LENGTH, NICK_MIN_LENGTH, NICK_LENGTH_ERROR);
     }
 
     //existuje uz takyto nick v databaze
     private function checkNickInDb($nick) {
         $task = 'SELECT id_user FROM user WHERE nick = ? LIMIT 1';
 
-        if(DBWrap::existInDb($task, [$nick])) {
-            echo "nick je uz pouzivany";
-        }
-        echo "nick je OK";
-        return true;
+        return DBWrap::queryUniversal($task, [$nick]);
     }
 
     //ma zadany mail tvar mailovej adresy
     private function checkMail($mail) {
-        if ($this->checkLength($mail, MAIL_MAX_LENGTH, MAIL_MIN_LENGTH) && filter_var($parMail, FILTER_VALIDATE_EMAIL)) {
-            echo "mail je spravny";
+        if ($this->checkLength($mail, MAIL_MAX_LENGTH, MAIL_MIN_LENGTH) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
-        echo "mail je nespravny";
-        return false;//todo throw error namiesto tohoto
+        $this->createMessage(MAIL_ERROR);
+        return false;
     }
 
-    //existuje takyto mail v databaze?
+    //existuje takyto mail v databaze
     private function checkMailInDb($mail) {
         $task = 'SELECT id_user FROM user WHERE mail = ? LIMIT 1';
 
-        if(DBWrap::existInDb($task, [$mail])) {
-            echo "takyto mail je uz pouzity!";//todo throw error
-        }
-        else {echo "takyto mail je este nepouzity";}
+        return DBWrap::queryUniversal($task, [$mail]);
     }
 
+    //su hesla zhodne a spravne dlhe
     private function checkTwoPasswd($passwd1, $passwd2) {
+        if ($this->checkPasswd($passwd1)) {
+            if ($passwd1 === $passwd2) {
+                return true;
+            }
+            $this->createMessage(PASSWD_NOT_MATCH);
+        }
+        return false;
+    }
 
+    private function checkPasswd($passwd) {
+        return $this->checkLengthWMsg($passwd, PASSWD_MAX_LENGTH, PASSWD_MIN_LENGTH, PASSWD_LENGTH_ERROR);
     }
 }

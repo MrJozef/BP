@@ -1,5 +1,6 @@
 <?php
 
+const ERROR_DB_CONNECT = "Nepodarilo sa pripojiť k databáze!";
 
 class DBWrap
 {
@@ -20,30 +21,26 @@ class DBWrap
                         PDO::ATTR_EMULATE_PREPARES => false,                //speci vecicka - přenechá vkládání parametrů do dotazu na databázi
                     ]
                 );
-                echo "Spojenie s DB bolo uspesne!";                         //TODO toto 1. uspesne echo asi nebude treba
 
             }
             catch (PDOException $exception) {
-                echo "Spojenie s DB zlyhalo!<br>Error: " . $exception->getMessage();    //TODO toto 2. echo inak
-                return false;
+                throw new MyException(ERROR_DB_CONNECT);
             }
         }
-
-        return true;
     }
 
     //z db vracia 1 riadok/zaznam - pri SELECT
-    public static function queryOne($statement, $param = []) {
+    public static function selectOne($statement, $param = []) {
         return self::query($statement, $param)->fetch();
     }
 
     //z db vracia viac riadkov - pri SELECT
-    public static function queryAll($statement, $param = []) {
+    public static function selectAll($statement, $param = []) {
         return self::query($statement, $param)->fetchAll();
     }
 
-    //ak pri selecte najdeme vyhovujuci zaznam/zaznamy v tabulke - true
-    public static function existInDb($statement, $param = []) {
+    //ak pri SELECT najdeme vyhovujuci zaznam/zaznamy v tabulke - true; pouziva sa ja pri INSERT, ak sa podarilo vlozit do db - vrati 1, inak exception
+    public static function queryUniversal($statement, $param = []) {
         return self::query($statement, $param)->rowCount() ? true : false;
     }
 

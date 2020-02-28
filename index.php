@@ -1,7 +1,14 @@
 <?php
+    include "wcm/model/MyException.php";
     include "wcm/model/DBWrap.php";
     include "wcm/model/ManagerUser.php";
-    DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+    try {
+        DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+    }
+    catch (MyException $e) {
+        echo $e->errorMessage();
+    }
+
 
     $userDB = new ManagerUser();
     if (isset($_POST['nick'])) {
