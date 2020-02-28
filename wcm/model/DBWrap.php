@@ -49,6 +49,7 @@ class DBWrap
 
     private static function query($statement, $param = []) {
         $prepared = self::$DbConn->prepare($statement);
-        return $prepared->execute($param);
+        $prepared->execute($param);
+        return $prepared;
     }
 }

@@ -3,7 +3,7 @@
 
 abstract class Manager
 {
-    private function checkLength($x, $maxLength, $minLength) {
+    protected function checkLength($x, $maxLength, $minLength, $errorMsg) {
         if(strlen($x) >= $minLength && strlen($x) <= $maxLength) {
             return true;
         }

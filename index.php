@@ -4,6 +4,9 @@
     DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
 
     $userDB = new ManagerUser();
+    if (isset($_POST['nick'])) {
+        $userDB->userSignUp($_POST['nick'], $_POST['passwd'], $_POST['passwd2'], $_POST['mail']);
+    }
 ?>
 
 <!DOCTYPE html>
