@@ -2,6 +2,8 @@
     include "wcm/model/MyException.php";
     include "wcm/model/DBWrap.php";
     include "wcm/model/ManagerUser.php";
+    session_start();
+
     try {
         DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
     }
@@ -12,7 +14,7 @@
 
     $userDB = new ManagerUser();
     if (isset($_POST['nick'])) {
-        $userDB->userSignUp($_POST['nick'], $_POST['passwd'], $_POST['passwd2'], $_POST['mail']);
+        $userDB->userSignUp($_POST['signup-nick'], $_POST['signup-passwd'], $_POST['signup-passwd2'], $_POST['signup-mail']);
     }
 ?>
 
@@ -33,16 +35,16 @@
         <h1>Administrátorská registrácia</h1>
         <form method="post">
             <label>Nick:
-                <input type="text" name="nick" minlength="4" maxlength="30" placeholder="Frenky22" required>
+                <input type="text" name="signup-nick" minlength="4" maxlength="30" placeholder="Frenky22" required>
             </label>
             <label>Heslo:
-                <input type="password" name="passwd" minlength="6" maxlength="30" required>
+                <input type="password" name="signup-passwd" minlength="6" maxlength="30" required>
             </label>
             <label>Opakujte heslo:
-                <input type="password" name="passwd2" minlength="6" maxlength="30" required>
+                <input type="password" name="signup-passwd2" minlength="6" maxlength="30" required>
             </label>
             <label>E-mail:
-                <input type="email" name="mail" placeholder="jano.fero@gmail.com" minlength="6" maxlength="60" required>
+                <input type="email" name="signup-mail" placeholder="jano.fero@gmail.com" minlength="6" maxlength="60" required>
             </label>
             <input type="submit" value="Registrovať">
             <!-- or <button id="udalostRegistrovat">Registrovať</button> -->
@@ -50,7 +52,7 @@
     </div>
 
     <div id="login">
-        <h1>Prihlásiť sa ako administrátor</h1>
+        <h1>Administrátorské prihlasovanie</h1>
         <form method="post">
             <label>Nick:
                 <input type="text" name="login-nick" minlength="4" maxlength="30" placeholder="Frenky22" required>
@@ -61,6 +63,55 @@
             <input type="submit" value="Prihlásiť sa">
         </form>
     </div>
+
+    <div id="user-settings"><!-- toto sa zobrazi iba prihlasenym -->
+        <h1>Nastavenia účtu</h1>
+        <h2>Zmena hesla</h2>
+        <form method="post">
+            <label>Aktuálne heslo:
+                <input type="password" name="passwd-old" minlength="6" maxlength="30" required>
+            </label>
+            <label>Nové heslo:
+                <input type="password" name="passwd-new" minlength="6" maxlength="30" required>
+            </label>
+            <label>Opakujte nové heslo:
+                <input type="password" name="passwd-new2" minlength="6" maxlength="30" required>
+            </label>
+            <input type="submit" value="Zmeniť heslo">
+        </form>
+
+        <h2>Zmena nicku</h2>
+        <form method="post">
+            <label>Nový nick:
+                <input type="text" name="nick-new" minlength="6" maxlength="30" required>
+            </label>
+            <label>Zadajte aj svoje heslo:
+                <input type="password" name="nick-passwd" minlength="6" maxlength="30" required>
+            </label>
+            <input type="submit" value="Zmeniť nick">
+        </form>
+
+        <h2>Zmena E-mailovej adresy</h2>
+        <form method="post">
+            <label>Nová E-mailová adresa:
+                <input type="email" name="mail-new" minlength="6" maxlength="60" required>
+            </label>
+            <label>Zadajte aj svoje heslo:
+                <input type="password" name="mail-passwd" minlength="6" maxlength="30" required>
+            </label>
+            <input type="submit" value="Zmeniť E-mail">
+        </form>
+
+        <h2>Vymazanie profilu</h2>
+        <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
+        <form method="post">
+            <label>Pre vymazanie profilu zadajte svoje heslo:
+                <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
+            </label>
+            <input type="submit" value="Vymazať môj profil">
+        </form>
+    </div>
+    
 
     <div id="create-article"><!-- toto sa zobrazi iba prihlasenym -->
         <h1>Vytvoriť nový článok</h1>
@@ -92,5 +143,9 @@
             <!--todo viditelnost na zaklikavanie?-->
         </form>
     </div>
+
+    <footer>
+
+    </footer>
 </body>
 </html>
