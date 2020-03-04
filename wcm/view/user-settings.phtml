@@ -1,0 +1,47 @@
+<div id="user-settings">
+    <h1>Nastavenia účtu</h1>
+    <h2>Zmena hesla</h2>
+    <form method="post">
+        <label>Aktuálne heslo:
+            <input type="password" name="passwd-old" minlength="6" maxlength="30" required>
+        </label>
+        <label>Nové heslo:
+            <input type="password" name="passwd-new" minlength="6" maxlength="30" required>
+        </label>
+        <label>Opakujte nové heslo:
+            <input type="password" name="passwd-new2" minlength="6" maxlength="30" required>
+        </label>
+        <input type="submit" value="Zmeniť heslo">
+    </form>
+
+    <h2>Zmena nicku</h2>
+    <form method="post">
+        <label>Nový nick:
+            <input type="text" name="nick-new" minlength="6" maxlength="30" required>
+        </label>
+        <label>Zadajte aj svoje heslo:
+            <input type="password" name="nick-passwd" minlength="6" maxlength="30" required>
+        </label>
+        <input type="submit" value="Zmeniť nick">
+    </form>
+
+    <h2>Zmena E-mailovej adresy</h2>
+    <form method="post">
+        <label>Nová E-mailová adresa:
+            <input type="email" name="mail-new" minlength="6" maxlength="60" required>
+        </label>
+        <label>Zadajte aj svoje heslo:
+            <input type="password" name="mail-passwd" minlength="6" maxlength="30" required>
+        </label>
+        <input type="submit" value="Zmeniť E-mail">
+    </form>
+
+    <h2>Vymazanie profilu</h2>
+    <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
+    <form method="post">
+        <label>Pre vymazanie profilu zadajte svoje heslo:
+            <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
+        </label>
+        <input type="submit" value="Vymazať môj profil">
+    </form>
+</div>

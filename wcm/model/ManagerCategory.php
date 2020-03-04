@@ -1,4 +1,5 @@
 <?php
+include "Manager.php";
 
 const CAT_NAME_MIN_LENGTH = 3;
 const CAT_NAME_MAX_LENGTH = 100;
@@ -12,5 +13,9 @@ const UNVERIFIED = 0;
 
 class ManagerCategory extends Manager
 {
+    public function loadOnlyNames() {
+        $task = 'SELECT name FROM category ORDER BY id_category DESC';
 
+        return DBWrap::selectAll($task, []);
+    }
 }

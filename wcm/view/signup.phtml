@@ -1,0 +1,20 @@
+<div id="signup">
+    <h1>Administrátorská registrácia</h1>
+    <form method="post">
+        <label>Nick:
+            <input type="text" name="signup-nick" minlength="4" maxlength="30" placeholder="Frenky22" required
+                value="<?php if(isset($_POST["signup-nick"])) echo htmlspecialchars($_POST["signup-nick"], ENT_QUOTES)?>">
+        </label>
+        <label>Heslo:
+            <input type="password" name="signup-passwd" minlength="6" maxlength="30" required>
+        </label>
+        <label>Opakujte heslo:
+            <input type="password" name="signup-passwd2" minlength="6" maxlength="30" required>
+        </label>
+        <label>E-mail:
+            <input type="email" name="signup-mail" placeholder="jano.fero@gmail.com" minlength="6" maxlength="60" required
+                   value="<?php if(isset($_POST["signup-mail"])) echo htmlspecialchars($_POST["signup-mail"], ENT_QUOTES)?>">
+        </label>
+        <input type="submit" value="Registrovať">
+    </form>
+</div>
