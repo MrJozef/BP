@@ -1,0 +1,7 @@
+<ul>
+    <?php $result = $categControll->loadNamesOfCat();
+    foreach ($result as $categ) {
+        echo "<li><button value='{$categ['name']}'>{$categ['name']}</button></li>";
+    }
+    ?>
+</ul>
