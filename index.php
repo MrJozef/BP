@@ -1,7 +1,7 @@
 <?php
-    include "wcm/model/MyException.php";
-    include "wcm/model/DBWrap.php";
-    include "wcm/controller/ControllerCategory.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
     session_start();
 
     try {
@@ -29,13 +29,7 @@
     <header>
         <h1>Web Start Line</h1>
         <nav>
-            <ul>
-            <?php $result = $categControll->loadNamesOfCat();
-                foreach ($result as $categ) {
-                    echo $categ["name"];//todo prerobit na button
-                }
-            ?>
-            </ul>
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-ul.phtml"); ?>
         </nav>
     </header>
 
@@ -45,7 +39,7 @@
 
     <footer>
         <ul>
-            <li><a href="wcm/view/admin.php">Administračné rozhranie</a></li>
+            <li><a href="wcm/view/admin.php">Administrátorské rozhranie</a></li>
         </ul>
     </footer>
 </body>

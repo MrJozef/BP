@@ -3,8 +3,19 @@
 
 abstract class Controller
 {
-    //todo funkcia na osetrenie?
     protected $myManager;
+
+    //pouziva sa v .phtml sablonach a nielen na vypisy v $_POST, ale aj v $_SESSION
+    public function clearPost($nameOfPost) {
+        if(isset($_POST[$nameOfPost])) {
+            return $this->clearHTML($_POST[$nameOfPost]);
+        }
+        elseif(isset($_SESSION[$nameOfPost])) {
+            return $this->clearHTML($_SESSION[$nameOfPost]);
+        }
+
+        return null;
+    }
 
     //funkcia na obranu pred XSS - todo nie som uplne presvedceny, ci je toto dobre, este skontrolovat
     protected function clearHTML($x) {
