@@ -13,7 +13,7 @@ const UNVERIFIED = 0;
 
 class ManagerCategory extends Manager
 {
-    public function loadOnlyNames() {
+    public function getOnlyNames() {
         $task = 'SELECT name FROM category ORDER BY id_category DESC';
 
         return DBWrap::selectAll($task, []);

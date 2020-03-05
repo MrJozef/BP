@@ -3,6 +3,7 @@
 
 abstract class Controller
 {
+    protected $dataForView;
     protected $myManager;
 
     //pouziva sa v .phtml sablonach a nielen na vypisy v $_POST, ale aj v $_SESSION

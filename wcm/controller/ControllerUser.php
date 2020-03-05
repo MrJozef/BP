@@ -24,10 +24,14 @@ class ControllerUser extends Controller
     }
 
     public function signUp() {//todo catch
-        $result = $this->myManager->userSignUp($_POST['signup-nick'], $_POST['signup-passwd'], $_POST['signup-passwd2'], $_POST['signup-mail']);
+        $this->myManager->userSignUp($_POST['signup-nick'], $_POST['signup-passwd'], $_POST['signup-passwd2'], $_POST['signup-mail']);
+    }
 
-            if ($result) {
-                $_SESSION['user'] = $_POST['signup-nick'];
-            }
+    public function loadNoVerified() {//todo catch
+        $result = $this->myManager->getNoVerified();
+
+        $this->dataForView['verifAdmin'] = $this->clearHTML($result);
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/verified-admin.phtml");
     }
 }

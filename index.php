@@ -2,7 +2,6 @@
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
-    session_start();
 
     try {
         DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
@@ -29,7 +28,7 @@
     <header>
         <h1>Web Start Line</h1>
         <nav>
-            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-ul.phtml"); ?>
+            <?php $categControll->loadNamesOfCat() ?>
         </nav>
     </header>
 

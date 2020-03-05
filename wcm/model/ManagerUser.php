@@ -103,6 +103,13 @@ class ManagerUser extends Manager
         return false;
     }
 
+    //táto funkcia vrati tych novoprihlasenych adminov, ktori potvrdili mail, no cakaju na schvalenie adminom
+    public function getNoVerified() {
+        $task = 'SELECT nick, mail FROM user WHERE verified_mail = 1 AND verified_admin = 0';
+
+        return DBWrap::selectAll($task, []);
+    }
+
     private function checkUniversal($task, $taskParam = [], $succMsg, $errMsg) {
         try {
             DBWrap::queryUniversal($task, $taskParam);

@@ -1,0 +1,19 @@
+<div id="verified-admin">
+    <h1>Administrátori čakajúci na schválenie</h1>
+
+        <?php if(!empty($result)) { ?>
+            <p>Prezrite si E-mailové adresy a na základe nich schvaľujte / zamietajte žiadosti.</p>
+            <table>
+                <?php foreach ($result as $admin) : ?>
+                    <tr>
+                        <th><?= $admin['nick']?></th>
+                        <th><?= $admin['mail']?></th>
+                        <th><a href="admin.php?adminDelete=<?=$admin['nick']?>">Zamietnuť žiadosť</a></th>
+                        <th><a href="admin.php?adminConfirm=<?=$admin['nick']?>">Potvrdiť žiadosť</a></th>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+        <?php } else { ?>
+            <p>Žiadna žiadosť čakajúca na Vaše schválenie!</p>
+        <?php } ?>
+</div>
