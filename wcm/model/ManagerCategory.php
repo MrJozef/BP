@@ -1,5 +1,5 @@
 <?php
-include "Manager.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const CAT_NAME_MIN_LENGTH = 3;
 const CAT_NAME_MAX_LENGTH = 100;

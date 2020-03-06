@@ -28,7 +28,7 @@
     <header>
         <h1>Web Start Line</h1>
         <nav>
-            <?php $categControll->loadNamesOfCat() ?>
+            <?php $categControll->loadCatMenu() ?>
         </nav>
     </header>
 

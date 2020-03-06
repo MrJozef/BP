@@ -3,7 +3,9 @@
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
     session_start();
+
     try {
         DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
     }
@@ -12,6 +14,7 @@
     }
     $categControll = new ControllerCategory();
     $userControll = new ControllerUser();
+    $articControll = new ControllerArticle();
 
 
 
@@ -43,7 +46,7 @@
 
 <body>
     <header>
-        <?php if(isset($_SESSION['user'])) $categControll->loadNamesOfCat() ?>
+        <?php if(isset($_SESSION['user'])) $categControll->loadCatMenu() ?>
     </header>
 
     <main>
@@ -62,10 +65,10 @@
     <?php if(isset($_SESSION['user'])) { ?>
         <footer>
             <ul>
-                <li><button value="create-article">Napísať článok</button></li>
-                <li><button value="create-category">Vytvoriť kategóriu</button></li>
-                <li><button value="user-settings">Spravovať profil</button></li>
-                <li><button value="user-settings">Spravovať administrátorov</button></li>
+                <li><a href="admin.php?section=create-article">Napísať článok</a></li>
+                <li><a href="admin.php?section=create-category">Vytvoriť kategóriu</a></li>
+                <li><a href="admin.php?section=user-settings">Spravovať profil</a></li>
+                <li><a href="admin.php?section=user-settings">Spravovať administrátorov</a></li>
                 <li><p><?= $userControll->clearPost('user')?></p></li>
                 <li><a href="admin.php?action=logout">Odhlásiť sa</a></li>
             </ul>

@@ -2,6 +2,7 @@
 
 const ERROR_DB_CONNECT = "Nepodarilo sa pripojiť k databáze!";
 
+
 class DBWrap
 {
     private static $DbConn;

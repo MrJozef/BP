@@ -1,4 +1,5 @@
 <?php
+
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const NICK_MIN_LENGTH = 4;
@@ -45,11 +46,11 @@ class ManagerUser extends Manager
                             return true;
                         }
                         else {
-                            $this->createMessage(NICK_ALREADY_EXISTS);
+                            throw new MyException(NICK_ALREADY_EXISTS);
                         }
                     }
                     else {
-                        $this->createMessage(MAIL_ALREADY_EXISTS);
+                        throw new MyException(MAIL_ALREADY_EXISTS);
                     }
                 }
             }
@@ -113,10 +114,10 @@ class ManagerUser extends Manager
     private function checkUniversal($task, $taskParam = [], $succMsg, $errMsg) {
         try {
             DBWrap::queryUniversal($task, $taskParam);
-            $this->createMessage($succMsg);
+            //$this->createMessage($succMsg);todo co s touto uspesnou spravou?
         }
         catch(PDOException $exception) {
-            $this->createMessage($errMsg);
+            throw new MyException($errMsg);
         }
     }
 
@@ -131,12 +132,10 @@ class ManagerUser extends Manager
                 return true;
             }
             else {
-                $this->createMessage(ERROR_ACTUAL_PASSWD);
+                throw new MyException(ERROR_ACTUAL_PASSWD);
             }
-            return false;
         }
-        $this->createMessage(ERROR_LOGIN);
-        return false;
+        throw new MyException(ERROR_LOGIN);
     }
 
     //overi ci je nick spravne dlhy
@@ -156,7 +155,7 @@ class ManagerUser extends Manager
         if ($this->checkLength($mail, MAIL_MAX_LENGTH, MAIL_MIN_LENGTH) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
-        $this->createMessage(MAIL_ERROR);
+        throw new MyException(MAIL_ERROR);
         return false;
     }
 
@@ -173,7 +172,7 @@ class ManagerUser extends Manager
             if ($passwd1 === $passwd2) {
                 return true;
             }
-            $this->createMessage(PASSWD_NOT_MATCH);
+            throw new MyException(PASSWD_NOT_MATCH);
         }
         return false;
     }

@@ -8,8 +8,7 @@ abstract class Manager
         if ($this->checkLength($x, $maxLength, $minLength)) {
             return true;
         }
-        $this->createMessage($errorMsg);
-        return false;
+        throw new MyException($errorMsg);
     }
 
     protected function checkLength($x, $maxLength, $minLength) {
@@ -18,9 +17,5 @@ abstract class Manager
             return true;
         }
         return false;
-    }
-
-    protected function createMessage($msg) {
-        echo $msg;//todo toto vytuningovat asi by bolo dobre
     }
 }

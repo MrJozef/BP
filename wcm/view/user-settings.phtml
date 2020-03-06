@@ -3,13 +3,16 @@
     <h2>Zmena hesla</h2>
     <form method="post">
         <label>Aktuálne heslo:
-            <input type="password" name="passwd-old" minlength="6" maxlength="30" required>
+            <input type="password" name="passwd-old" minlength="6" maxlength="30" required
+                   value="<?= $userControll->clearPost('passwd-old') ?>">
         </label>
         <label>Nové heslo:
-            <input type="password" name="passwd-new" minlength="6" maxlength="30" required>
+            <input type="password" name="passwd-new" minlength="6" maxlength="30" required
+                   value="<?= $userControll->clearPost('passwd-new') ?>">
         </label>
         <label>Opakujte nové heslo:
-            <input type="password" name="passwd-new2" minlength="6" maxlength="30" required>
+            <input type="password" name="passwd-new2" minlength="6" maxlength="30" required
+                   value="<?= $userControll->clearPost('passwd-new2') ?>">
         </label>
         <input type="submit" value="Zmeniť heslo">
     </form>
@@ -17,18 +20,20 @@
     <h2>Zmena nicku</h2>
     <form method="post">
         <label>Nový nick:
-            <input type="text" name="nick-new" minlength="6" maxlength="30" required>
+            <input type="text" name="nick-new" minlength="6" maxlength="30" required
+                   value="<?= $userControll->clearPost('nick-new') ?>">
         </label>
-        <!--<label>Zadajte aj svoje heslo:
+        <label>Zadajte aj svoje heslo:
             <input type="password" name="nick-passwd" minlength="6" maxlength="30" required>
-        </label>-->
+        </label>
         <input type="submit" value="Zmeniť nick">
     </form>
 
     <h2>Zmena E-mailovej adresy</h2>
     <form method="post">
         <label>Nová E-mailová adresa:
-            <input type="email" name="mail-new" minlength="6" maxlength="60" required>
+            <input type="email" name="mail-new" minlength="6" maxlength="60" required
+                   value="<?= $userControll->clearPost('mail-new') ?>">
         </label>
         <label>Zadajte aj svoje heslo:
             <input type="password" name="mail-passwd" minlength="6" maxlength="30" required>

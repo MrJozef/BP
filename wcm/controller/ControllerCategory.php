@@ -10,11 +10,14 @@ class ControllerCategory extends Controller
         $this->myManager = new ManagerCategory();
     }
 
-    public function loadNamesOfCat() {
-        $result = $this->myManager->getOnlyNames();
-
-        $this->dataForView['categNames'] = $this->clearHTML($result);
+    public function loadCatMenu() {
+        $this->loadNamesOfCat();
         extract($this->dataForView);
         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-ul.phtml");
+    }
+
+    private function loadNamesOfCat() {
+        $result = $this->myManager->getOnlyNames();
+        $this->dataForView['categNames'] = $this->clearHTML($result);
     }
 }
