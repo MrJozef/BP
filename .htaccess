@@ -1,0 +1,18 @@
+#chybove stranky
+ErrorDocument 404 /wcm/view/error404.html
+
+#uprava url addr
+RewriteEngine On
+RewriteBase /
+
+#aby nam uzivatelia nemohli pozerat do sablonovych zdrojakov
+AddType application/x-httpd-php .php .phtml
+
+# To externally redirect /dir/foo.php to /dir/foo
+RewriteCond %{THE_REQUEST} \s/+(.*?/)?(?:index)?(.*?)\.php[\s?] [NC]
+RewriteRule ^ %1%2 [R=302,L,NE]
+
+# To internally forward /dir/foo to /dir/foo.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1\.php -f [NC]
+RewriteRule ^(.+?)/?$ $1.php [L]
