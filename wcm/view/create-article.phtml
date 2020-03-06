@@ -5,17 +5,10 @@
             <input type="text" name="article-title" minlength="3" maxlength="200" placeholder="Formátovanie obrázkov" required
             value="<?= $articControll->clearPost('article-title') ?>">
         </label>
-        <!--TODO toto funguje???-->
         <label for="article-category">Kategória:</label>
-            <select id="article-category" name="article-category" required>
-                <?php foreach ($categNames as $cat) : ?>
-                    <option value="<?= $cat['name'] ?>"><?= $cat['name'] ?></option>
-                <?php endforeach ?>
-            </select>
+            <?php $categControll->loadCatSelect() ?>
         <label>Text článku:
-            <textarea name="article-text" minlength="50" maxlength="65535" placeholder="Sem napíšte celý Váš článok... Môžete používať HTML značky." required>
-                <?= $articControll->clearPost('article-text') ?>
-            </textarea>
+            <textarea name="article-text" minlength="50" maxlength="65535" placeholder="Sem napíšte celý Váš článok... Môžete používať HTML značky." required><?= $articControll->clearPost('article-text') ?></textarea>
         </label><!--todo tu pouzijeme nieco pokrocilejsie nez text area?-->
         <input type="submit" value="Pridať článok">
     </form>

@@ -3,16 +3,18 @@
 
         <?php if(!empty($verifAdmin)) { ?>
             <p>Prezrite si E-mailové adresy a na základe nich schvaľujte / zamietajte žiadosti.</p>
-            <table>
-                <?php foreach ($verifAdmin as $admin) : ?>
-                    <tr>
-                        <th><?= $admin['nick']?></th>
-                        <th><?= $admin['mail']?></th>
-                        <th><a href="admin.php?adminDelete=<?=$admin['nick']?>">Zamietnuť žiadosť</a></th>
-                        <th><a href="admin.php?adminConfirm=<?=$admin['nick']?>">Potvrdiť žiadosť</a></th>
-                    </tr>
-                <?php endforeach ?>
-            </table>
+            <form method="post">
+                <table>
+                    <?php foreach ($verifAdmin as $admin) : ?>
+                        <tr>
+                            <th><?= $admin['nick']?></th>
+                            <th><?= $admin['mail']?></th>
+                            <th><button type="submit" name="admin-delete" value="<?=$admin['nick']?>">Zamietnuť žiadosť</button></th>
+                            <th><button type="submit" name="admin-confirm" value="<?=$admin['nick']?>">Potvrdiť žiadosť</button></th>
+                        </tr>
+                    <?php endforeach ?>
+                </table>
+            </form>
         <?php } else { ?>
             <p>Žiadna žiadosť čakajúca na Vaše schválenie!</p>
         <?php } ?>

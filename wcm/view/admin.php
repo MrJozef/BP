@@ -18,8 +18,8 @@
 
 
 
-    if (isset($_GET['action'])) {
-        if ($_GET['action'] === 'logout') {
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] === 'logout') {
             $userControll->logout();
         }
     }
@@ -31,6 +31,7 @@
     if (isset($_POST['signup-nick'])) {
         $userControll->signUp();
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -50,13 +51,24 @@
     </header>
 
     <main>
-        <?php if(!isset($_SESSION['user']))
+        <?php
+            if(!isset($_SESSION['user']))
             {
                 require($_SERVER['DOCUMENT_ROOT']."/wcm/view/login.phtml");
                 require($_SERVER['DOCUMENT_ROOT']."/wcm/view/signup.phtml");
             }
             else {
-                $userControll->loadNoVerified();
+                if(!isset($_POST['subpage'])){
+                    $userControll->loadNoVerified();
+                }
+                else {
+                    if($_POST['subpage'] === 'verified-admin') {
+                        $userControll->loadNoVerified();
+                    }
+                    else {
+                        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_POST['subpage'].".phtml");
+                    }
+                }
             }
         ?>
     </main>
@@ -64,14 +76,16 @@
 
     <?php if(isset($_SESSION['user'])) { ?>
         <footer>
-            <ul>
-                <li><a href="admin.php?section=create-article">Napísať článok</a></li>
-                <li><a href="admin.php?section=create-category">Vytvoriť kategóriu</a></li>
-                <li><a href="admin.php?section=user-settings">Spravovať profil</a></li>
-                <li><a href="admin.php?section=user-settings">Spravovať administrátorov</a></li>
-                <li><p><?= $userControll->clearPost('user')?></p></li>
-                <li><a href="admin.php?action=logout">Odhlásiť sa</a></li>
-            </ul>
+            <form method="post">
+                <ul>
+                    <li><button type="submit" name="subpage" value="create-article">Napísať článok</button></li>
+                    <li><button type="submit" name="subpage" value="create-category">Vytvoriť kategóriu</button></li>
+                    <li><button type="submit" name="subpage" value="user-settings">Spravovať profil</button></li>
+                    <li><button type="submit" name="subpage" value="verified-admin">Spravovať administrátorov</button></li>
+                    <li><p><?= $userControll->clearPost('user')?></p></li>
+                    <li><button type="submit" name="action" value="logout">Odhlásiť sa</button></li>
+                </ul>
+            </form>
         </footer>
     <?php } ?>
 </body>
