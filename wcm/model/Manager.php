@@ -8,7 +8,6 @@ abstract class Manager
         if (!$this->checkLength($x, $maxLength, $minLength)) {
             throw new MyException($errorMsg);
         }
-
     }
 
     protected function checkLength($x, $maxLength, $minLength) {

@@ -47,6 +47,14 @@
     if (isset($_POST['delete-passwd'])) {
         $userControll->deleteMyself();
     }
+
+    if (isset($_POST['admin-delete'])) {
+        $userControll->adminDelete();
+    }
+
+    if (isset($_POST['admin-confirm'])) {
+        $userControll->adminConfirm();
+    }
 ?>
 
 <!DOCTYPE html>

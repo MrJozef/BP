@@ -4,7 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const NICK_MIN_LENGTH = 4;
 const NICK_MAX_LENGTH = 30;
-const NICK_LENGTH_ERROR = "Dĺžka Vášho nicku musí byť medzi " . NICK_MIN_LENGTH . " a " . NICK_MAX_LENGTH . " znakmi!";
+const NICK_ERROR = "Dĺžka Vášho nicku musí byť medzi " . NICK_MIN_LENGTH . " a " . NICK_MAX_LENGTH . " znakmi! Zároveň musí obsahovať iba písmená a číslice (číslicou však nesmie začínať)!";
 const NICK_ALREADY_EXISTS = "Nick, ktorý ste si zvolili už používa iný užívateľ! Zvoľte iný.";
 
 const PASSWD_MIN_LENGTH = 6;
@@ -25,13 +25,12 @@ const ERROR_ADD_NEW_USER = "Pri registrácii nastala chyba!";
 const ERROR_ACTUAL_PASSWD = "Zadali ste nesprávne svoje aktuálne heslo!";
 const ERROR_UPDATE = "Pri zmene nastavenia Vášho účtu prišlo k chybe a zmena sa neuložila!";
 const ERROR_DELETE = "Pri vymazávaní Vašeho profilu nastala chyba a nezmazal sa!";
+const ERROR_DB = "Neočakávaná chyba v databáze! Akcia sa nevykonala.";
 
 // vsetky metody s nazvom check... vyhadzuju vynimky
 class ManagerUser extends Manager
 {
-    public function userSignUp($nick, $passwd, $passwd2, $mail)
-    {
-
+    public function userSignUp($nick, $passwd, $passwd2, $mail) {
         $this->checkNick($nick);
         $this->checkMail($mail);
         $this->checkTwoPasswd($passwd, $passwd2);
@@ -128,6 +127,18 @@ class ManagerUser extends Manager
         $this->checkUniversal($task, [$nick], ERROR_UPDATE);
     }
 
+    //prihlaseny administrator schvaluje novo-prihlaseneho admina, kt. si uz potvrdil mail
+    public function adminConfirm($nick) {
+        $task = 'UPDATE user SET verified_admin = 1 WHERE nick = ?';
+        $this->checkUniversal($task, [$nick], ERROR_DB);
+    }
+
+    //prihlaseny administrator VYMAZAVA (nie dead = 1) novo-prihlaseneho admina, kt. si uz potvrdil mail
+    public function adminRefuse($nick) {
+        $task = 'DELETE FROM user WHERE nick = ?';
+        $this->checkUniversal($task, [$nick], ERROR_DB);
+    }
+
     //táto funkcia vrati tych novoprihlasenych adminov, ktori potvrdili mail, no cakaju na schvalenie adminom
     public function getNoVerified() {
         $task = 'SELECT nick, mail FROM user WHERE verified_mail = 1 AND verified_admin = 0';
@@ -156,7 +167,9 @@ class ManagerUser extends Manager
 
     //overi ci je nick spravne dlhy
     private function checkNick($nick) {
-        return $this->checkLengthWException($nick, NICK_MAX_LENGTH, NICK_MIN_LENGTH, NICK_LENGTH_ERROR);
+        if(!preg_match('/^[A-Za-z][A-Za-z0-9]{NICK_MIN_LENGTH - 1,NICK_MAX_LENGTH - 1}$/', $nick)) {
+            throw new MyException(NICK_ERROR);
+        }
     }
 
     //existuje uz takyto nick v databaze
@@ -190,6 +203,6 @@ class ManagerUser extends Manager
 
     //je heslo spravne dlhe
     private function checkPasswd($passwd) {
-        return $this->checkLengthWException($passwd, PASSWD_MAX_LENGTH, PASSWD_MIN_LENGTH, PASSWD_LENGTH_ERROR);
+        $this->checkLengthWException($passwd, PASSWD_MAX_LENGTH, PASSWD_MIN_LENGTH, PASSWD_LENGTH_ERROR);
     }
 }

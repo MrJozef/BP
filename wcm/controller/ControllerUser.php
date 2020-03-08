@@ -83,8 +83,25 @@ class ControllerUser extends Controller
         }
     }
 
+    public function adminDelete() {
+        try {
+            $this->myManager->adminRefuse($_POST['admin-delete']);
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
 
-    public function loadNoVerified() {//todo catch
+    public function adminConfirm() {
+        try {
+            $this->myManager->adminConfirm($_POST['admin-confirm']);
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
+    public function loadNoVerified() {
         $result = $this->myManager->getNoVerified();
 
         $this->dataForView['verifAdmin'] = $this->clearHTML($result);
