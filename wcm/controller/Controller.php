@@ -38,4 +38,16 @@ abstract class Controller
 
         return $x;
     }
+
+    protected function throwSuccMsg($succMsg) {
+        $this->dataForView['message'] = $succMsg;
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/success-msg.phtml");
+    }
+
+    protected function throwErrorMsg($errorMsg) {
+        $this->dataForView['message'] = $errorMsg;
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/error-msg.phtml");
+    }
 }

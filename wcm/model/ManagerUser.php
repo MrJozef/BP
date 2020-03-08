@@ -17,91 +17,115 @@ const MAIL_MAX_LENGTH = 60;
 const MAIL_ERROR = "Zadali ste nevalídnu E-mailovú adresu!";
 const MAIL_ALREADY_EXISTS = "Na túto E-mailovú adresu je už registrovaný iný užívateľ!";
 
+const ERROR_MAIL_NOT_CONFIRM = "Svoj účet ešte nemôžete používať, pretože ste nepotvrdili E-mail odoslaný na Vašu E-mailovú adresu.";
+const ERROR_ACC_NOT_CONFIRM = "Svoj účet ešte nemôžete používať, pretože Vašu žiadosť ešte nepotvrdil žiadny administrátor!";
 const ERROR_LOGIN = "Zadali ste neexistujúci nick!";
+const ERROR_DELETED_ACC = "Tento účet bol zmazaný! Už ho nemôžete používať.";
 const ERROR_ADD_NEW_USER = "Pri registrácii nastala chyba!";
 const ERROR_ACTUAL_PASSWD = "Zadali ste nesprávne svoje aktuálne heslo!";
-const ERROR_UPDATE = 'Pri zmene nastavenia Vášho účtu prišlo k chybe a zmena sa neuložila!';
+const ERROR_UPDATE = "Pri zmene nastavenia Vášho účtu prišlo k chybe a zmena sa neuložila!";
+const ERROR_DELETE = "Pri vymazávaní Vašeho profilu nastala chyba a nezmazal sa!";
 
-const SUCCESS_SIGN_UP = 'Boli ste úspešne zaregistrovaný! Na Váš mail bude doručený overovací E-mail,
-                                pre pokračovanie na stránke ho musíte potvrdiť.';
-const SUCCESS_PASSWD = 'Vaše heslo bolo úspešne zmenené!';
-const SUCCESS_NICK = 'Váš Nick bol úspešne zmenený!';
-const SUCCESS_MAIL = 'Váš E-mail bol úspešne zmenený!';
-
+// vsetky metody s nazvom check... vyhadzuju vynimky
 class ManagerUser extends Manager
 {
-    public function userSignUp($nick, $passwd, $passwd2, $mail) {
+    public function userSignUp($nick, $passwd, $passwd2, $mail)
+    {
 
-        if ($this->checkNick($nick)) {
-            if ($this->checkMail($mail)) {
-                if ($this->checkTwoPasswd($passwd, $passwd2)) {
+        $this->checkNick($nick);
+        $this->checkMail($mail);
+        $this->checkTwoPasswd($passwd, $passwd2);
 
-                    if (!$this->checkMailInDb($mail)) {
+        if (!$this->findMailInDb($mail)) {
 
-                        if (!$this->checkNickInDb($nick)) {
-                            $task = 'INSERT INTO user (nick, password, mail) VALUES(?, ?, ?)';
-                            $hash = password_hash($passwd, PASSWORD_DEFAULT);
+            if (!$this->findNickInDb($nick)) {
+                $task = 'INSERT INTO user (nick, password, mail) VALUES(?, ?, ?)';
+                $hash = password_hash($passwd, PASSWORD_DEFAULT);
 
-                            $this->checkUniversal($task, [$nick, $hash, $mail], SUCCESS_SIGN_UP, ERROR_ADD_NEW_USER);
-                            return true;
-                        }
-                        else {
-                            throw new MyException(NICK_ALREADY_EXISTS);
-                        }
-                    }
-                    else {
-                        throw new MyException(MAIL_ALREADY_EXISTS);
-                    }
-                }
+                $this->checkUniversal($task, [$nick, $hash, $mail], ERROR_ADD_NEW_USER);
+
+                //uspech
+            } else {
+                throw new MyException(NICK_ALREADY_EXISTS);
             }
-        }
-        return false;
-    }
-
-    //aktualne prihlaseny uzivatel si meni heslo
-    public function userChangePasswd($nick, $oldPasswd, $newPasswd, $newPasswd2) {
-
-        if ($this->checkTwoPasswd($newPasswd, $newPasswd2)) {
-            if ($this->checkUserPasswd($nick, $oldPasswd)) {
-                $task = 'UPDATE user SET password = ? WHERE nick = ?';
-                $hash = password_hash($newPasswd, PASSWORD_DEFAULT);
-
-                $this->checkUniversal($task, [$passwd, $nick], SUCCESS_PASSWD, ERROR_UPDATE);
-            }
-        }
-    }
-
-    //aktualne prihlaseny uzivatel si meni nick
-    public function userChangeNick($nick, $newNick, $passwd) {
-
-        if ($this->checkPasswd($passwd)) {
-            if ($this->checkUserPasswd($nick, $passwd)) {
-                $task = 'UPDATE user SET nick = ? WHERE nick = ?';
-
-                $this->checkUniversal($task, [$newNick, $oldNick], SUCCESS_NICK, ERROR_UPDATE);
-            }
-        }
-    }
-
-    //tato funkcia je len pre aktualne prihlasenych uzivatelov
-    public function userChangeMail($nick, $newMail, $passwd) {
-
-        if ($this->checkPasswd($passwd)) {
-            if ($this->checkUserPasswd($nick, $passwd)) {
-                $task = 'UPDATE user SET mail = ? WHERE nick = ?';
-
-                $this->checkUniversal($task, [$newMail, $nick], SUCCESS_MAIL, ERROR_UPDATE);
-            }
+        } else {
+            throw new MyException(MAIL_ALREADY_EXISTS);
         }
     }
 
     public function userLogin($nick, $passwd) {
-        if ($this->checkNick($nick)) {
-            if ($this->checkPasswd($passwd)) {
-                return $this->checkUserPasswd($nick, $passwd);
+        $this->checkNick($nick);
+        $this->checkPasswd($passwd);
+
+        if($this->findNickInDb($nick)) {
+            //aby sme nevybrali uz mrtve ucty
+            $task = 'SELECT password, verified_mail, verified_admin FROM user WHERE nick = ? AND dead = 0 LIMIT 1';
+            $user = DBWrap::selectOne($task, [$nick]);
+
+            if(!empty($user)) {
+                if (!password_verify($passwd, $user['password'])) {
+                    throw new MyException(ERROR_ACTUAL_PASSWD);
+                }
+
+                if($user['verified_mail'] === 0) {
+                    throw new MyException(ERROR_MAIL_NOT_CONFIRM);
+                }
+
+                if($user['verified_admin'] === 0) {
+                    throw new MyException(ERROR_ACC_NOT_CONFIRM);
+                }
+
+                //uspech
             }
+            else {
+                throw new MyException(ERROR_DELETED_ACC);
+            }
+
         }
-        return false;
+        else {
+            throw new MyException(ERROR_LOGIN);
+        }
+    }
+
+
+    //aktualne prihlaseny uzivatel si meni heslo
+    public function userChangePasswd($nick, $oldPasswd, $newPasswd, $newPasswd2) {
+
+        $this->checkTwoPasswd($newPasswd, $newPasswd2);
+        $this->checkUserPasswd($nick, $oldPasswd);
+
+        $task = 'UPDATE user SET password = ? WHERE nick = ?';
+        $hash = password_hash($newPasswd, PASSWORD_DEFAULT);
+        $this->checkUniversal($task, [$hash, $nick], ERROR_UPDATE);
+    }
+
+    //aktualne prihlaseny uzivatel si meni nick
+    public function userChangeNick($nick, $newNick, $passwd) {
+        $this->checkNick($newNick);//ten novy nick ci splna podmienky nicku
+        $this->checkPasswd($passwd);
+        $this->checkUserPasswd($nick, $passwd);
+
+        $task = 'UPDATE user SET nick = ? WHERE nick = ?';
+        $this->checkUniversal($task, [$newNick, $nick], NICK_ALREADY_EXISTS);
+    }
+
+    //tato funkcia je len pre aktualne prihlasenych uzivatelov
+    public function userChangeMail($nick, $newMail, $passwd) {
+        $this->checkMail($newMail);
+        $this->checkPasswd($passwd);
+        $this->checkUserPasswd($nick, $passwd);
+
+        $task = 'UPDATE user SET mail = ? WHERE nick = ?';
+        $this->checkUniversal($task, [$newMail, $nick], ERROR_UPDATE);
+    }
+
+    public function userDelete($nick, $passwd) {
+        $this->checkNick($nick);
+        $this->checkPasswd($passwd);
+        $this->checkUserPasswd($nick, $passwd);
+
+        $task = 'UPDATE user SET dead = 1 WHERE nick = ?';
+        $this->checkUniversal($task, [$nick], ERROR_UPDATE);
     }
 
     //táto funkcia vrati tych novoprihlasenych adminov, ktori potvrdili mail, no cakaju na schvalenie adminom
@@ -111,40 +135,32 @@ class ManagerUser extends Manager
         return DBWrap::selectAll($task, []);
     }
 
-    private function checkUniversal($task, $taskParam = [], $succMsg, $errMsg) {
+    private function checkUniversal($task, $taskParam = [], $errMsg) {
         try {
             DBWrap::queryUniversal($task, $taskParam);
-            //$this->createMessage($succMsg);todo co s touto uspesnou spravou?
         }
         catch(PDOException $exception) {
             throw new MyException($errMsg);
         }
     }
 
-    //overi ci uzivatel s danym nickom ma naozaj take heslo, ake zadal - toto sa pouziva aj pre login, preto treba kontrolu ci existuje nick
+    //overi ci uzivatel s danym nickom ma naozaj take heslo, ake zadal - toto sa NEpouziva pre login, preto netreba kontrolu ci existuje nick
     private function checkUserPasswd($nick, $passwd) {
+        $task = 'SELECT password FROM user where nick = ? LIMIT 1';
+        $result = DBWrap::selectOne($task, [$nick]);
 
-        if($this->checkNickInDb($nick)) {
-            $task = 'SELECT password FROM user where nick = ?';
-            $result = DBWrap::selectOne($task, [$nick]);
-
-            if(password_verify($passwd, $result['password'])) {
-                return true;
-            }
-            else {
-                throw new MyException(ERROR_ACTUAL_PASSWD);
-            }
+        if (!password_verify($passwd, $result['password'])) {
+            throw new MyException(ERROR_ACTUAL_PASSWD);
         }
-        throw new MyException(ERROR_LOGIN);
     }
 
     //overi ci je nick spravne dlhy
     private function checkNick($nick) {
-        return $this->checkLengthWMsg($nick, NICK_MAX_LENGTH, NICK_MIN_LENGTH, NICK_LENGTH_ERROR);
+        return $this->checkLengthWException($nick, NICK_MAX_LENGTH, NICK_MIN_LENGTH, NICK_LENGTH_ERROR);
     }
 
     //existuje uz takyto nick v databaze
-    private function checkNickInDb($nick) {
+    private function findNickInDb($nick) {
         $task = 'SELECT id_user FROM user WHERE nick = ? LIMIT 1';
 
         return DBWrap::queryUniversal($task, [$nick]);
@@ -152,15 +168,13 @@ class ManagerUser extends Manager
 
     //ma zadany mail tvar mailovej adresy
     private function checkMail($mail) {
-        if ($this->checkLength($mail, MAIL_MAX_LENGTH, MAIL_MIN_LENGTH) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            return true;
+        if (!$this->checkLength($mail, MAIL_MAX_LENGTH, MAIL_MIN_LENGTH) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            throw new MyException(MAIL_ERROR);
         }
-        throw new MyException(MAIL_ERROR);
-        return false;
     }
 
     //existuje takyto mail v databaze
-    private function checkMailInDb($mail) {
+    private function findMailInDb($mail) { //return T/F
         $task = 'SELECT id_user FROM user WHERE mail = ? LIMIT 1';
 
         return DBWrap::queryUniversal($task, [$mail]);
@@ -168,17 +182,14 @@ class ManagerUser extends Manager
 
     //su hesla zhodne a spravne dlhe
     private function checkTwoPasswd($passwd1, $passwd2) {
-        if ($this->checkPasswd($passwd1)) {
-            if ($passwd1 === $passwd2) {
-                return true;
-            }
+        $this->checkPasswd($passwd1);
+        if ($passwd1 !== $passwd2) {
             throw new MyException(PASSWD_NOT_MATCH);
         }
-        return false;
     }
 
     //je heslo spravne dlhe
     private function checkPasswd($passwd) {
-        return $this->checkLengthWMsg($passwd, PASSWD_MAX_LENGTH, PASSWD_MIN_LENGTH, PASSWD_LENGTH_ERROR);
+        return $this->checkLengthWException($passwd, PASSWD_MAX_LENGTH, PASSWD_MIN_LENGTH, PASSWD_LENGTH_ERROR);
     }
 }

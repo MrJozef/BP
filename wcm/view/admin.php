@@ -32,6 +32,21 @@
         $userControll->signUp();
     }
 
+    if (isset($_POST['passwd-old'])) {
+        $userControll->changePasswd();
+    }
+
+    if (isset($_POST['nick-new'])) {
+        $userControll->changeNick();
+    }
+
+    if (isset($_POST['mail-new'])) {
+        $userControll->changeMail();
+    }
+
+    if (isset($_POST['delete-passwd'])) {
+        $userControll->deleteMyself();
+    }
 ?>
 
 <!DOCTYPE html>
