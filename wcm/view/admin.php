@@ -55,6 +55,14 @@
     if (isset($_POST['admin-confirm'])) {
         $userControll->adminConfirm();
     }
+
+    if(isset($_POST['category-name'])) {
+        $categControll->saveNewCat();
+    }
+
+    if(isset($_POST['article-title'])) {
+        $articControll->saveNewArtic();
+    }
 ?>
 
 <!DOCTYPE html>

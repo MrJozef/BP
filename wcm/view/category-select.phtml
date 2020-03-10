@@ -1,6 +1,6 @@
 <select id="article-category" name="article-category" required>
         <option value="">Zvoľte kategóriu</option>
     <?php foreach ($categNames as $cat) : ?>
-        <option value="<?= $cat['name'] ?>"><?= $cat['name'] ?></option>
+        <option value="<?= $cat['id_category'] ?>"><?= $cat['name'] ?></option>
     <?php endforeach ?>
 </select>

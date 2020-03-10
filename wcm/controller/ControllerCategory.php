@@ -10,6 +10,15 @@ class ControllerCategory extends Controller
         $this->myManager = new ManagerCategory();
     }
 
+    public function saveNewCat() {
+        try {
+            $this->myManager->save($_POST['category-name'], $_POST['category-desc'], $_POST['category-visibility']);
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
     public function loadCatMenu() {
         $this->loadNamesOfCat();
         extract($this->dataForView);
@@ -23,7 +32,7 @@ class ControllerCategory extends Controller
     }
 
     private function loadNamesOfCat() {
-        $result = $this->myManager->getOnlyNames();
+        $result = $this->myManager->getNamesAndId();
         $this->dataForView['categNames'] = $this->clearHTML($result);
     }
 }

@@ -41,7 +41,7 @@ class ManagerUser extends Manager
                 $task = 'INSERT INTO user (nick, password, mail) VALUES(?, ?, ?)';
                 $hash = password_hash($passwd, PASSWORD_DEFAULT);
 
-                $this->checkUniversal($task, [$nick, $hash, $mail], ERROR_ADD_NEW_USER);
+                $this->tryQueryDb($task, [$nick, $hash, $mail], ERROR_ADD_NEW_USER);
 
                 //uspech
             } else {
@@ -58,7 +58,7 @@ class ManagerUser extends Manager
 
         if($this->findNickInDb($nick)) {
             //aby sme nevybrali uz mrtve ucty
-            $task = 'SELECT password, verified_mail, verified_admin FROM user WHERE nick = ? AND dead = 0 LIMIT 1';
+            $task = 'SELECT id_user, password, verified_mail, verified_admin FROM user WHERE nick = ? AND dead = 0 LIMIT 1';
             $user = DBWrap::selectOne($task, [$nick]);
 
             if(!empty($user)) {
@@ -74,7 +74,7 @@ class ManagerUser extends Manager
                     throw new MyException(ERROR_ACC_NOT_CONFIRM);
                 }
 
-                //uspech
+                return $user['id_user'];
             }
             else {
                 throw new MyException(ERROR_DELETED_ACC);
@@ -95,7 +95,7 @@ class ManagerUser extends Manager
 
         $task = 'UPDATE user SET password = ? WHERE nick = ?';
         $hash = password_hash($newPasswd, PASSWORD_DEFAULT);
-        $this->checkUniversal($task, [$hash, $nick], ERROR_UPDATE);
+        $this->tryQueryDb($task, [$hash, $nick], ERROR_UPDATE);
     }
 
     //aktualne prihlaseny uzivatel si meni nick
@@ -105,7 +105,7 @@ class ManagerUser extends Manager
         $this->checkUserPasswd($nick, $passwd);
 
         $task = 'UPDATE user SET nick = ? WHERE nick = ?';
-        $this->checkUniversal($task, [$newNick, $nick], NICK_ALREADY_EXISTS);
+        $this->tryQueryDb($task, [$newNick, $nick], NICK_ALREADY_EXISTS);
     }
 
     //tato funkcia je len pre aktualne prihlasenych uzivatelov
@@ -115,7 +115,7 @@ class ManagerUser extends Manager
         $this->checkUserPasswd($nick, $passwd);
 
         $task = 'UPDATE user SET mail = ? WHERE nick = ?';
-        $this->checkUniversal($task, [$newMail, $nick], ERROR_UPDATE);
+        $this->tryQueryDb($task, [$newMail, $nick], ERROR_UPDATE);
     }
 
     public function userDelete($nick, $passwd) {
@@ -124,19 +124,19 @@ class ManagerUser extends Manager
         $this->checkUserPasswd($nick, $passwd);
 
         $task = 'UPDATE user SET dead = 1 WHERE nick = ?';
-        $this->checkUniversal($task, [$nick], ERROR_UPDATE);
+        $this->tryQueryDb($task, [$nick], ERROR_UPDATE);
     }
 
     //prihlaseny administrator schvaluje novo-prihlaseneho admina, kt. si uz potvrdil mail
     public function adminConfirm($nick) {
         $task = 'UPDATE user SET verified_admin = 1 WHERE nick = ?';
-        $this->checkUniversal($task, [$nick], ERROR_DB);
+        $this->tryQueryDb($task, [$nick], ERROR_DB);
     }
 
     //prihlaseny administrator VYMAZAVA (nie dead = 1) novo-prihlaseneho admina, kt. si uz potvrdil mail
     public function adminRefuse($nick) {
         $task = 'DELETE FROM user WHERE nick = ?';
-        $this->checkUniversal($task, [$nick], ERROR_DB);
+        $this->tryQueryDb($task, [$nick], ERROR_DB);
     }
 
     //táto funkcia vrati tych novoprihlasenych adminov, ktori potvrdili mail, no cakaju na schvalenie adminom
@@ -144,15 +144,6 @@ class ManagerUser extends Manager
         $task = 'SELECT nick, mail FROM user WHERE verified_mail = 1 AND verified_admin = 0';
 
         return DBWrap::selectAll($task, []);
-    }
-
-    private function checkUniversal($task, $taskParam = [], $errMsg) {
-        try {
-            DBWrap::queryUniversal($task, $taskParam);
-        }
-        catch(PDOException $exception) {
-            throw new MyException($errMsg);
-        }
     }
 
     //overi ci uzivatel s danym nickom ma naozaj take heslo, ake zadal - toto sa NEpouziva pre login, preto netreba kontrolu ci existuje nick
@@ -167,7 +158,7 @@ class ManagerUser extends Manager
 
     //overi ci je nick spravne dlhy
     private function checkNick($nick) {
-        if(!preg_match('/^[A-Za-z][A-Za-z0-9]{NICK_MIN_LENGTH - 1,NICK_MAX_LENGTH - 1}$/', $nick)) {
+        if(!preg_match("/^[A-Za-z][A-Za-z0-9]{" . (NICK_MIN_LENGTH - 1) . "," . (NICK_MAX_LENGTH - 1) . "}$/", $nick)) {
             throw new MyException(NICK_ERROR);
         }
     }

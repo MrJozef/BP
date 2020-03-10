@@ -17,8 +17,9 @@ class ControllerUser extends Controller
 
     public function login() {
         try {
-            $this->myManager->userLogin($_POST['login-nick'], $_POST['login-passwd']);
+            $idUser = $this->myManager->userLogin($_POST['login-nick'], $_POST['login-passwd']);
             $_SESSION['user'] = $_POST['login-nick'];
+            $_SESSION['user-id'] = $idUser;
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
