@@ -18,4 +18,19 @@ class ControllerArticle extends Controller
             $this->throwErrorMsg($e->errorMessage());
         }
     }
+
+    public function aLoadAllArticNamesOfCat($categoryName) {
+        $articles = $this->myManager->aLoadAllArticNamesOfCat($categoryName);
+        $this->dataForView['articleNames'] = $this->clearHTML($articles);
+
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article-ul.phtml");
+    }
+
+    public function aLoadArticle($articleId) {
+        $article = $this->myManager->aLoadArticle($articleId);
+        $article = $this->clearHTML($article);
+        print_r($article);
+        return $article;
+    }
 }

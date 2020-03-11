@@ -146,6 +146,18 @@ class ManagerUser extends Manager
         return DBWrap::selectAll($task, []);
     }
 
+    //All v tomto pripade znamena vsetkych, ktori mohli teoreticky napisat clanok
+    public function aGetAllUserNames() {//todo mozno tuto funkciu pouzijeme aj v php bez ajaxu? a zatial ju nepouzivame
+        $task = 'SELECT id_user, nick FROM user WHERE verified_admin = 1';
+        return DBWrap::selectAll($task, []);
+    }
+
+    public function aGetNameById($userId) {
+        $task = 'SELECT nick FROM user WHERE id_user = ? LIMIT 1';
+        $nickArray = DBWrap::selectOne($task, [$userId]);
+        return $nickArray['nick'];
+    }
+
     //overi ci uzivatel s danym nickom ma naozaj take heslo, ake zadal - toto sa NEpouziva pre login, preto netreba kontrolu ci existuje nick
     private function checkUserPasswd($nick, $passwd) {
         $task = 'SELECT password FROM user where nick = ? LIMIT 1';

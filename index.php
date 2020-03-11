@@ -22,6 +22,10 @@
     <meta name="author" content="Jozef Kubík ml.">
 
     <title>Web Start Line</title>
+
+    <script src="front-page/jquery.js"></script>
+    <script src="front-page/FPController.js"></script>
+    <script src="front-page/FPViewHandler.js"></script>
 </head>
 
 <body>

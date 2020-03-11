@@ -1,5 +1,4 @@
 <?php
-
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const ARTICLE_MIN_LENGTH = 50;
@@ -22,5 +21,15 @@ class ManagerArticle extends Manager
 
         $task = 'INSERT INTO article (id_category, id_author, title, text, date_creation) VALUES (?, ?, ?, ?, ?)';
         $this->tryQueryDb($task, [$idCateg, $idAuthor, $title, $text, $actualDate], ERROR_ART_NEW);
+    }
+
+    public function aLoadAllArticNamesOfCat($categoryName) {
+        $task = 'SELECT id_article, title FROM article WHERE id_category = ?';
+        return DBWrap::selectAll($task, [$categoryName]);
+    }
+
+    public function aLoadArticle($articleId) {
+        $task = 'SELECT id_author, title, text, date_creation, date_edit FROM article WHERE id_article = ?';
+        return DBWrap::selectOne($task, [$articleId]);
     }
 }

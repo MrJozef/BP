@@ -5,7 +5,7 @@ ErrorDocument 404 /wcm/view/error404.html
 RewriteEngine On
 RewriteBase /
 
-#aby nam uzivatelia nemohli pozerat do sablonovych zdrojakov
+##aby nam uzivatelia nemohli pozerat do sablonovych zdrojakov
 AddType application/x-httpd-php .php .phtml
 
 # To externally redirect /dir/foo.php to /dir/foo
