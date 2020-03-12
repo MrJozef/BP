@@ -7,10 +7,16 @@ $(document).ready(function() {
 
     categoryButtons.click(function() {
         let categoryId = $(this).attr('value');
+        controller.loadArticleNames(categoryId);
 
-        controller.loadArticleNames(categoryId).done(function (data) {
-            main.html(data);
-            //todo tunak nacitat article buttons
-        });
+        setTimeout(function () {
+
+            let articleButtons = $(main).find('button');
+
+            articleButtons.click(function () {
+                let articleId = $(this).attr('value');
+                controller.loadArticle(articleId);
+            })
+        },50);
     });
 });

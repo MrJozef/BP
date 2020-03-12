@@ -20,8 +20,8 @@ class ControllerArticle extends Controller
     }
 
     public function aLoadAllArticNamesOfCat($categoryName) {
-        $articles = $this->myManager->aLoadAllArticNamesOfCat($categoryName);
-        $this->dataForView['articleNames'] = $this->clearHTML($articles);
+        $articleNames = $this->myManager->aLoadAllArticNamesOfCat($categoryName);
+        $this->dataForView['articleNames'] = $this->clearHTML($articleNames);
 
         extract($this->dataForView);
         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article-ul.phtml");
@@ -30,7 +30,7 @@ class ControllerArticle extends Controller
     public function aLoadArticle($articleId) {
         $article = $this->myManager->aLoadArticle($articleId);
         $article = $this->clearHTML($article);
-        print_r($article);
+
         return $article;
     }
 }

@@ -1,0 +1,14 @@
+<article>
+    <div>
+        <h1><?= $article['title']?></h1>
+        <p>Článok napísal: <strong><?= $article['nick']?></strong>, dňa: <span>
+                <?php $date = strtotime($article['date_creation']); echo date('d.m.Y', $date); ?></span></p>
+
+        <?php if($article['date_edit'] !== null) { ?>
+            <p>Dátum poslednej úpravy: <?= $article['date_edit'] ?></p>
+        <?php } ?>
+    </div>
+    <div>
+        <?= $article['text'] ?>
+    </div>
+</article>
