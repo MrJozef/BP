@@ -20,9 +20,14 @@ class ControllerCategory extends Controller
     }
 
     public function loadCatMenu() {
-        $this->loadNamesOfCat();
-        extract($this->dataForView);
-        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-ul.phtml");
+        try {
+            $this->loadNamesOfCat();
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-ul.phtml");
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
     }
 
     public function loadCatSelect() {

@@ -17,7 +17,7 @@ class ManagerArticle extends Manager
         $this->checkLengthWException($title, ART_TITLE_MAX_LENGTH, ART_TITLE_MIN_LENGTH, ERROR_TITLE_LENGTH);
         $this->checkLengthWException($text, ARTICLE_MAX_LENGTH, ARTICLE_MIN_LENGTH, ERROR_ARTICLE_LENGTH);
 
-        $actualDate = date(DATE_FORMAT);
+        $actualDate = date(RAW_DATE_FORMAT);
 
         $task = 'INSERT INTO article (id_category, id_author, title, text, date_creation) VALUES (?, ?, ?, ?, ?)';
         $this->tryQueryDb($task, [$idCateg, $idAuthor, $title, $text, $actualDate], ERROR_ART_NEW);

@@ -1,18 +1,17 @@
 <?php
-    const DATE_FORMAT = 'Y-m-d';
-
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
     session_start();
 
     date_default_timezone_set('Europe/Bratislava');
 
 
     try {
-        DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
     }
     catch (MyException $e) {
         echo $e->errorMessage();
@@ -67,6 +66,10 @@
 
     if(isset($_POST['article-title'])) {
         $articControll->saveNewArtic();
+    }
+
+    if(isset($_GET['verif'])) {
+        $userControll->verifiedUser();
     }
 ?>
 

@@ -2,9 +2,11 @@
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
+
 
     try {
-        DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
     }
     catch (MyException $e) {
         echo $e->errorMessage();

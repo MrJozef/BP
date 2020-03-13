@@ -1,12 +1,15 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/ManagerUser.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/EmailSender.php";
 
 const SUCCESS_SIGN_UP = 'Boli ste úspešne zaregistrovaný! Na Váš mail bude doručený overovací E-mail,
                                 pre pokračovanie na stránke ho musíte potvrdiť.';
 const SUCCESS_PASSWD = 'Vaše heslo bolo úspešne zmenené!';
 const SUCCESS_NICK = 'Váš Nick bol úspešne zmenený!';
 const SUCCESS_MAIL = 'Váš E-mail bol úspešne zmenený!';
+const SUCCES_MAIL_VERIF = 'Váš E-mail bol úspešne overený, teraz budete musieť počkať, kým Vašu žiadosť schváli niektorý z administrátorov.';
+const ERROR_MAIL_VERIF = 'Váš E-mail nemohol byť overený! Obráťte sa na administrátora s touto chybou.';
 
 class ControllerUser extends Controller
 {
@@ -96,6 +99,20 @@ class ControllerUser extends Controller
     public function adminConfirm() {
         try {
             $this->myManager->adminConfirm($_POST['admin-confirm']);
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
+    public function verifiedUser() {
+        try {
+            if ($this->myManager->userVerified($_GET['verif']) === true) {
+                $this->throwSuccMsg(SUCCES_MAIL_VERIF);
+            }
+            else {
+                $this->throwErrorMsg(ERROR_MAIL_VERIF);
+            }
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

@@ -1,6 +1,6 @@
 <?php
-
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/EmailSender.php";
 
 const NICK_MIN_LENGTH = 4;
 const NICK_MAX_LENGTH = 30;
@@ -43,7 +43,15 @@ class ManagerUser extends Manager
 
                 $this->tryQueryDb($task, [$nick, $hash, $mail], ERROR_ADD_NEW_USER);
 
-                //uspech
+                $emailSender = new EmailSender();
+                $hashNick = sha1($nick);
+                try {
+                    $emailSender->sendSignUpMail($mail, $hashNick);//todo zahashovat nick
+                }
+                catch (MyException $e) {
+                    $this->adminRefuse($nick);      //ak sa nepodarilo odoslat mail, nema zmysel, mat takehoto uzivatela v db
+                    throw new MyException($e->errorMessage());
+                }
             } else {
                 throw new MyException(NICK_ALREADY_EXISTS);
             }
@@ -125,6 +133,25 @@ class ManagerUser extends Manager
 
         $task = 'UPDATE user SET dead = 1 WHERE nick = ?';
         $this->tryQueryDb($task, [$nick], ERROR_UPDATE);
+    }
+
+    public function userVerified($hashNick) {
+        $task = 'SELECT nick FROM user WHERE verified_mail = 0';
+
+        $nickArray = DBWrap::selectAll($task);
+        foreach ($nickArray as $thisUser) {
+
+            if (sha1($thisUser['nick']) === $hashNick) {
+                $this->setVerifiedMail($thisUser['nick']);
+               return true;
+            }
+        }
+        return false;
+    }
+
+    private function setVerifiedMail($nick) {
+        $task = 'UPDATE user SET verified_mail = 1 WHERE nick = ?';
+        $this->tryQueryDb($task, [$nick], ERROR_DB);
     }
 
     //prihlaseny administrator schvaluje novo-prihlaseneho admina, kt. si uz potvrdil mail

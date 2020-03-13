@@ -1,21 +1,30 @@
 $(document).ready(function() {
 
-    let controller = new FPController();
-
-    let categoryButtons = $('header nav button');
-    let main = $('main');
+    let controller = new FPController(),
+    categoryButtons = $('header nav button'),
+    main = $('main'),
+    previousCategoryId,
+    previousArticleId;
 
     categoryButtons.click(function() {
-        let categoryId = $(this).attr('value');
-        controller.loadArticleNames(categoryId);
+        let actualCategoryId = $(this).attr('value');
+
+        if (previousCategoryId !== actualCategoryId) {
+            controller.loadArticleNames(actualCategoryId);
+            previousCategoryId = actualCategoryId;
+        }
+
 
         setTimeout(function () {
-
             let articleButtons = $(main).find('button');
 
             articleButtons.click(function () {
-                let articleId = $(this).attr('value');
-                controller.loadArticle(articleId);
+                let actualArticleId = $(this).attr('value');
+
+                if(previousArticleId !== actualArticleId) {
+                    controller.loadArticle(actualArticleId);
+                    previousArticleId = actualArticleId;
+                }
             })
         },50);
     });

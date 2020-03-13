@@ -8,12 +8,12 @@ abstract class Manager
 {
 
     protected function tryQueryDb($task, $taskParam = [], $errMsg) {
-        try {
+        //try {
             DBWrap::queryUniversal($task, $taskParam);
-        }
+        /*}
         catch(PDOException $exception) {
             throw new MyException($errMsg);
-        }
+        }*/
     }
 
     protected function checkLengthWException($x, $maxLength, $minLength, $errorMsg) {

@@ -32,7 +32,14 @@ class FPController {
                 alert('Prepáčte, nepodarilo sa načítať dáta zo serveru.');
             },
             success: function (data) {
-                $('footer').append(data);
+
+                if($('main article').length) {
+                    $('article').remove();
+                    $('main').append(data);
+                }
+                else {
+                    $('main').append(data);
+                }
             }
         });
     }
