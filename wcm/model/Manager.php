@@ -1,19 +1,12 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
 
-const ERROR_UNIVERSAL = "Dopyt na databázu zlyhal! Vaša požiadavka nemohla byť dokončená.";
-
 
 abstract class Manager
 {
 
     protected function tryQueryDb($task, $taskParam = [], $errMsg) {
-        //try {
-            DBWrap::queryUniversal($task, $taskParam);
-        /*}
-        catch(PDOException $exception) {
-            throw new MyException($errMsg);
-        }*/
+        DBWrap::queryUniversal($task, $taskParam);
     }
 
     protected function checkLengthWException($x, $maxLength, $minLength, $errorMsg) {

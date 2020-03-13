@@ -1,0 +1,16 @@
+<div id="edit-category">
+    <h1>Upraviť kategóriu <span><?= $categEdit['name'] ?></span></h1>
+    <form method="post">
+        <label>Názov kategórie:
+            <input type="text" name="edit-category-name" minlength="3" maxlength="100" placeholder="Web - 2. ročník" required
+                   value="<?= $categEdit['name'] ?>">
+        </label>
+        <label>Popis kategórie:
+            <textarea name="edit-category-desc" minlength="20" maxlength="2000" placeholder="Sem napíšte popis ku kategórii - aké články obsahuje... Môžete používať HTML značky." required><?= $categEdit['description']  ?></textarea>
+        </label><!--todo tu je asi zbytocne pouzivat nieco ine nez texareu?-->
+        <p>Bude kategória po úpravách viditeľná pre všetkých užívateľov (vrátane textov, ktoré obsahuje)?</p>
+        <label><input type="radio" name="edit-category-visibility" value="1" <?php if($categEdit['visibility'] == true) echo "checked" ?>>Áno</label>
+        <label><input type="radio" name="edit-category-visibility" value="0" <?php if($categEdit['visibility'] == false) echo "checked" ?>>Nie</label>
+        <input type="submit" value="Upraviť kategóriu">
+    </form>
+</div>

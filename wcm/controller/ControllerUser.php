@@ -32,7 +32,7 @@ class ControllerUser extends Controller
     public function logout() {
         $_SESSION = array();
         session_destroy();
-        header("Location: ../../index.php");//todo toto funguje, ale urobit to inak?
+        header("Location: ../../index.php");
     }
 
     public function signUp() {
@@ -123,7 +123,6 @@ class ControllerUser extends Controller
     public function aGetAllUserNames() {
         $users = $this->myManager->aGetAllUserNames();
         $users = $this->clearHTML($users);
-        print_r($users);
         return $users;
     }
 

@@ -71,6 +71,16 @@
     if(isset($_GET['verif'])) {
         $userControll->verifiedUser();
     }
+
+    if(isset($_POST['category'])) {
+        $_SESSION['category'] = $_POST['category'];//pri opatovnom nacitani stranky sa $_POST vymaze -> sposobi chybu
+        $_SESSION['actpage'] = "edit-category";
+    }
+
+    if(isset($_POST['edit-category-name'])) {
+        $categControll->saveEditCat($_SESSION['category']);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -91,21 +101,27 @@
 
     <main>
         <?php
-            if(!isset($_SESSION['user']))
-            {
+            if (!isset($_SESSION['user'])) {
                 require($_SERVER['DOCUMENT_ROOT']."/wcm/view/login.phtml");
                 require($_SERVER['DOCUMENT_ROOT']."/wcm/view/signup.phtml");
             }
             else {
-                if(!isset($_POST['subpage'])){
+                if (!isset($_POST['subpage']) && !isset($_SESSION['actpage'])) {
                     $userControll->loadNoVerified();
                 }
                 else {
-                    if($_POST['subpage'] === 'verified-admin') {
+                    if (isset($_POST['subpage'])) {
+                        $_SESSION['actpage'] = $_POST['subpage'];
+                    }
+
+                    if($_SESSION['actpage'] === 'verified-admin') {
                         $userControll->loadNoVerified();
                     }
+                    elseif($_SESSION['actpage'] === 'edit-category') {
+                        $categControll->editCat($_SESSION['category']);
+                    }
                     else {
-                        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_POST['subpage'].".phtml");
+                        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_SESSION['actpage'].".phtml");
                     }
                 }
             }

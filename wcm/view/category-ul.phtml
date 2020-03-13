@@ -1,5 +1,9 @@
+<!--ak sme v indexe, form sa nevypíše, ak sme v admin. rozhraní, vypíše sa-->
+<?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "<form method=\"post\">" ?>
 <ul>
     <?php foreach ($categNames as $categ) : ?>
-        <li><button value="<?=$categ['id_category']?>"><?=$categ['name']?></button></li>
+        <li><button <?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "type='submit' name='category'" ?> value="<?=$categ['id_category']?>"><?=$categ['name']?></button></li>
     <?php endforeach ?>
 </ul>
+<?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "</form>" ?>
+
