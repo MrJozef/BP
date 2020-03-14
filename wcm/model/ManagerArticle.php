@@ -10,6 +10,7 @@ const ART_TITLE_MAX_LENGTH = 200;
 const ERROR_TITLE_LENGTH = "Dĺžka nadpisu článku musí byť medzi " . ART_TITLE_MIN_LENGTH . " a " . ART_TITLE_MAX_LENGTH . " znakmi!";
 
 const ERROR_ART_NEW = "Pri ukladaní článku nastala chyba a článok sa neuložil!";
+const ERROR_ART_UPDATE = "Pri ukladaní zmien nastala chyba a zmeny v článku sa neuložili!";
 
 class ManagerArticle extends Manager
 {
@@ -31,5 +32,22 @@ class ManagerArticle extends Manager
     public function aLoadArticle($articleId) {
         $task = 'SELECT id_author, title, text, date_creation, date_edit FROM article WHERE id_article = ?';
         return DBWrap::selectOne($task, [$articleId]);
+    }
+
+    //tato funkcia sa pouziva pri editacii clankov v admin. rozhrani
+    public function loadOneArticle($articleId) {
+        $task = 'SELECT id_category, title, text FROM article WHERE id_article = ?';
+        return DBWrap::selectOne($task, [$articleId]);
+    }
+
+    public function saveEditedArticle($articleId, $categoryId, $title, $text) {
+        $this->checkLengthWException($title, ART_TITLE_MAX_LENGTH, ART_TITLE_MIN_LENGTH, ERROR_TITLE_LENGTH);
+        $this->checkLengthWException($text, ARTICLE_MAX_LENGTH, ARTICLE_MIN_LENGTH, ERROR_ARTICLE_LENGTH);
+
+        $actualDate = date(RAW_DATE_FORMAT);
+
+        $task = 'UPDATE article SET id_category = ?, title = ?, text = ?, date_edit = ? WHERE id_article = ?';
+
+        $this->tryQueryDb($task, [$categoryId, $title, $text, $actualDate,  $articleId], ERROR_ART_UPDATE);
     }
 }

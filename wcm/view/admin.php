@@ -81,6 +81,15 @@
         $categControll->saveEditCat($_SESSION['category']);
     }
 
+    if(isset($_POST['article'])) {
+        $_SESSION['article'] = $_POST['article'];//pri opatovnom nacitani stranky sa $_POST vymaze -> sposobi chybu
+        $_SESSION['actpage'] = "edit-article";
+    }
+
+    if(isset($_POST['edit-article-title'])) {
+        $articControll->saveEditArtic($_SESSION['article']);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +126,13 @@
                     if($_SESSION['actpage'] === 'verified-admin') {
                         $userControll->loadNoVerified();
                     }
+                    elseif($_SESSION['actpage'] === 'edit-article') {
+                        $articControll->aLoadAllArticNamesOfCat($_SESSION['category']); //vypise vsetky clanky v kategorii
+                        $categorySelect = $categControll->onlyLoadCatSelect();
+                        $articControll->editArtic($_SESSION['article'], $categorySelect);
+                    }
                     elseif($_SESSION['actpage'] === 'edit-category') {
+                        $articControll->aLoadAllArticNamesOfCat($_SESSION['category']);
                         $categControll->editCat($_SESSION['category']);
                     }
                     else {

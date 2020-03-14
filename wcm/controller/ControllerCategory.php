@@ -58,6 +58,11 @@ class ControllerCategory extends Controller
         }
     }
 
+    public function onlyLoadCatSelect() {
+        $this->loadAllNamesOfCat();
+        return $this->dataForView['categNames'];
+    }
+
     public function loadCatSelect() {
         $this->loadAllNamesOfCat();
         extract($this->dataForView);

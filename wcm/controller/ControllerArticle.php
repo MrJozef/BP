@@ -33,4 +33,27 @@ class ControllerArticle extends Controller
 
         return $article;
     }
+
+    public function editArtic($articId, $arraySelectCat) {
+        try {
+            $article = $this->myManager->loadOneArticle($articId);
+            $this->dataForView['articEdit'] = $this->clearHTML($article);
+            $this->dataForView['categNames'] = $arraySelectCat;
+
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/edit-article.phtml");
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
+    public function saveEditArtic($articId) {
+        try {
+            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], trim($_POST['edit-article-title']), $_POST['edit-article-text']);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
 }
