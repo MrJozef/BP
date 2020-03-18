@@ -1,0 +1,6 @@
+<select id="article-importance" name="article-importance" required>
+    <option value="">Zvoľte dôležitosť</option>
+    <option value="1" <?php if(isset($articEdit['importance']) && $articEdit['importance'] === 1) echo "selected"?>>Základný text</option>
+    <option value="2" <?php if(isset($articEdit['importance']) && $articEdit['importance'] === 2) echo "selected"?>>Dôležitý text</option>
+    <option value="3" <?php if(isset($articEdit['importance']) && $articEdit['importance'] === 3) echo "selected"?>>Pokročilá téma</option>
+</select>

@@ -77,8 +77,14 @@
         $_SESSION['actpage'] = "edit-category";
     }
 
-    if(isset($_POST['edit-category-name'])) {
+    if(isset($_POST['edit-category'])) {
         $categControll->saveEditCat($_SESSION['category']);
+    }
+
+    if(isset($_POST['delete-category'])) {
+        $categControll->deleteCat();
+        unset($_SESSION['category']);
+        $_SESSION['actpage'] = 'verified-admin';
     }
 
     if(isset($_POST['article'])) {
@@ -86,8 +92,14 @@
         $_SESSION['actpage'] = "edit-article";
     }
 
-    if(isset($_POST['edit-article-title'])) {
+    if(isset($_POST['edit-article'])) {
         $articControll->saveEditArtic($_SESSION['article']);
+    }
+
+    if(isset($_POST['delete-article'])) {
+        $articControll->deleteArtic($_SESSION['article']);
+        unset($_SESSION['article']);
+        $_SESSION['actpage'] = 'edit-category';
     }
 
 ?>

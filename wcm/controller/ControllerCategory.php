@@ -58,6 +58,15 @@ class ControllerCategory extends Controller
         }
     }
 
+    public function deleteCat() {
+        try {
+            $this->myManager->deleteCatWithArticles($_SESSION['category']);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
     public function onlyLoadCatSelect() {
         $this->loadAllNamesOfCat();
         return $this->dataForView['categNames'];
@@ -67,6 +76,12 @@ class ControllerCategory extends Controller
         $this->loadAllNamesOfCat();
         extract($this->dataForView);
         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-select.phtml");
+    }
+
+    public function aLoadDescCat($categId) {
+        $this->dataForView = $this->myManager->aLoadDescCat($categId);
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-section.phtml");
     }
 
     private function loadNamesOfCat() {

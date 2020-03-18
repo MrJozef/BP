@@ -3,7 +3,7 @@ class FPController {
     constructor() {
     }
 
-    //nacita nazvy clankov z danej kategorie
+    //nacita nazvy clankov z danej kategorie a popis ku kategorii
     loadArticleNames(categoryId) {
 
         return $.ajax ({
@@ -21,6 +21,7 @@ class FPController {
         });
     }
 
+    //nacita dany clanok
     loadArticle(articleId) {
         return $.ajax ({
             type: 'post',

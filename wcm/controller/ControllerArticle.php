@@ -12,7 +12,7 @@ class ControllerArticle extends Controller
 
     public function saveNewArtic() {
         try {
-            $this->myManager->saveNewArtic($_SESSION['user-id'], $_POST['article-category'], trim($_POST['article-title']), $_POST['article-text']);
+            $this->myManager->saveNewArtic($_SESSION['user-id'], $_POST['article-category'], trim($_POST['article-title']), $_POST['article-text'], $_POST['article-importance']);
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -29,7 +29,12 @@ class ControllerArticle extends Controller
 
     public function aLoadArticle($articleId) {
         $article = $this->myManager->aLoadArticle($articleId);
+
+        //potrebujeme, aby v texte ostali zachovane html tagy
+        $clearText = $article['text'];
+        $article['text'] = "";
         $article = $this->clearHTML($article);
+        $article['text'] = $clearText;
 
         return $article;
     }
@@ -48,9 +53,18 @@ class ControllerArticle extends Controller
         }
     }
 
+    public function deleteArtic($articId) {
+        try {
+            $this->myManager->deleteArticle($articId);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
     public function saveEditArtic($articId) {
         try {
-            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], trim($_POST['edit-article-title']), $_POST['edit-article-text']);
+            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], trim($_POST['edit-article-title']), $_POST['edit-article-text'], $_POST['article-importance']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

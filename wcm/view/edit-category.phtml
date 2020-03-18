@@ -11,6 +11,10 @@
         <p>Bude kategória po úpravách viditeľná pre všetkých užívateľov (vrátane textov, ktoré obsahuje)?</p>
         <label><input type="radio" name="edit-category-visibility" value="1" <?php if($categEdit['visibility'] == true) echo "checked" ?>>Áno</label>
         <label><input type="radio" name="edit-category-visibility" value="0" <?php if($categEdit['visibility'] == false) echo "checked" ?>>Nie</label>
-        <input type="submit" value="Upraviť kategóriu">
+        <input type="submit" name="edit-category" value="Upraviť kategóriu">
+        <div>
+            <p>Pozor, nasledujúca akcia je nevratná a vymaže aj všetky články, ktoré sa aktuálne nachádzajú v kategórii!</p>
+            <input type="submit" name="delete-category" value="Vymazať kategóriu a všetky články, ktoré obsahuje">
+        </div>
     </form>
 </div>
