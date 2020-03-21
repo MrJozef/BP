@@ -1,12 +1,14 @@
 <div id="edit-css-category">
-    <h1>Zmeniť názov CSS kategórie <span><?= $cssCateg['categ_name'] ?></span></h1>
+    <h1>Zmeniť názov CSS kategórie: <span><?= $cssCateg['categ_name'] ?></span></h1>
     <form method="post">
         <label>Nový názov kategórie:
             <input type="text" name="css-categ-name" minlength="3" maxlength="100" placeholder="Text & písmo" required
                    value="<?= $cssCateg['categ_name'] ?>">
         </label>
         <input type="submit" name="edit-css-categ" value="Upraviť CSS kategóriu">
+    </form>
 
+    <form method="post">
         <div>
             <p>Pozor, nasledujúcu akciu je možné vykonať iba v prípade, že kategória neobsahuje žiadne CSS vlastnosti a je nevratná!</p>
             <input type="submit" name="delete-css-categ" value="Vymazať CSS kategóriu">

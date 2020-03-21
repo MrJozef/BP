@@ -1,0 +1,8 @@
+<form method="post">
+    <ul>
+        <?php foreach ($cssProp as $prop) : ?>
+            <li><button type='submit' name='css-prop' value="<?=$prop['id_prop']?>"><?=$prop['prop_name']?></button></li>
+        <?php endforeach ?>
+        <li><button type='submit' class="newButton" name="subpage" value="manage-css-property">Nová CSS vlastnosť</button></li>
+    </ul>
+</form>

@@ -48,6 +48,15 @@ class ControllerCssCategory extends Controller
         }
     }
 
+    public function getCssCateg() {
+        try {
+            return $this->clearHTML($this->myManager->loadAllNames());
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
     private function showNewCssCategForm() {
         if (isset($_POST['css-categ-name'])) {
             $this->dataForView['cssCateg'] = ['css-categ-name' => $_POST['css-categ-name']];
@@ -60,7 +69,6 @@ class ControllerCssCategory extends Controller
     }
 
     private function editCssCateg($cssCategId) {
-
         try {
             $this->dataForView['cssCateg'] = $this->clearHTML($this->myManager->loadCategory($cssCategId));
             extract($this->dataForView);

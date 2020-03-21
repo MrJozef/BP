@@ -1,0 +1,26 @@
+<div id="edit-css-property">
+    <h1>Upraviť CSS vlastnosť: <span><?= $cssProp['prop_name'] ?></span></h1>
+    <form method="post">
+        <label>Premenujte vlastnosť:
+            <input type="text" name="prop-name" minlength="3" maxlength="50" placeholder="text-align" required
+                   value="<?= $cssProp['prop_name'] ?>">
+        </label>
+        <label>Hodnoty vlastnosti:
+            <textarea name="prop-value" minlength="10" maxlength="2000" placeholder="Sem napíšte hodnoty, ktoré môže CSS vlastnosť nadobúdať. Musíte používať HTML značky." required><?= $cssProp['prop_value'] ?></textarea>
+        </label>
+        <label>Upravte zaradenie vlastnosti:
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml"); ?>
+        </label>
+        <label>Popis vlastnosti:
+            <textarea name="prop-description" minlength="20" maxlength="65535" placeholder="Sem napíšte popis CSS vlastnosti. Môžete používať HTML značky."><?= $cssProp['prop_description'] ?></textarea>
+        </label>
+        <input type="submit" name="edit-css-prop" value="Upraviť CSS vlastnosť">
+    </form>
+
+    <form method="post">
+        <div>
+            <p>Pozor, nasledujúca akcia je nevratná a nemôžete ju vykonať, ak v nejakom príklade danú vlastnosť používate!</p>
+            <input type="submit" name="delete-css-prop" value="Vymazať CSS vlastnosť">
+        </div>
+    </form>
+</div>
