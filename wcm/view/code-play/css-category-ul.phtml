@@ -1,0 +1,8 @@
+ <form method="post">
+    <ul>
+        <?php foreach ($cssCateg as $categ) : ?>
+            <li><button type='submit' name='css-categ' value="<?=$categ['id_css_categ']?>"><?=$categ['categ_name']?></button></li>
+        <?php endforeach ?>
+        <li><button type='submit' class="newButton" name="subpage" value="manage-css-category">Nová kategória</button></li>
+    </ul>
+ </form>

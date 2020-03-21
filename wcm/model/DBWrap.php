@@ -1,7 +1,7 @@
 <?php
 
 const ERROR_DB_CONNECT = "Nepodarilo sa pripojiť k databáze!";
-const ERROR_UNAVALIABLE = "Nedostupný obsah & služby! - Dopyt na databázu zlyhal!";
+const ERROR_UNAVALIABLE = "Dopyt na databázu zlyhal!";
 
 class DBWrap
 {

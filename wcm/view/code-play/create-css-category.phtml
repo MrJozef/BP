@@ -1,0 +1,12 @@
+<div id="create-css-category">
+    <h1>Vytvoriť novú kategóriu CSS vlastností</h1>
+    <p>CSS vlastnosti je možné združovať do kategórií, ktoré sa objavia v užívateľskom rozhraní - napríklad vlastnosť <i>color</i>
+        by bolo vhodné zaradiť do kategórie <i>Text & písmo</i>, vlastnosť <i>height</i> do kategórie <i>Box model</i>...</p>
+    <form method="post">
+        <label>Názov kategórie:
+            <input type="text" name="css-categ-name" minlength="3" maxlength="100" placeholder="Text & písmo" required
+                   value="<?= $cssCateg['css-categ-name'] ?>">
+        </label>
+        <input type="submit" name="create-css-categ" value="Vytvoriť kategóriu">
+    </form>
+</div>

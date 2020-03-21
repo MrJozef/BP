@@ -4,6 +4,7 @@
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssCategory.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
     session_start();
 
@@ -20,6 +21,7 @@
     $userControll = new ControllerUser();
     $articControll = new ControllerArticle();
 
+    $cssCategControll = new ControllerCssCategory();
 
 
     if (isset($_POST['action'])) {
@@ -102,6 +104,29 @@
         $_SESSION['actpage'] = 'edit-category';
     }
 
+    //code-play
+
+    if (isset($_POST['subpage']) == 'manage-css-category') {
+        unset($_SESSION['css-categ']);              //toto je dolezite pri kliknuti na nova kategoria
+    }
+
+    if (isset($_POST['create-css-categ'])) {
+        $cssCategControll->saveNewCssCateg();
+    }
+
+    if (isset($_POST['edit-css-categ'])) {
+        $cssCategControll->saveEditedCssCateg();
+    }
+
+    if (isset($_POST['delete-css-categ'])) {
+        $cssCategControll->deleteCssCateg();
+        unset($_SESSION['css-categ']);
+    }
+
+    if(isset($_POST['css-categ'])) {
+        $_SESSION['css-categ'] = $_POST['css-categ'];//pri opatovnom nacitani stranky sa $_POST vymaze -> sposobi chybu
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -147,6 +172,9 @@
                         $articControll->aLoadAllArticNamesOfCat($_SESSION['category']);
                         $categControll->editCat($_SESSION['category']);
                     }
+                    elseif($_SESSION['actpage'] === 'manage-css-category') {
+                        $cssCategControll->showCssCateg();
+                    }
                     else {
                         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_SESSION['actpage'].".phtml");
                     }
@@ -159,6 +187,12 @@
     <?php if(isset($_SESSION['user'])) { ?>
         <footer>
             <form method="post">
+                <ul>
+                    <li>Code-play</li>
+                    <li><button type="submit" name="subpage" value="manage-css-category">Spravovať kategórie</button></li>
+                    <li><button type="submit" name="subpage" value="">CSS vlastnosti</button></li>
+                    <li><button type="submit" name="subpage" value="">Spravovať príklady</button></li>
+                </ul>
                 <ul>
                     <li><button type="submit" name="subpage" value="create-article">Napísať článok</button></li>
                     <li><button type="submit" name="subpage" value="create-category">Vytvoriť kategóriu</button></li>

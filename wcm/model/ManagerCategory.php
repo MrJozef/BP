@@ -38,13 +38,13 @@ class ManagerCategory extends Manager
     }
 
     public function loadOneCat($categId) {
-        $task = 'SELECT name, description, visibility FROM category WHERE id_category = ?';
+        $task = 'SELECT name, description, visibility FROM category WHERE id_category = ? LIMIT 1';
 
         return DBWrap::selectOne($task, [$categId]);
     }
 
     public function aLoadDescCat($categId) {
-        $task = 'SELECT description FROM category WHERE id_category = ?';
+        $task = 'SELECT description FROM category WHERE id_category = ? LIMIT 1';
         return DBWrap::selectOne($task, [$categId]);
     }
 
