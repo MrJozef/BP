@@ -1,0 +1,7 @@
+<form method="post">
+    <ul>
+        <?php foreach ($examples as $example) : ?>
+            <li><button type='submit' <?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "name='example'" ?> value="<?=$example['id_example']?>"><?=$example['exam_name']?></button></li>
+        <?php endforeach ?>
+    </ul>
+</form>
