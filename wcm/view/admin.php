@@ -6,6 +6,7 @@
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssCategory.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssProperty.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerExample.php";
     include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
     session_start();
 
@@ -24,6 +25,8 @@
 
     $cssCategControll = new ControllerCssCategory();
     $cssPropControll = new ControllerCssProperty();
+    $exampleControll = new ControllerExample();
+
 
     if (isset($_POST['action'])) {
         if ($_POST['action'] === 'logout') {
@@ -149,6 +152,28 @@
         $cssPropControll->deleteProp();
         unset($_SESSION['css-prop']);
     }
+
+    //example
+    /*if (isset($_POST['subpage']) == 'manage-css-property') {
+        unset($_SESSION['css-prop']);              //toto je dolezite pri kliknuti na nova kategoria
+    }
+
+    if(isset($_POST['css-prop'])) {
+        $_SESSION['css-prop'] = $_POST['css-prop'];
+    }
+
+    if (isset($_POST['create-css-prop'])) {
+        $cssPropControll->saveNewProp();
+    }
+
+    if (isset($_POST['edit-css-prop'])) {
+        $cssPropControll->saveEditedProp();
+    }
+
+    if (isset($_POST['delete-css-prop'])) {
+        $cssPropControll->deleteProp();
+        unset($_SESSION['css-prop']);
+    }*/
 ?>
 
 <!DOCTYPE html>
@@ -201,6 +226,9 @@
                         $cssCategSelect = $cssCategControll->getCssCateg();
                         $cssPropControll->showCssProp($cssCategSelect);
                     }
+                    elseif($_SESSION['actpage'] === 'manage-example') {
+                        $exampleControll->manageExample();
+                    }
                     else {
                         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_SESSION['actpage'].".phtml");
                     }
@@ -215,9 +243,9 @@
             <form method="post">
                 <ul>
                     <li>Code-play</li>
-                    <li><button type="submit" name="subpage" value="manage-css-category">Spravovať kategórie</button></li>
+                    <li><button type="submit" name="subpage" value="manage-css-category">CSS kategórie</button></li>
                     <li><button type="submit" name="subpage" value="manage-css-property">CSS vlastnosti</button></li>
-                    <li><button type="submit" name="subpage" value="">Spravovať príklady</button></li>
+                    <li><button type="submit" name="subpage" value="manage-example">Spravovať príklady</button></li>
                 </ul>
                 <ul>
                     <li><button type="submit" name="subpage" value="create-article">Napísať článok</button></li>
