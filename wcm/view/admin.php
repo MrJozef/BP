@@ -154,10 +154,6 @@
     }
 
     //example
-    /*if (isset($_POST['subpage']) == 'manage-css-property') {
-        unset($_SESSION['css-prop']);              //toto je dolezite pri kliknuti na nova kategoria
-    }
-*/
     if(isset($_POST['example'])) {
         $_SESSION['example'] = $_POST['example'];
         $_SESSION['actpage'] = 'example-form';
@@ -167,15 +163,34 @@
     if (isset($_POST['subpage']) && $_POST['subpage'] === 'example-form') {
         unset($_SESSION['example']);
     }
-/*
-    if (isset($_POST['edit-css-prop'])) {
-        $cssPropControll->saveEditedProp();
+
+    if (isset($_POST['use-save'])) {
+        $exampleControll->saveNewUse();
     }
 
-    if (isset($_POST['delete-css-prop'])) {
-        $cssPropControll->deleteProp();
-        unset($_SESSION['css-prop']);
-    }*/
+    if (isset($_POST['use-edit'])) {
+        $exampleControll->saveEditedUse();
+    }
+
+    if (isset($_POST['use-delete'])) {
+        $exampleControll->deleteUse();
+    }
+
+    if (isset($_POST['create-example'])) {
+        $id_example = $exampleControll->saveNewExample();
+        if($id_example) {
+            $_SESSION['example'] = $id_example;
+        }
+    }
+
+    if (isset($_POST['edit-example'])) {
+        $exampleControll->saveEditedExample();
+    }
+
+    if (isset($_POST['delete-example'])) {
+        $exampleControll->deleteExample();
+        unset($_SESSION['example']);
+    }
 ?>
 
 <!DOCTYPE html>

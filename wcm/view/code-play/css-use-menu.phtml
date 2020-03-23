@@ -1,6 +1,6 @@
 <div>
     <?php foreach ($cssUse as $use) : ?>
-        <form class="saved">
+        <form method="post" class="saved">
             <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
             <input type="text" name="for-element" minlength="1" maxlength="60" value="<?=$use['for_element']?>" required>
             <button type="submit" name="use-edit" value="<?=$use['id_use']?>">Upraviť</button>
@@ -10,7 +10,7 @@
 
     <?php if(isset($use['id_prop'])) unset($use['id_prop']); ?>
 
-    <form>
+    <form method="post">
         <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
         <input type="text" name="for-element" minlength="1" maxlength="60" required>
 

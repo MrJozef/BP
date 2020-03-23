@@ -1,0 +1,6 @@
+<select id="prop-categ" name="prop-categ" required>
+    <option value="">Zvoľte kategóriu</option>
+    <?php foreach ($cssCateg as $cat) : ?>
+        <option value="<?= $cat['id_css_categ'] ?>" <?php if(isset($cssProp['id_css_categ']) && $cat['id_css_categ'] === $cssProp['id_css_categ']) echo "selected"?>><?= $cat['categ_name'] ?></option>
+    <?php endforeach ?>
+</select>
