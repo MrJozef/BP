@@ -49,16 +49,21 @@ class ControllerCssProperty extends Controller
         }
     }
 
-    private function loadCssPropMenu() {
+    public function loadCssPropNames() {
         try {
-            $menu = $this->myManager->loadAllNames();
-            $this->dataForView['cssProp'] = $this->clearHTML($menu);
-            extract($this->dataForView);
-            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-ul.phtml");
+            $allNames = $this->myManager->loadAllNames();
+            return $this->clearHTML($allNames);
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
         }
+        return null;
+    }
+
+    private function loadCssPropMenu() {
+        $this->dataForView['cssProp'] = $this->loadCssPropNames();
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-ul.phtml");
     }
 
     private function showCssPropForm() {

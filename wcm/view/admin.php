@@ -157,15 +157,17 @@
     /*if (isset($_POST['subpage']) == 'manage-css-property') {
         unset($_SESSION['css-prop']);              //toto je dolezite pri kliknuti na nova kategoria
     }
-
-    if(isset($_POST['css-prop'])) {
-        $_SESSION['css-prop'] = $_POST['css-prop'];
+*/
+    if(isset($_POST['example'])) {
+        $_SESSION['example'] = $_POST['example'];
+        $_SESSION['actpage'] = 'example-form';
     }
 
-    if (isset($_POST['create-css-prop'])) {
-        $cssPropControll->saveNewProp();
+    //ak klikáme na tlačítko vytvoriť nový príklad, je potrebné, aby s v $_SESSION nezostalo id predtým upravovaného example-u
+    if (isset($_POST['subpage']) && $_POST['subpage'] === 'example-form') {
+        unset($_SESSION['example']);
     }
-
+/*
     if (isset($_POST['edit-css-prop'])) {
         $cssPropControll->saveEditedProp();
     }
@@ -226,8 +228,12 @@
                         $cssCategSelect = $cssCategControll->getCssCateg();
                         $cssPropControll->showCssProp($cssCategSelect);
                     }
-                    elseif($_SESSION['actpage'] === 'manage-example') {
-                        $exampleControll->manageExample();
+                    elseif($_SESSION['actpage'] === 'example-form') {
+                        $properties = $cssPropControll->loadCssPropNames();
+                        $exampleControll->manageExample($properties);
+                    }
+                    elseif($_SESSION['actpage'] === 'show-examples') {
+                        $exampleControll->showExamples();
                     }
                     else {
                         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_SESSION['actpage'].".phtml");
@@ -245,7 +251,7 @@
                     <li>Code-play</li>
                     <li><button type="submit" name="subpage" value="manage-css-category">CSS kategórie</button></li>
                     <li><button type="submit" name="subpage" value="manage-css-property">CSS vlastnosti</button></li>
-                    <li><button type="submit" name="subpage" value="manage-example">Spravovať príklady</button></li>
+                    <li><button type="submit" name="subpage" value="show-examples">Spravovať príklady</button></li>
                 </ul>
                 <ul>
                     <li><button type="submit" name="subpage" value="create-article">Napísať článok</button></li>

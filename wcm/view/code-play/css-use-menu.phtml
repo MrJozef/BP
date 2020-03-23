@@ -1,0 +1,22 @@
+<div>
+    <?php foreach ($cssUse as $use) : ?>
+        <form class="saved">
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
+            <input type="text" name="for-element" minlength="1" maxlength="60" value="<?=$use['for_element']?>" required>
+            <button type="submit" name="use-edit" value="<?=$use['id_use']?>">Upraviť</button>
+            <button type="submit" name="use-delete" value="<?=$use['id_use']?>">Delete</button>
+        </form>
+    <?php endforeach ?>
+
+    <?php if(isset($use['id_prop'])) unset($use['id_prop']); ?>
+
+    <form>
+        <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
+        <input type="text" name="for-element" minlength="1" maxlength="60" required>
+
+        <!--kym nebude example vytvoreny, tak nebudeme moct k nemu pridavat vlastnosti-->
+        <?php if(isset($_SESSION['example'])) { ?>
+            <button type="submit" name="use-save">Uložiť</button><!-- todo tuto musime zistovat aky priklad a aka vlastnost -->
+        <?php } ?>
+    </form>
+</div>

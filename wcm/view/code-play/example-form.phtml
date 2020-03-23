@@ -1,0 +1,31 @@
+<?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-use-menu.phtml") ?>
+<div>
+    <h1>Príklad</h1>
+    <form method="post">
+        <label>Názov príkladu:
+            <input type="text" name="example-name" minlength="3" maxlength="60" placeholder="Tabuľky" required
+                   value="<?= $example['exam_name'] ?>">
+        </label>
+        <label>Popis príkladu (voliteľný):
+            <textarea name="example-description" minlength="20" maxlength="1000" placeholder="Sem môžete napísať krátky popis (max. 1000 znakov) príkladu. Nepoužívajte HTML značky."><?=$example['exam_description']?></textarea>
+        </label>
+        <label>HTML kód:
+            <textarea name="example-code" minlength="10" maxlength="3000" placeholder="<h1>Nadpis</h1><p>Popis...</p>"><?=$example['exam_code']?></textarea>
+        </label>
+
+        <?php if(isset($_SESSION['example'])) { ?>
+            <input type="submit" name="edit-example" value="Uložiť zmeny">
+        <?php } else { ?>
+            <input type="submit" name="create-example" value="Vytvoriť príklad">
+        <?php } ?>
+    </form>
+
+    <?php if(isset($_SESSION['example'])) { ?>
+        <form method="post">
+            <div>
+                <p>Pozor, nasledujúca akcia je nevratná!</p>
+                <input type="submit" name="delete-example" value="Zmazať príklad">
+            </div>
+        </form>
+    <?php } ?>
+</div>
