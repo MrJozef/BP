@@ -10,12 +10,18 @@ class ControllerExample extends Controller
         $this->myManager = new ManagerExample();
     }
 
-    public function showExamples() {
+    //if $forAdmin == false -> zobrazi sa iba ul sablona (pouzivane v code-play.php)
+    public function showExamples($forAdmin = true) {
         try {
             $this->dataForView['examples'] = $this->clearHTML($this->myManager->loadExampleNames());
 
             extract($this->dataForView);
-            require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/example-menu.phtml");
+            if ($forAdmin) {
+                require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/example-menu.phtml");
+            }
+            else {
+                require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/example-ul.phtml");
+            }
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -30,13 +36,7 @@ class ControllerExample extends Controller
                 $this->dataForView['cssUse'] = $dataFromManager['cssUse'];
             }
             else {
-/*                if (isset($_POST['example-name'])) {
-                    $this->dataForView['example'] = ['exam_name' => $_POST['example-name'], 'exam_description' => $_POST['example-description'], 'exam_code' => $_POST['example-code']];
-                }
-                else {*/
-                    $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => ""];
-               // }
-
+                $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => ""];
                 $this->dataForView['cssUse'] = [];
             }
 

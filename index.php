@@ -25,14 +25,18 @@
 
     <title>Web Start Line</title>
 
-    <script src="front-page/jquery.js"></script>
-    <script src="front-page/FPController.js"></script>
-    <script src="front-page/FPViewHandler.js"></script>
+    <script src="js/jq-library/jquery.js"></script>
+    <script src="js/AjaxCrier.js"></script>
+    <script src="js/FPController.js"></script>
+    <script src="js/FPViewHandler.js"></script>
 </head>
 
 <body>
     <header>
         <h1>Web Start Line</h1>
+        <ul>
+            <li><a href="code-play.php">Code-Play</a></li>
+        </ul>
         <nav>
             <?php $categControll->loadCatMenu() ?>
         </nav>
