@@ -24,6 +24,9 @@
     <title>Code-Play</title>
 
     <script src="js/jq-library/jquery.js"></script>
+    <script src="js/AjaxCrier.js"></script>
+    <script src="js/CPController.js"></script>
+    <script src="js/CPViewHandler.js"></script>
 
 </head>
 
@@ -39,6 +42,9 @@
     </header>
 
     <main>
+        <section>
+            <p><!-- sem príde prípadný popis príkladu --></p>
+        </section>
         <form id="css-form">
             <!-- sem sa vkladajú css vlastnosti -->
         </form>

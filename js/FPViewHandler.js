@@ -10,7 +10,7 @@ $(document).ready(function() {
         const actualCategoryId = $(this).attr('value');
 
         if (previousCategoryId !== actualCategoryId) {
-            controller.loadArticleNames(actualCategoryId).then(data =>$('main').html(data));
+            controller.loadArticleNames(actualCategoryId).then(data =>$(main).html(data));
             previousCategoryId = actualCategoryId;
         }
 
@@ -25,10 +25,10 @@ $(document).ready(function() {
                     controller.loadArticle(actualArticleId).then(data => {
                         if($('main article').length) {
                             $('article').remove();
-                            $('main').append(data);
+                            $(main).append(data);
                         }
                         else {
-                            $('main').append(data);
+                            $(main).append(data);
                         }
                     });
 

@@ -81,6 +81,15 @@ class ManagerExample extends Manager
         DBWrap::queryUniversal($task, [$exampleId]);
     }
 
+    public function aLoadExample($exampleId){
+        $task = 'SELECT exam_code, exam_description FROM example WHERE id_example = ? LIMIT 1';
+        return DBWrap::selectOne($task, [$exampleId]);
+    }
+
+    public function aLoadExampleProperties($exampleId) {
+
+    }
+
     private function checkValues($name, $desc, $code) {
         $this->checkLengthWException($name, EXAMPLE_NAME_MAX_LENGTH, EXAMPLE_NAME_MIN_LENGTH, EXAMPLE_NAME_LENGTH);
         $this->checkLengthWException($code, EXAMPLE_CODE_MAX_LENGTH, EXAMPLE_CODE_MIN_LENGTH, EXAMPLE_CODE_LENGTH);

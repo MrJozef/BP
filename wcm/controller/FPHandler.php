@@ -2,12 +2,13 @@
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
 
 
 if(isset($_POST['aCategoryId'])) {
 
     try {
-        DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
 
         $categControll = new ControllerCategory();
         $articControll = new ControllerArticle();
@@ -24,7 +25,7 @@ if(isset($_POST['aCategoryId'])) {
 
 if(isset($_POST['aArticleId'])) {
     try {
-        DBWrap::connect('127.0.0.1', 'bp_db', 'root', '');
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
 
         $articControll = new ControllerArticle();
         $userControll = new ControllerUser();

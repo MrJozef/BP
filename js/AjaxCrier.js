@@ -7,12 +7,12 @@ class AjaxCrier {
     }
 
     //dataForPhp - musí to byť objekt!
-    async callAjax(urlToPhpHandler, dataForPhp) {
+    async _callAjax(outputDataType, urlToPhpHandler, dataForPhp) {
         return $.ajax ({
             type: 'post',
             data: dataForPhp,
             url: urlToPhpHandler,
-            dataType: 'html',
+            dataType: outputDataType,
             async: 'true',
             error: function () {
                 alert('Prepáčte, nepodarilo sa načítať dáta zo serveru.');

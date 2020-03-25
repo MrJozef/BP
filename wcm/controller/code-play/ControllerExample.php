@@ -104,4 +104,24 @@ class ControllerExample extends Controller
             $this->throwErrorMsg($e->errorMessage());
         }
     }
+
+    public function aLoadExample($exampleId) {
+        try {
+            return $this->myManager->aLoadExample($exampleId);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
+
+    public function aLoadExampleProperties($exampleId) {
+        try {
+            return $this->myManager->aLoadExampleProperties($exampleId);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
 }
