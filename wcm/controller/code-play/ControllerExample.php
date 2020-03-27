@@ -117,7 +117,10 @@ class ControllerExample extends Controller
 
     public function aLoadExampleProperties($exampleId) {
         try {
-            return $this->myManager->aLoadExampleProperties($exampleId);
+            $this->dataForView['propList'] = $this->myManager->aLoadExampleProperties($exampleId);
+
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-prop-list.phtml");
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

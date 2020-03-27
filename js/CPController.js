@@ -1,5 +1,4 @@
 const URL_TO_PHP_HANDLER = '../wcm/controller/code-play/CPHandler';
-const OUTPUT_DATA_TYPE = 'json';
 
 class CPController extends AjaxCrier {
 
@@ -8,7 +7,12 @@ class CPController extends AjaxCrier {
     }
 
     async loadFullExample(exampleId) {
-        const dataPhp = {aExample: exampleId};
-        return this._callAjax(OUTPUT_DATA_TYPE, URL_TO_PHP_HANDLER, dataPhp);
+        const dataForRequest1 = {aExample: exampleId};
+        let data = await this._callAjax('json', URL_TO_PHP_HANDLER, dataForRequest1);
+
+        const dataForRequest2 = {aExampleProp: exampleId};
+        data.propertyList = await this._callAjax('html', URL_TO_PHP_HANDLER, dataForRequest2);
+
+        return data;
     }
 }

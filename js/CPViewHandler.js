@@ -8,7 +8,8 @@ $(document).ready(function () {
         iframeBody = $(iframe).contents().find('body'),
         iframeHead = $(iframe).contents().find('head');
 
-    //tu nemoze byt arrow function!
+
+    //tu nemoze byt arrow function! bude blbnut this
     navButton.click(function() {
         const actualExampleId = $(this).attr('value');
 
@@ -22,7 +23,8 @@ $(document).ready(function () {
             else {
                 description.empty();
             }
-        });
 
+            cssProperty.html(data.propertyList);
+        })//todo .catch(data => $('body').append(data));?
     });
 });

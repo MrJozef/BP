@@ -10,7 +10,7 @@ $(document).ready(function() {
         const actualCategoryId = $(this).attr('value');
 
         if (previousCategoryId !== actualCategoryId) {
-            controller.loadArticleNames(actualCategoryId).then(data =>$(main).html(data));
+            controller.loadArticleNames(actualCategoryId).then(data => $(main).html(data));
             previousCategoryId = actualCategoryId;
         }
 

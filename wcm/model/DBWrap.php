@@ -32,12 +32,15 @@ class DBWrap
 
     //z db vracia 1 riadok/zaznam - pri SELECT
     public static function selectOne($statement, $param = []) {
-        return self::query($statement, $param)->fetch();
+        //fetch_assoc -> https://www.php.net/manual/en/pdostatement.fetch.php
+        //jednoducho povedane, defaultne spravanie je taketo: Select meno From tab1 where id = ?; ---> mi vrati [0 => 'Janko', 'meno' => 'Janko']
+        //pri fetch_assoc mi vrati iba ['meno' => 'Janko']
+        return self::query($statement, $param)->fetch(PDO::FETCH_ASSOC);
     }
 
     //z db vracia viac riadkov - pri SELECT
     public static function selectAll($statement, $param = []) {
-        return self::query($statement, $param)->fetchAll();
+        return self::query($statement, $param)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //ak pri SELECT najdeme vyhovujuci zaznam/zaznamy v tabulke - true; pouziva sa ja pri INSERT, ak sa podarilo vlozit do db - vrati 1, inak exception

@@ -14,9 +14,24 @@ if(isset($_POST['aExample'])) {
         $outputFromDb = $exampleControll->aLoadExample($_POST['aExample']);
         $output['code'] = $outputFromDb['exam_code'];
         $output['desc'] = $outputFromDb['exam_description'];
-        //$output['propertyList'] = $exampleControll->aLoadExampleProperties($_POST['aExample']);
 
         echo json_encode($output);
+    }
+    catch (MyException $e) {
+        echo $e->errorMessage();
+    }
+}
+
+if(isset($_POST['aExampleProp'])) {
+
+    try {
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
+
+        $exampleControll = new ControllerExample();
+
+        $output = $exampleControll->aLoadExampleProperties($_POST['aExampleProp']);
+
+        echo $output;
     }
     catch (MyException $e) {
         echo $e->errorMessage();

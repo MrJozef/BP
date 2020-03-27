@@ -25,11 +25,11 @@ class ManagerExample extends Manager
         return DBWrap::selectAll($task, []);
     }
 
-    public function loadExample($idExample) {       //todo jednym selectom toto vyriesit?
+    public function loadExample($idExample) {
         $task = 'SELECT exam_name, exam_description, exam_code FROM example WHERE id_example = ?';
         $outputArray['example'] = DBWrap::selectOne($task, [$idExample]);
 
-        $task = 'SELECT id_use, id_prop, for_element FROM css_use WHERE id_example = ?';
+        $task = 'SELECT id_use, id_prop, for_element FROM css_use JOIN css_property USING(id_prop) WHERE id_example = ? ORDER BY for_element, prop_name';
         $outputArray['cssUse'] = DBWrap::selectAll($task, [$idExample]);
         return $outputArray;
     }
@@ -87,7 +87,15 @@ class ManagerExample extends Manager
     }
 
     public function aLoadExampleProperties($exampleId) {
+        $task = 'SELECT us.id_prop, us.for_element, prop.prop_name, prop.prop_value, cat.categ_name
+                 FROM css_use us
+                 JOIN css_property prop USING(id_prop)
+                 JOIN css_category cat USING(id_css_categ)
+                 WHERE us.id_example = ?
+                 ORDER BY us.for_element, cat.categ_name, prop.prop_name';
 
+
+        return DBWrap::selectAll($task, [$exampleId]);
     }
 
     private function checkValues($name, $desc, $code) {

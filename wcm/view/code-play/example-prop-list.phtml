@@ -1,0 +1,28 @@
+<?php $closedElement = true; $closedCategory = true;
+
+foreach ($propList as $key=>$prop) : ?>
+    <?php if($closedElement) { echo "<section><h1>{$prop['for_element']}</h1>"; $closedElement = false; } ?>
+
+        <?php if($closedCategory) { echo "<div><h2>{$prop['categ_name']}</h2>"; $closedCategory = false; } ?>
+
+            <div>
+                <button type="button" name="<?= $prop['for_element'] ?>" value="<?= $prop['id_prop'] ?>"><?= $prop['prop_name'] ?>:</button>
+                <?= $prop['prop_value'] ?>
+            </div>
+
+            <?php
+                $existNextProp = array_key_exists($key+1, $propList);
+                if ($existNextProp) {
+
+                    ($prop['for_element'] !== $propList[$key+1]['for_element']) ? $endOfElement = true : $endOfElement = false;
+
+                    ($prop['categ_name'] !== $propList[$key+1]['categ_name'] || $endOfElement) ? $endOfCat = true : $endOfCat = false;
+                }
+            ?>
+
+        <?php if($endOfCat) { echo "</div>"; $closedCategory = true; } ?>
+
+    <?php if($endOfElement) { echo "</section>"; $closedElement = true; } ?>
+<?php endforeach ?>
+
+<button type="reset" value="reset">Reset</button>
