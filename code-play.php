@@ -15,6 +15,8 @@
     $exampleControll = new ControllerExample();
 ?>
 
+<!DOCTYPE html>
+
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
@@ -25,6 +27,7 @@
 
     <script src="js/jq-library/jquery.js"></script>
     <script src="js/AjaxCrier.js"></script>
+    <script src="js/Styler.js"></script>
     <script src="js/CPController.js"></script>
     <script src="js/CPViewHandler.js"></script>
 

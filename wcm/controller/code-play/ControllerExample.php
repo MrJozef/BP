@@ -115,6 +115,16 @@ class ControllerExample extends Controller
         return null;
     }
 
+    public function aLoadArrayProperties($exampleId) {
+        try {
+            return $this->myManager->aLoadArrayProperties($exampleId);
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
+
     public function aLoadExampleProperties($exampleId) {
         try {
             $this->dataForView['propList'] = $this->myManager->aLoadExampleProperties($exampleId);

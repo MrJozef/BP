@@ -14,6 +14,7 @@ if(isset($_POST['aExample'])) {
         $outputFromDb = $exampleControll->aLoadExample($_POST['aExample']);
         $output['code'] = $outputFromDb['exam_code'];
         $output['desc'] = $outputFromDb['exam_description'];
+        $output['propArray'] = $exampleControll->aLoadArrayProperties($_POST['aExample']);
 
         echo json_encode($output);
     }

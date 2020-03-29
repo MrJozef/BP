@@ -86,6 +86,22 @@ class ManagerExample extends Manager
         return DBWrap::selectOne($task, [$exampleId]);
     }
 
+    public function aLoadArrayProperties($exampleId) {
+        $task = 'SELECT DISTINCT prop.prop_name, us.for_element 
+                 FROM css_use us
+                 JOIN css_property prop USING(id_prop)
+                 WHERE us.id_example = ?
+                 ORDER BY  us.for_element, prop.prop_name';
+
+        $arrayFromDb = DBWrap::selectAll($task, [$exampleId]);
+        $outputArray = [];
+
+        foreach ($arrayFromDb as $prop) {
+            $outputArray[$prop['for_element']][$prop['prop_name']] = "";
+        }
+        return $outputArray;
+    }
+
     public function aLoadExampleProperties($exampleId) {
         $task = 'SELECT us.id_prop, us.for_element, prop.prop_name, prop.prop_value, cat.categ_name
                  FROM css_use us
