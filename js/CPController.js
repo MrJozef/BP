@@ -15,4 +15,9 @@ class CPController extends AjaxCrier {
 
         return data;
     }
+
+    async loadPropDesc(propertyId) {
+        const dataForRequest = {aPropDesc: propertyId};
+        return this._callAjax('html', URL_TO_PHP_HANDLER, dataForRequest);
+    }
 }

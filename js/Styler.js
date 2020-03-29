@@ -14,6 +14,14 @@ class Styler {
         this.propList[elemName][propName] = propValue;      //todo aby sme nemohli zmenit value a aj tak nam to insertne do propList
     }
 
+    clearAll() {
+        for (let elem in this.propList) {
+            for(let prop in this.propList[elem]) {
+                this.propList[elem][prop] = "";
+            }
+        }
+    }
+
     getHTMLStyle() {
         let styleString = "";
 

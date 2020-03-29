@@ -38,3 +38,17 @@ if(isset($_POST['aExampleProp'])) {
         echo $e->errorMessage();
     }
 }
+
+if(isset($_POST['aPropDesc'])) {
+
+    try {
+        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
+
+        $exampleControll = new ControllerCssProperty();
+
+        echo $exampleControll->aLoadPropDesc($_POST['aPropDesc']);
+    }
+    catch (MyException $e) {
+        echo $e->errorMessage();
+    }
+}

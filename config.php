@@ -1,7 +1,7 @@
 <?php
-const HOST = '127.0.0.1';
-const DB_NAME = 'bp_db';
-const USER = 'root';
+const HOST = '';
+const DB_NAME = '';
+const USER = '';
 const PASSWORD = '';
 
 const MAIL_ADDR = 'admin@startline.dx.am';

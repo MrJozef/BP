@@ -20,11 +20,18 @@ class ControllerArticle extends Controller
     }
 
     public function aLoadAllArticNamesOfCat($categoryName) {
-        $articleNames = $this->myManager->aLoadAllArticNamesOfCat($categoryName);
-        $this->dataForView['articleNames'] = $this->clearHTML($articleNames);
+        try {
+            $articleNames = $this->myManager->aLoadAllArticNamesOfCat($categoryName);
+            if (!empty($articleNames)) {
+                $this->dataForView['articleNames'] = $this->clearHTML($articleNames);
 
-        extract($this->dataForView);
-        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article-ul.phtml");
+                extract($this->dataForView);
+                require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article-ul.phtml");
+            }
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());       //todo toto fixnut, ked nemam nic v db ziadny clanok -> chyba dopytu
+        }
     }
 
     public function aLoadArticle($articleId) {

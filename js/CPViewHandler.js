@@ -1,9 +1,9 @@
-const example = new Styler();
+const example = new Styler(),
+    exampleControll = new CPController();
 
 $(document).ready(function () {
 
-    const exampleControll = new CPController(),
-        navButton = $('header nav button'),
+    const navButton = $('header nav button'),
         description = $('main section p'),
         cssProperty = $('#css-form'),
         iframe = $('#result'),
@@ -37,7 +37,8 @@ $(document).ready(function () {
 
                 const propSelect = cssProperty.find('select'),
                     propInput = cssProperty.find('input'),
-                    propButton = cssProperty.find('button');
+                    propButton = cssProperty.find('div button'),    //tymto vyberieme vsetko okrem reset tlacidlo
+                    resetButton = cssProperty.find('[value="reset"]');
 
                 propSelect.change(function() {
                     fMain($(this), iframeStyle);
@@ -46,6 +47,15 @@ $(document).ready(function () {
                 propInput.on('change keyup', function() {       //todo toto sa pusta 2x jak to
                     fMain($(this), iframeStyle);
                 });
+
+                propButton.click(function () {
+                    fShowPropDesc($(this));
+                });
+
+                resetButton.click(function () {
+                    example.clearAll();
+                    iframeStyle.text("");
+                })
             })//todo .catch(data => $('body').append(data));?
         }
     });
@@ -63,7 +73,7 @@ function fMain(input, where) {
         actualInput = $(allPropInputs[i]);
 
         if (!actualInput.hasClass('unit')) {
-            if (actualInput.val() === "") {         //ak napriklad vymazeme hodnotu input type=text, tak value bude musiet byt ""
+            if (actualInput.val() === "") {         //ak napriklad vymazeme hodnotu input type=text, tak value bude musiet byt "" a nie "em"
                 break;
             }
             value += " " + actualInput.val();
@@ -78,6 +88,14 @@ function fMain(input, where) {
     where.text(example.getHTMLStyle());
 }
 
-function fShowPropDesc(property) {
-    alert("nieco");
+function fShowPropDesc(propButton) {
+    const propertyId = propButton.attr('value');
+
+    exampleControll.loadPropDesc(propertyId).then(data => {
+        $('body').append(data);
+
+        $('#exit').click(function () {
+            $('article').remove();
+        })
+    })
 }

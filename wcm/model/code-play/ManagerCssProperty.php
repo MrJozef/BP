@@ -76,4 +76,10 @@ class ManagerCssProperty extends Manager
             throw new MyException(ERROR_PROP_IN_USE);
         }
     }
+
+    public function aLoadPropDesc($propId) {
+        $task = 'SELECT prop_name, prop_description FROM css_property WHERE id_prop = ? LIMIT 1';
+
+        return DBWrap::selectOne($task, [$propId]);
+    }
 }

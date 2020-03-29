@@ -25,6 +25,7 @@ class ManagerArticle extends Manager
         $this->tryQueryDb($task, [$idCateg, $idAuthor, $title, $text, $importance, $actualDate], ERROR_ART_NEW);
     }
 
+    //používame aj v administrátorskom prostredí, nielen pre Ajax
     public function aLoadAllArticNamesOfCat($categoryName) {
         $task = 'SELECT id_article, title, importance FROM article WHERE id_category = ?';
         return DBWrap::selectAll($task, [$categoryName]);

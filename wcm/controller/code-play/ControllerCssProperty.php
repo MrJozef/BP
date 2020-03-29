@@ -60,6 +60,17 @@ class ControllerCssProperty extends Controller
         return null;
     }
 
+    public function aLoadPropDesc($propId) {
+        try {
+            $this->dataForView['property'] = $this->myManager->aLoadPropDesc($propId);
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-desc.phtml");
+        }
+        catch(MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+    }
+
     private function loadCssPropMenu() {
         $this->dataForView['cssProp'] = $this->loadCssPropNames();
         extract($this->dataForView);
