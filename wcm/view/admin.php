@@ -170,10 +170,12 @@
 
     if (isset($_POST['use-edit'])) {
         $exampleControll->saveEditedUse();
+        unset($_POST['for-element']);
     }
 
     if (isset($_POST['use-delete'])) {
         $exampleControll->deleteUse();
+        unset($_POST['for-element']);
     }
 
     if (isset($_POST['create-example'])) {

@@ -12,11 +12,11 @@
 
     <form method="post">
         <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
-        <input type="text" name="for-element" minlength="1" maxlength="60" required>
+        <input type="text" name="for-element" minlength="1" maxlength="60" value="<?php if(isset($_POST['for-element'])) echo $_POST['for-element'] ?>" required>
 
         <!--kym nebude example vytvoreny, tak nebudeme moct k nemu pridavat vlastnosti-->
         <?php if(isset($_SESSION['example'])) { ?>
-            <button type="submit" name="use-save">Uložiť</button><!-- todo tuto musime zistovat aky priklad a aka vlastnost -->
+            <button type="submit" name="use-save">Uložiť</button>
         <?php } ?>
     </form>
 </div>

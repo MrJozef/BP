@@ -8,7 +8,7 @@ $(document).ready(function () {
         cssProperty = $('#css-form'),
         iframe = $('#result'),
         iframeBody = iframe.contents().find('body'),
-        iframeHead = iframe.contents().find('head').html("<style></style>")
+        iframeHead = iframe.contents().find('head').html("<style></style>");
         iframeStyle = iframeHead.find('style');
 
     let previousExampleId = "";
@@ -38,7 +38,8 @@ $(document).ready(function () {
                 const propSelect = cssProperty.find('select'),
                     propInput = cssProperty.find('input'),
                     propButton = cssProperty.find('div button'),    //tymto vyberieme vsetko okrem reset tlacidlo
-                    resetButton = cssProperty.find('[value="reset"]');
+                    resetButton = cssProperty.find('[value="reset"]'),
+                    showCodeButton = cssProperty.find('[value="showCode"]');
 
                 propSelect.change(function() {
                     fMain($(this), iframeStyle);
@@ -55,7 +56,11 @@ $(document).ready(function () {
                 resetButton.click(function () {
                     example.clearAll();
                     iframeStyle.text("");
-                })
+                });
+
+                showCodeButton.click(function () {
+                    fShowCode(data.code);
+                });
             })//todo .catch(data => $('body').append(data));?
         }
     });
@@ -96,6 +101,32 @@ function fShowPropDesc(propButton) {
 
         $('#exit').click(function () {
             $('article').remove();
-        })
-    })
+        });
+    });
+}
+
+function fShowCode(HTMLCode) {
+    let cssCode = example.getTextStyle(),
+        htmlCode = fSpecialChars(HTMLCode),
+
+    codeArticle =
+        `<article><button type="button" id="exit">Exit</button>
+            <div><h1>CSS kód:</h1><p><code style="white-space: pre-line">${cssCode}</code></p></div>
+            <div><h1>HTML kód:</h1><p><code style="white-space: pre-line">${htmlCode}</code></p></div>
+        </article>`;//todo style dat do css code
+
+    $('body').append(codeArticle);
+
+    $('#exit').click(function () {
+        $('article').remove();
+    });
+}
+
+function fSpecialChars(str) {
+
+    return str.replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 }
