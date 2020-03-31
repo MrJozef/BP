@@ -1,0 +1,7 @@
+<select id="article-example" name="article-example">
+    <option value="">Žiadny príklad</option>
+
+    <?php foreach ($articExample as $exam) : ?>
+        <option value="<?= $exam['id_example'] ?>" <?php if(isset($articEdit['id_example']) && $exam['id_example'] === $articEdit['id_example']) echo "selected"?>><?= $exam['exam_name'] ?></option>
+    <?php endforeach ?>
+</select>

@@ -12,7 +12,7 @@ class ControllerArticle extends Controller
 
     public function saveNewArtic() {
         try {
-            $this->myManager->saveNewArtic($_SESSION['user-id'], $_POST['article-category'], trim($_POST['article-title']), $_POST['article-text'], $_POST['article-importance']);
+            $this->myManager->saveNewArtic($_SESSION['user-id'], $_POST['article-category'], $_POST['article-example'], trim($_POST['article-title']), $_POST['article-text'], $_POST['article-importance']);
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -46,11 +46,12 @@ class ControllerArticle extends Controller
         return $article;
     }
 
-    public function editArtic($articId, $arraySelectCat) {
+    public function editArtic($articId, $arraySelectCat, $arraySelectExam) {
         try {
             $article = $this->myManager->loadOneArticle($articId);
             $this->dataForView['articEdit'] = $this->clearHTML($article);
             $this->dataForView['categNames'] = $arraySelectCat;
+            $this->dataForView['articExample'] = $arraySelectExam;
 
             extract($this->dataForView);
             require($_SERVER['DOCUMENT_ROOT']."/wcm/view/edit-article.phtml");
@@ -71,7 +72,7 @@ class ControllerArticle extends Controller
 
     public function saveEditArtic($articId) {
         try {
-            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], trim($_POST['edit-article-title']), $_POST['edit-article-text'], $_POST['article-importance']);
+            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], $_POST['article-example'], trim($_POST['edit-article-title']), $_POST['edit-article-text'], $_POST['article-importance']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

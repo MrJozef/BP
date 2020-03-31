@@ -10,8 +10,15 @@ $(document).ready(function () {
         iframeBody = iframe.contents().find('body'),
         iframeHead = iframe.contents().find('head').html("<style></style>");
         iframeStyle = iframeHead.find('style');
-
     let previousExampleId = "";
+
+
+    //ak bol pouzity link z clanku -> toto zapracuje iba raz pri nacitani stranky
+    const urlParam = new URLSearchParams(window.location.search);
+    if(urlParam.has('example')) {
+        previousExampleId = urlParam.get('example');
+        fOpenExample(previousExampleId);
+    }
 
 
     //tu nemoze byt arrow function! bude blbnut this
@@ -20,8 +27,14 @@ $(document).ready(function () {
 
         if (previousExampleId !== actualExampleId) {
             previousExampleId = actualExampleId;
+            fOpenExample(actualExampleId);
+        }
+    });
 
-            exampleControll.loadFullExample(actualExampleId).then(data => {
+    function fOpenExample(exampleId) {
+
+        exampleControll.loadFullExample(exampleId).then(data => {
+            if (data.code !== null) {       //toto sa stane, ked napr. do url adresy napiseme neexistujuci priklad
                 iframeBody.html(data.code);
                 //!= je ok
                 if(data.desc != "") {
@@ -61,9 +74,9 @@ $(document).ready(function () {
                 showCodeButton.click(function () {
                     fShowCode(data.code);
                 });
-            })//todo .catch(data => $('body').append(data));?
-        }
-    });
+            }
+        })//todo .catch(data => $('body').append(data));?
+    }
 });
 
 //where to inject code

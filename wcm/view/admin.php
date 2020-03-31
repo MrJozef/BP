@@ -232,7 +232,8 @@
                     elseif($_SESSION['actpage'] === 'edit-article') {
                         $articControll->aLoadAllArticNamesOfCat($_SESSION['category']); //vypise vsetky clanky v kategorii
                         $categorySelect = $categControll->onlyLoadCatSelect();
-                        $articControll->editArtic($_SESSION['article'], $categorySelect);
+                        $exampleSelect = $exampleControll->loadExamplesNames();
+                        $articControll->editArtic($_SESSION['article'], $categorySelect, $exampleSelect);
                     }
                     elseif($_SESSION['actpage'] === 'edit-category') {
                         $articControll->aLoadAllArticNamesOfCat($_SESSION['category']);

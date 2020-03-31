@@ -28,6 +28,22 @@ class ControllerExample extends Controller
         }
     }
 
+    public function loadExamplesNames() {
+        try {
+            return $this->clearHTML($this->myManager->loadExampleNames());
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
+
+    public function loadExampleSelect() {
+        $this->dataForView['articExample'] = $this->loadExamplesNames();
+        extract($this->dataForView);
+        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-select.phtml");
+    }
+
     public function manageExample($propArrayForSelect) {
         try {
             if(isset($_SESSION['example'])) {
