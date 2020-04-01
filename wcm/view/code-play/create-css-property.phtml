@@ -1,13 +1,25 @@
 <div id="create-css-property">
     <h1>Vytvoriť novú CSS vlastnosť</h1>
     <p>Názov vlastnosti píšte bez <em>:</em> na konci.</p>
-    <p>Do políčka hodnoty musíte napísať html kód, nestačia hodnoty. Napríklad pri <i>text-align</i> nestačí napísať <i>left</i>, <i>center</i>, <i>right</i>, ale treba:
+    <p>Do políčka <i>Hodnoty vlastnosti</i> musíte napísať HTML kód, nestačia hodnoty. Napríklad pri <i>text-align</i> nestačí napísať <i>left</i>, <i>center</i>, <i>right</i>, ale treba:
         <code>&lt;select&gt;
             &lt;option value="left"&gt;left&lt;/option&gt;
             &lt;option value="center"&gt;center&lt;/option&gt;
             ...
             &lt;/select&gt;</code>
     </p>
+    <p>Pri definovaní hodnôt sú povolené iba tagy:</p>
+    <ul>
+        <li><code>&lt;select&gt; a vnorené &lt;option&gt;, &lt;optgroup&gt;</code></li>
+        <li><code>&lt;input&gt;</code></li>
+    </ul>
+    <p>Ak chcete <strong>definovať jednotky</strong> pre <code>&lt;input type="number"&gt;</code>, tento <code>&lt;select&gt;</code> musí byť označený triedou <i>unit</i>:</p>
+    <p><code>&lt;select <strong>class="unit"</strong>&gt;
+            &lt;option value="px"&gt;px&lt;/option&gt;
+            &lt;option value="em"&gt;em&lt;/option&gt;
+            &lt;option value="%"&gt;%&lt;/option&gt;
+            &lt;option value=" "&gt;[-]&lt;/option&gt;
+            &lt;/select&gt;</code></p>
     <p>Popis vlastnosti je voliteľný.</p>
     <form method="post">
         <label>Názov vlastnosti:
@@ -21,7 +33,7 @@
             <?php require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/css-category-select.phtml"); ?>
         </label>
         <label>Popis vlastnosti:
-            <textarea name="prop-description" minlength="20" maxlength="65535" placeholder="Sem napíšte popis CSS vlastnosti. Môžete používať HTML značky."><?= $cssProp['prop-description'] ?></textarea>
+            <textarea class="tinyEditor" name="prop-description" minlength="20" maxlength="65535" placeholder="Sem napíšte popis CSS vlastnosti. Môžete používať HTML značky."><?= $cssProp['prop-description'] ?></textarea>
         </label>
         <input type="submit" name="create-css-prop" value="Vytvoriť vlastnosť">
     </form>

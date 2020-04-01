@@ -26,6 +26,7 @@
     <title>Web Start Line</title>
 
     <script src="js/jq-library/jquery.js"></script>
+    <script src="https://cdn.tiny.cloud/1/y5c3tk6y8gwt9pitzkk1ilg3xyaex53pkv4s1zdcyig9dj08/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="js/AjaxCrier.js"></script>
     <script src="js/FPController.js"></script>
     <script src="js/FPViewHandler.js"></script>

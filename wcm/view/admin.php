@@ -66,12 +66,13 @@
         $userControll->adminConfirm();
     }
 
-    if(isset($_POST['category-name'])) {
+    if(isset($_POST['create-category'])) {
         $categControll->saveNewCat();
     }
 
-    if(isset($_POST['article-title'])) {
+    if(isset($_POST['create-article'])) {
         $articControll->saveNewArtic();
+        echo "??????";
     }
 
     if(isset($_GET['verif'])) {
@@ -204,6 +205,13 @@
     <meta name="author" content="Jozef Kubík ml.">
 
     <title>WSL - Administrátorské rozhranie</title>
+
+    <script src="https://cdn.tiny.cloud/1/y5c3tk6y8gwt9pitzkk1ilg3xyaex53pkv4s1zdcyig9dj08/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.tinyEditor'
+        });
+    </script>
 </head>
 
 <body>
@@ -278,6 +286,7 @@
                     <li><button type="submit" name="subpage" value="verified-admin">Spravovať administrátorov</button></li>
                     <li><p><?= $userControll->clearPost('user')?></p></li>
                     <li><button type="submit" name="action" value="logout">Odhlásiť sa</button></li>
+                    <li><a href="../../index.php">Späť bez odhlásenia</a></li>
                 </ul>
             </form>
         </footer>
