@@ -30,7 +30,7 @@ class ControllerArticle extends Controller
             }
         }
         catch(MyException $e) {
-            $this->throwErrorMsg($e->errorMessage());       //todo toto fixnut, ked nemam nic v db ziadny clanok -> chyba dopytu
+            $this->throwErrorMsg($e->errorMessage());
         }
     }
 
@@ -46,15 +46,25 @@ class ControllerArticle extends Controller
         return $article;
     }
 
-    public function editArtic($articId, $arraySelectCat, $arraySelectExam) {
+    public function manageArtic($articId = null, $arraySelectCat, $arraySelectExam) {
         try {
-            $article = $this->myManager->loadOneArticle($articId);
-            $this->dataForView['articEdit'] = $this->clearHTML($article);
+            if($articId != null) {
+                $article = $this->myManager->loadOneArticle($articId);
+                $this->dataForView['article'] = $this->clearHTML($article);
+            }
+            elseif (isset($_POST['title'])) {
+                $this->dataForView['article'] = ['title' => trim($_POST['article-title']), 'text' => $_POST['article-text'], 'importance' => $_POST['article-importance']];
+                echo($_POST['article-text']);
+            }
+            else {
+                $this->dataForView['article'] = ['title' => "", 'text' => "Sem napíšte celý Váš článok... Môžete používať HTML značky.", 'importance' => ""];
+            }
+
             $this->dataForView['categNames'] = $arraySelectCat;
             $this->dataForView['articExample'] = $arraySelectExam;
 
             extract($this->dataForView);
-            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/edit-article.phtml");
+            require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/article-form.phtml");
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -72,7 +82,7 @@ class ControllerArticle extends Controller
 
     public function saveEditArtic($articId) {
         try {
-            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], $_POST['article-example'], trim($_POST['edit-article-title']), $_POST['edit-article-text'], $_POST['article-importance']);
+            $this->myManager->saveEditedArticle($articId, $_POST['article-category'], $_POST['article-example'], trim($_POST['article-title']), $_POST['article-text'], $_POST['article-importance']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

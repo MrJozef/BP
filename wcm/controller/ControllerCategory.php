@@ -36,13 +36,22 @@ class ControllerCategory extends Controller
         }
     }
 
-    public function editCat($catId) {
+    public function manageCat($catId = null) {
         try {
-            $category = $this->myManager->loadOneCat($catId);
-            $this->dataForView['categEdit'] = $this->clearHTML($category);
+            if($catId != null) {
+                $category = $this->myManager->loadOneCat($catId);
+                $this->dataForView['categ'] = $this->clearHTML($category);
+            }
+            elseif(isset($_POST['category-name'])) {
+                $this->dataForView['categ'] = ['name' => trim($_POST['category-name']), 'description' => $_POST['category-desc'], 'visibility' => $_POST['category-visibility']];
+            }
+            else {
+                $this->dataForView['categ'] = ['name' => "", 'description' => "Sem napíšte popis ku kategórii - aké články obsahuje... Môžete používať HTML značky.", 'visibility' => "0"];
+            }
+
 
             extract($this->dataForView);
-            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/edit-category.phtml");
+            require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/category-form.phtml");
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -51,7 +60,7 @@ class ControllerCategory extends Controller
 
     public function saveEditCat($catId) {
         try {
-            $this->myManager->saveEditedCat($catId, trim($_POST['edit-category-name']), $_POST['edit-category-desc'], $_POST['edit-category-visibility']);
+            $this->myManager->saveEditedCat($catId, trim($_POST['category-name']), $_POST['category-desc'], $_POST['category-visibility']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

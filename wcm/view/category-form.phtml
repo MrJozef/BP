@@ -1,0 +1,30 @@
+<div>
+    <h1><?php if($categ['name'] != "") { echo "Upraviť kategóriu: <span>{$categ['name']}</span>"; } else echo "Vytvoriť novú kategóriu" ?></h1>
+    <form method="post">
+        <label>Názov kategórie:
+            <input type="text" name="category-name" minlength="3" maxlength="100" placeholder="Web - 2. ročník" required
+                   value="<?= $categ['name'] ?>">
+        </label>
+        <label>Popis kategórie (maximálne 2000 znakov):
+            <textarea class="tinyEditor" name="category-desc" minlength="20" maxlength="2000" required><?= $categ['description']  ?></textarea>
+        </label>
+        <p>Bude kategória viditeľná pre všetkých užívateľov (vrátane textov, ktoré obsahuje)?</p>
+        <label><input type="radio" name="category-visibility" value="1" <?php if($categ['visibility'] == true) echo "checked" ?>>Áno</label>
+        <label><input type="radio" name="category-visibility" value="0" <?php if($categ['visibility'] == false) echo "checked" ?>>Nie</label>
+
+        <?php if(isset($_SESSION['category'])) { ?>
+            <input type="submit" name="edit-category" value="Upraviť kategóriu">
+        <?php } else { ?>
+            <input type="submit" name="create-category" value="Vytvoriť kategóriu">
+        <?php } ?>
+    </form>
+
+    <?php if(isset($_SESSION['category'])) { ?>
+        <form method="post">
+            <div class="delete">
+                <p>Pozor, nasledujúca akcia je nevratná a vymaže aj všetky články, ktoré sa aktuálne nachádzajú v kategórii!</p>
+                <input type="submit" name="delete-category" value="Vymazať kategóriu a všetky články, ktoré obsahuje">
+            </div>
+        </form>
+    <?php } ?>
+</div>

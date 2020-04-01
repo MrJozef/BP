@@ -27,7 +27,8 @@
     $cssPropControll = new ControllerCssProperty();
     $exampleControll = new ControllerExample();
 
-
+    //wcm
+    //user
     if (isset($_POST['action'])) {
         if ($_POST['action'] === 'logout') {
             $userControll->logout();
@@ -66,17 +67,17 @@
         $userControll->adminConfirm();
     }
 
-    if(isset($_POST['create-category'])) {
-        $categControll->saveNewCat();
-    }
-
-    if(isset($_POST['create-article'])) {
-        $articControll->saveNewArtic();
-        echo "??????";
-    }
-
     if(isset($_GET['verif'])) {
         $userControll->verifiedUser();
+    }
+
+    //category
+    if (isset($_POST['subpage']) == 'create-category') {
+        unset($_SESSION['category']);              //toto je dolezite pri kliknuti na novu kategoriu
+    }
+
+    if(isset($_POST['create-category'])) {
+        $categControll->saveNewCat();
     }
 
     if(isset($_POST['category'])) {
@@ -92,6 +93,15 @@
         $categControll->deleteCat();
         unset($_SESSION['category']);
         $_SESSION['actpage'] = 'verified-admin';
+    }
+
+    //article
+    if(isset($_POST['create-article'])) {
+        $articControll->saveNewArtic();
+    }
+
+    if (isset($_POST['subpage']) == 'create-article') {
+        unset($_SESSION['article']);              //toto je dolezite pri kliknuti na novy clanok
     }
 
     if(isset($_POST['article'])) {
@@ -237,15 +247,19 @@
                     if($_SESSION['actpage'] === 'verified-admin') {
                         $userControll->loadNoVerified();
                     }
-                    elseif($_SESSION['actpage'] === 'edit-article') {
-                        $articControll->aLoadAllArticNamesOfCat($_SESSION['category']); //vypise vsetky clanky v kategorii
+                    elseif($_SESSION['actpage'] === 'edit-article' || $_SESSION['actpage'] === 'create-article') {
+                        if(isset($_SESSION['category'])) {
+                            $articControll->aLoadAllArticNamesOfCat($_SESSION['category']); //vypise vsetky clanky v kategorii
+                        }
                         $categorySelect = $categControll->onlyLoadCatSelect();
                         $exampleSelect = $exampleControll->loadExamplesNames();
-                        $articControll->editArtic($_SESSION['article'], $categorySelect, $exampleSelect);
+                        $articControll->manageArtic($_SESSION['article'], $categorySelect, $exampleSelect);
                     }
-                    elseif($_SESSION['actpage'] === 'edit-category') {
-                        $articControll->aLoadAllArticNamesOfCat($_SESSION['category']);
-                        $categControll->editCat($_SESSION['category']);
+                    elseif($_SESSION['actpage'] === 'edit-category' || $_SESSION['actpage'] === 'create-category') {
+                        if(isset($_SESSION['category'])) {
+                            $articControll->aLoadAllArticNamesOfCat($_SESSION['category']);
+                        }
+                        $categControll->manageCat($_SESSION['category']);
                     }
                     elseif($_SESSION['actpage'] === 'manage-css-category') {
                         $cssCategControll->showCssCateg();

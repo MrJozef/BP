@@ -119,13 +119,6 @@ class ControllerUser extends Controller
         }
     }
 
-    //toto je funkcia pre ajax - front page
-    public function aGetAllUserNames() {
-        $users = $this->myManager->aGetAllUserNames();
-        $users = $this->clearHTML($users);
-        return $users;
-    }
-
     //toto je tiez funkcia pre ajax
     public function aGetUserNameById($userId) {
         $userNick = $this->myManager->aGetNameById($userId);

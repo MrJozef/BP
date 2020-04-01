@@ -1,0 +1,33 @@
+<div>
+    <h1><?php if($article['title'] != "") { echo "Upraviť článok: <span>{$article['title']}</span>"; } else echo "Nový článok" ?></h1>
+    <form method="post">
+        <label>Nadpis článku:
+            <input type="text" name="article-title" minlength="3" maxlength="200" placeholder="Formátovanie obrázkov" required
+                   value="<?= $article['title'] ?>">
+        </label>
+        <label for="article-category">Kategória:</label>
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-select.phtml"); ?>
+        <label for="article-importance">Zaradenie článku::</label>
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/importance-select.phtml"); ?>
+        <label>Text článku:
+            <textarea class="tinyEditor" name="article-text" minlength="50" maxlength="65535" required><?= $article['text'] ?></textarea>
+        </label>
+        <label for="article-example">Priraďte príklad k článku:</label>
+            <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-select.phtml"); ?>
+
+        <?php if(isset($_SESSION['article'])) { ?>
+            <input type="submit" name="edit-article" value="Upraviť článok">
+        <?php } else { ?>
+            <input type="submit" name="create-article" value="Uložiť článok">
+        <?php } ?>
+    </form>
+
+    <?php if(isset($_SESSION['article'])) { ?>
+        <form method="post">
+            <div class="delete">
+                <p>Pozor, nasledujúca akcia je nezvratná!</p>
+                <input type="submit" name="delete-article" value="Zmazať článok">
+            </div>
+        </form>
+    <?php } ?>
+</div>
