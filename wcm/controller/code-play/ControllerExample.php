@@ -1,6 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/code-play/ManagerExample.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
 
 
 class ControllerExample extends Controller
@@ -36,12 +34,6 @@ class ControllerExample extends Controller
             $this->throwErrorMsg($e->errorMessage());
         }
         return null;
-    }
-
-    public function loadExampleSelect() {
-        $this->dataForView['articExample'] = $this->loadExamplesNames();
-        extract($this->dataForView);
-        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-select.phtml");
     }
 
     public function manageExample($propArrayForSelect) {

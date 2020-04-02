@@ -1,15 +1,9 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
-
+include_once $_SERVER['DOCUMENT_ROOT'] . "/autoloader.php";
 
 if(isset($_POST['aCategoryId'])) {
 
     try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-
         $categControll = new ControllerCategory();
         $articControll = new ControllerArticle();
 
@@ -25,16 +19,16 @@ if(isset($_POST['aCategoryId'])) {
 
 if(isset($_POST['aArticleId'])) {
     try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-
         $articControll = new ControllerArticle();
         $userControll = new ControllerUser();
 
         $article = $articControll->aLoadArticle($_POST['aArticleId']);
-        $article['nick'] = $userControll->aGetUserNameById($article['id_author']);
+        if($article !== null) {
+            $article['nick'] = $userControll->aGetUserNameById($article['id_author']);
 
-        extract($article);
-        require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article.phtml");
+            extract($article);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article.phtml");
+        }
     }
     catch (MyException $e) {
         echo $e->errorMessage();

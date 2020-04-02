@@ -1,8 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/EmailSender.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
-
 
 const SIGNUP_SUBJECT = "WEB START LINE - Overenie E-mailovaj adresy";
 const ERROR_EMAIL_NOT_SENT = "Nepodarilo sa odoslať overovací E-mail na vašu mailovú adresu! Proces registrácie skončil neúspešne!";

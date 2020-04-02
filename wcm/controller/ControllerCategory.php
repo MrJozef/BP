@@ -1,6 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/ManagerCategory.php";
 
 
 class ControllerCategory extends Controller

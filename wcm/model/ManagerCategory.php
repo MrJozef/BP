@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const CAT_NAME_MIN_LENGTH = 3;
 const CAT_NAME_MAX_LENGTH = 100;
@@ -45,7 +44,12 @@ class ManagerCategory extends Manager
 
     public function aLoadDescCat($categId) {
         $task = 'SELECT description FROM category WHERE id_category = ? LIMIT 1';
-        return DBWrap::selectOne($task, [$categId]);
+        $dbOutput = DBWrap::selectOne($task, [$categId]);
+
+        if($dbOutput) {
+            return $dbOutput;
+        }
+        return [];
     }
 
     public function saveEditedCat($categId, $name, $desc, $visibility) {

@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const ARTICLE_MIN_LENGTH = 50;
 const ARTICLE_MAX_LENGTH = 65535;

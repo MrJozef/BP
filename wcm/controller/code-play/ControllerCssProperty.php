@@ -1,6 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/code-play/ManagerCssProperty.php";
 
 
 class ControllerCssProperty extends Controller

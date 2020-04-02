@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const CSS_CAT_NAME_MIN_LENGTH = 3;
 const CSS_CAT_NAME_MAX_LENGTH = 100;
@@ -9,6 +8,7 @@ const ERROR_CSS_CAT_NEW = "Pri ukladaní novej kategórie pre CSS vlastnosti nas
 const ERROR_CSS_CAT_UPDATE = "Pri ukladaní zmien nastala chyba a zmeny CSS kategórie sa neuložili!";
 const ERROR_CSS_CAT_CONTAINS = "Túto CSS kategóriu nie je možné zmazať, pretože obsahuje CSS vlastnosti! Najskôr ich presuňte do inej kategórie alebo vymažte.";
 const ERROR_CSS_CAT_DELETE = "Pri mazaní kategórie CSS vlastností nastala chyba a pravdepodobne sa nezmazala!";
+
 
 class ManagerCssCategory extends Manager
 {

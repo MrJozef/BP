@@ -1,6 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/EmailSender.php";
 
 const NICK_MIN_LENGTH = 4;
 const NICK_MAX_LENGTH = 30;

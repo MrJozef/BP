@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const PROP_NAME_MIN_LENGTH = 3;
 const PROP_NAME_MAX_LENGTH = 50;
@@ -17,6 +16,7 @@ const ERROR_NEW_PROP = "Pri ukladaní novej vlastnosti chyba a vlastnosť sa neu
 const ERROR_UPDATE_PROP = "Vlastnosť nebola pre chybu upravená!";
 const ERROR_PROP_IN_USE = "Túto CSS vlastnosť nie je možné zmazať, pretože sa používa v príkladoch! Najskôr ich vymažte, alebo z nich odstránte túto vlastnosť.";
 const ERROR_PROP_DELETE = "Pri mazaní CSS vlastnosti nastala chyba a tá sa pravdepodobne nezmazala!";
+
 
 class ManagerCssProperty extends Manager
 {

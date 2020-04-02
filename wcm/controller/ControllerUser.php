@@ -1,7 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/ManagerUser.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/EmailSender.php";
 
 const SUCCESS_SIGN_UP = 'Boli ste úspešne zaregistrovaný! Na Váš mail bude doručený overovací E-mail,
                                 pre pokračovanie na stránke ho musíte potvrdiť.';

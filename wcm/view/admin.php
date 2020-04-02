@@ -1,24 +1,9 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/MyException.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerCategory.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerUser.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/ControllerArticle.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssCategory.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssProperty.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerExample.php";
-    include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
     session_start();
-
     date_default_timezone_set('Europe/Bratislava');
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/autoloader.php";
 
-    try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-    }
-    catch (MyException $e) {
-        echo $e->errorMessage();
-    }
     $categControll = new ControllerCategory();
     $userControll = new ControllerUser();
     $articControll = new ControllerArticle();
@@ -201,7 +186,7 @@
     }
 
     if (isset($_POST['delete-example'])) {
-        $exampleControll->deleteExample();
+        $exampleControll->deleteExample();//tu vymazávame aj referencie v článkoch na tento príklad
         unset($_SESSION['example']);
     }
 ?>
@@ -275,7 +260,7 @@
                     elseif($_SESSION['actpage'] === 'show-examples') {
                         $exampleControll->showExamples();
                     }
-                    else {
+                    else {//sem by sa mal dostať iba user-settings
                         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/".$_SESSION['actpage'].".phtml");
                     }
                 }

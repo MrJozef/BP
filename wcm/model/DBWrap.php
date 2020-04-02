@@ -1,7 +1,7 @@
 <?php
 
 const ERROR_DB_CONNECT = "Nepodarilo sa pripojiť k databáze!";
-const ERROR_UNAVALIABLE = "Dopyt na databázu zlyhal!";
+
 
 class DBWrap
 {
@@ -49,13 +49,8 @@ class DBWrap
     }
 
     private static function query($statement, $param = []) {
-        try {
-            $prepared = self::$DbConn->prepare($statement);
-            $prepared->execute($param);
-        }
-        catch (\Throwable $exception) {
-            throw new MyException(ERROR_UNAVALIABLE);
-        }
+        $prepared = self::$DbConn->prepare($statement);
+        $prepared->execute($param);
 
         return $prepared;
     }

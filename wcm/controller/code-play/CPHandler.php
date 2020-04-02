@@ -1,14 +1,9 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerExample.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/code-play/ControllerCssProperty.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/config.php";
-
+include_once $_SERVER['DOCUMENT_ROOT'] . "/autoloader.php";
 
 if(isset($_POST['aExample'])) {
 
     try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-
         $exampleControll = new ControllerExample();
 
         $outputFromDb = $exampleControll->aLoadExample($_POST['aExample']);
@@ -26,8 +21,6 @@ if(isset($_POST['aExample'])) {
 if(isset($_POST['aExampleProp'])) {
 
     try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-
         $exampleControll = new ControllerExample();
 
         $output = $exampleControll->aLoadExampleProperties($_POST['aExampleProp']);
@@ -42,8 +35,6 @@ if(isset($_POST['aExampleProp'])) {
 if(isset($_POST['aPropDesc'])) {
 
     try {
-        DBWrap::connect(HOST, DB_NAME, USER, PASSWORD);
-
         $exampleControll = new ControllerCssProperty();
 
         echo $exampleControll->aLoadPropDesc($_POST['aPropDesc']);

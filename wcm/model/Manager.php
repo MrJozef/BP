@@ -1,12 +1,16 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/DBWrap.php";
 
 
 abstract class Manager
 {
 
     protected function tryQueryDb($task, $taskParam = [], $errMsg) {
-        DBWrap::queryUniversal($task, $taskParam);
+        try {
+            return DBWrap::queryUniversal($task, $taskParam);
+        }
+        catch (\Throwable $exception) {
+            throw new MyException($errMsg);
+        }
     }
 
     protected function checkLengthWException($x, $maxLength, $minLength, $errorMsg) {

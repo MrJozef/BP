@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/Manager.php";
 
 const FOR_ELEMENT_MIN_LENGTH = 1;
 const FOR_ELEMENT_MAX_LENGTH = 60;
@@ -16,6 +15,16 @@ const EXAMPLE_DESC_LENGTH = "Popis príkladu je nepovinný, ak sa ho však rozho
 const EXAMPLE_CODE_MIN_LENGTH = 10;
 const EXAMPLE_CODE_MAX_LENGTH = 3000;
 const EXAMPLE_CODE_LENGTH = "HTML kód príkladu musí obsahovať " . EXAMPLE_CODE_MIN_LENGTH . " až " . EXAMPLE_CODE_MAX_LENGTH . " znakov!";
+
+const ERROR_NEW_USE = "Pri vkladaní novej vlastnosti do príkladu nastala chyba a vlastnosť sa neuložila!";
+const ERROR_UPDATE_USE = "Vlastnosť nebola pre chybu upravená!";
+const ERROR_PROP_USE = "Pri mazaní CSS vlastnosti nastala chyba a tá sa pravdepodobne nezmazala!";
+
+const ERROR_NEW_EXAM = "Pri nového príkladu nastala chyba a príklad sa správne neuložil!";
+const ERROR_UPDATE_EXAM = "Príklad pre chybu zostal neupravený!";
+const ERROR_PROP_EXAM = "Pri mazaní príkladu nastala chyba!";
+
+const ERROR_ART_EXAMPLE = "Pokus odstrániť prepojenia s článkami zlyhal, príklad sa nevymazal!";
 
 //Táto trieda obsluhuje tabuľky css_use a súčasne example - nemá zmysel ich oddeľovať, kedže css_use existuje len kvôli tab. example
 class ManagerExample extends Manager
@@ -38,7 +47,7 @@ class ManagerExample extends Manager
         $this->checkLengthWException($forElement, FOR_ELEMENT_MAX_LENGTH, FOR_ELEMENT_MIN_LENGTH, FOR_ELEMENT_LENGTH);
 
         $task = 'INSERT INTO css_use (id_prop, id_example, for_element) VALUES (?, ?, ?)';
-        DBWrap::queryUniversal($task, [$propId, $exampleId, $forElement]);
+        $this->tryQueryDb($task, [$propId, $exampleId, $forElement],ERROR_NEW_USE);
     }
 
     //je možné meniť iba for_element a id_prop
@@ -46,12 +55,12 @@ class ManagerExample extends Manager
         $this->checkLengthWException($forElement, FOR_ELEMENT_MAX_LENGTH, FOR_ELEMENT_MIN_LENGTH, FOR_ELEMENT_LENGTH);
 
         $task = 'UPDATE css_use SET id_prop = ?, for_element = ? WHERE id_use = ?';
-        DBWrap::queryUniversal($task, [$propId, $forElement, $useId]);
+        $this->tryQueryDb($task, [$propId, $forElement, $useId], ERROR_UPDATE_USE);
     }
 
     public function deleteUse($useId) {
         $task = 'DELETE FROM css_use WHERE id_use = ?';
-        DBWrap::queryUniversal($task, [$useId]);
+        $this->tryQueryDb($task, [$useId], ERROR_PROP_USE);
     }
 
     //táto metóda vracia id novovloženého príkladu - aby sme mohli v session nastaviť
@@ -59,7 +68,7 @@ class ManagerExample extends Manager
         $this->checkValues($name, $desc, $code);
 
         $task = 'INSERT INTO example (exam_name, exam_description, exam_code) VALUES (?, ?, ?)';
-        DBWrap::queryUniversal($task, [$name, $desc, $code]);
+        $this->tryQueryDb($task, [$name, $desc, $code], ERROR_NEW_EXAM);
 
         $task = 'SELECT id_example FROM example WHERE exam_name = ? LIMIT 1';
         $outputArray = DBWrap::selectOne($task, [$name]);
@@ -70,18 +79,22 @@ class ManagerExample extends Manager
         $this->checkValues($name, $desc, $code);
 
         $task = 'UPDATE example SET exam_name = ?, exam_description = ?, exam_code = ? WHERE id_example = ?';
-        DBWrap::queryUniversal($task, [$name, $desc, $code, $exampleId]);
+        $this->tryQueryDb($task, [$name, $desc, $code, $exampleId], ERROR_UPDATE_EXAM);
     }
 
     public function deleteExample($exampleId) {
+        //musíme odstrániť aj prípadné referencie v článkoch
+        $task = 'UPDATE article SET id_example = 0 WHERE id_example = ?';
+        $this->tryQueryDb($task, [$exampleId], ERROR_ART_EXAMPLE);
+
         $task = 'DELETE FROM css_use WHERE id_example = ?';
-        DBWrap::queryUniversal($task, [$exampleId]);
+        $this->tryQueryDb($task, [$exampleId], ERROR_PROP_EXAM);
 
         $task = 'DELETE FROM example WHERE id_example = ?';
-        DBWrap::queryUniversal($task, [$exampleId]);
+        $this->tryQueryDb($task, [$exampleId], ERROR_PROP_EXAM);
     }
 
-    public function aLoadExample($exampleId){
+    public function aLoadExample($exampleId) {
         $task = 'SELECT exam_code, exam_description FROM example WHERE id_example = ? LIMIT 1';
         return DBWrap::selectOne($task, [$exampleId]);
     }

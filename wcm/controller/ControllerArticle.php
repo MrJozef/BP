@@ -1,6 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/controller/Controller.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/wcm/model/ManagerArticle.php";
 
 
 class ControllerArticle extends Controller
@@ -37,18 +35,21 @@ class ControllerArticle extends Controller
     public function aLoadArticle($articleId) {
         $article = $this->myManager->aLoadArticle($articleId);
 
-        //potrebujeme, aby v texte ostali zachovane html tagy
-        $clearText = $article['text'];
-        $article['text'] = "";
-        $article = $this->clearHTML($article);
-        $article['text'] = $clearText;
+        if ($article != null) {
+            //potrebujeme, aby v texte ostali zachovane html tagy
+            $clearText = $article['text'];
+            $article['text'] = "";
+            $article = $this->clearHTML($article);
+            $article['text'] = $clearText;
 
-        return $article;
+            return $article;
+        }
+        return null;
     }
 
     public function manageArtic($articId = null, $arraySelectCat, $arraySelectExam) {
         try {
-            if($articId != null) {
+            if ($articId != null) {
                 $article = $this->myManager->loadOneArticle($articId);
                 $this->dataForView['article'] = $this->clearHTML($article);
             }
