@@ -44,7 +44,7 @@ class ControllerExample extends Controller
                 $this->dataForView['cssUse'] = $dataFromManager['cssUse'];
             }
             else {
-                $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => ""];
+                $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => "", 'exam_js' => "", 'exam_js_description' => ""];
                 $this->dataForView['cssUse'] = [];
             }
 
@@ -87,7 +87,7 @@ class ControllerExample extends Controller
 
     public function saveNewExample() {
         try {
-            return $this->myManager->saveNewExample($_POST['example-name'], $_POST['example-description'], $_POST['example-code']);
+            return $this->myManager->saveNewExample($_POST['example-name'], $_POST['example-description'], $_POST['example-code'], $_POST['example-js'], $_POST['example-js-desc']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -97,7 +97,7 @@ class ControllerExample extends Controller
 
     public function saveEditedExample() {
         try {
-            $this->myManager->saveEditedExample($_POST['example-name'], $_POST['example-description'], $_POST['example-code'], $_SESSION['example']);
+            $this->myManager->saveEditedExample($_POST['example-name'], $_POST['example-description'], $_POST['example-code'], $_POST['example-js'], $_POST['example-js-desc'], $_SESSION['example']);
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -139,6 +139,33 @@ class ControllerExample extends Controller
 
             extract($this->dataForView);
             require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-prop-list.phtml");
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
+
+    public function aLoadExampleJs($exampleId) {
+        try {
+            $this->dataForView['examJs'] = $this->clearHTML($this->myManager->aLoadExampleJs($exampleId));
+            $this->dataForView['examId'] = $exampleId;
+
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/example-js-area.phtml");
+        }
+        catch (MyException $e) {
+            $this->throwErrorMsg($e->errorMessage());
+        }
+        return null;
+    }
+
+    public function aLoadJsDesc($exampleId) {
+        try {
+            $this->dataForView['jsDesc'] = $this->myManager->aLoadJsDesc($exampleId);
+
+            extract($this->dataForView);
+            require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/example-js-desc.phtml");
         }
         catch (MyException $e) {
             $this->throwErrorMsg($e->errorMessage());

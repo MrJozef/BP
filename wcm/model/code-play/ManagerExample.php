@@ -16,6 +16,14 @@ const EXAMPLE_CODE_MIN_LENGTH = 10;
 const EXAMPLE_CODE_MAX_LENGTH = 3000;
 const EXAMPLE_CODE_LENGTH = "HTML kód príkladu musí obsahovať " . EXAMPLE_CODE_MIN_LENGTH . " až " . EXAMPLE_CODE_MAX_LENGTH . " znakov!";
 
+const EXAMPLE_JS_MIN_LENGTH = 30;
+const EXAMPLE_JS_MAX_LENGTH = 4000;
+const EXAMPLE_JS_LENGTH = "JS kód príkladu je voliteľný, ak ho však zadáte, musí obsahovať " . EXAMPLE_JS_MIN_LENGTH . " až " . EXAMPLE_JS_MAX_LENGTH . " znakov!";
+
+const EXAMPLE_JS_DESC_MIN_LENGTH = 20;
+const EXAMPLE_JS_DESC_MAX_LENGTH = 65535;
+const EXAMPLE_JS_DESC_LENGTH = "Popis JS kódu je voliteľný, ak ho však zadáte, musí obsahovať " . EXAMPLE_JS_DESC_MIN_LENGTH . " až " . EXAMPLE_JS_DESC_MAX_LENGTH . " znakov!";
+
 const ERROR_NEW_USE = "Pri vkladaní novej vlastnosti do príkladu nastala chyba a vlastnosť sa neuložila!";
 const ERROR_UPDATE_USE = "Vlastnosť nebola pre chybu upravená!";
 const ERROR_PROP_USE = "Pri mazaní CSS vlastnosti nastala chyba a tá sa pravdepodobne nezmazala!";
@@ -35,7 +43,7 @@ class ManagerExample extends Manager
     }
 
     public function loadExample($idExample) {
-        $task = 'SELECT exam_name, exam_description, exam_code FROM example WHERE id_example = ?';
+        $task = 'SELECT exam_name, exam_description, exam_code, exam_js, exam_js_description FROM example WHERE id_example = ? LIMIT 1';
         $outputArray['example'] = DBWrap::selectOne($task, [$idExample]);
 
         $task = 'SELECT id_use, id_prop, for_element FROM css_use JOIN css_property USING(id_prop) WHERE id_example = ? ORDER BY for_element, prop_name';
@@ -64,22 +72,22 @@ class ManagerExample extends Manager
     }
 
     //táto metóda vracia id novovloženého príkladu - aby sme mohli v session nastaviť
-    public function saveNewExample($name, $desc = "", $code) {
-        $this->checkValues($name, $desc, $code);
+    public function saveNewExample($name, $desc = "", $code, $js = "", $jsDesc = "") {
+        $this->checkValues($name, $desc, $code, $js, $jsDesc);
 
-        $task = 'INSERT INTO example (exam_name, exam_description, exam_code) VALUES (?, ?, ?)';
-        $this->tryQueryDb($task, [$name, $desc, $code], ERROR_NEW_EXAM);
+        $task = 'INSERT INTO example (exam_name, exam_description, exam_code, exam_js, exam_js_description) VALUES (?, ?, ?, ?, ?)';
+        $this->tryQueryDb($task, [$name, $desc, $code, $js, $jsDesc], ERROR_NEW_EXAM);
 
         $task = 'SELECT id_example FROM example WHERE exam_name = ? LIMIT 1';
         $outputArray = DBWrap::selectOne($task, [$name]);
         return $outputArray['id_example'];
     }
 
-    public function saveEditedExample($name, $desc = "", $code, $exampleId) {
-        $this->checkValues($name, $desc, $code);
+    public function saveEditedExample($name, $desc = "", $code, $js = "", $jsDesc = "", $exampleId) {
+        $this->checkValues($name, $desc, $code, $js, $jsDesc);
 
-        $task = 'UPDATE example SET exam_name = ?, exam_description = ?, exam_code = ? WHERE id_example = ?';
-        $this->tryQueryDb($task, [$name, $desc, $code, $exampleId], ERROR_UPDATE_EXAM);
+        $task = 'UPDATE example SET exam_name = ?, exam_description = ?, exam_code = ?, exam_js = ?, exam_js_description = ? WHERE id_example = ?';
+        $this->tryQueryDb($task, [$name, $desc, $code, $js, $jsDesc, $exampleId], ERROR_UPDATE_EXAM);
     }
 
     public function deleteExample($exampleId) {
@@ -95,7 +103,7 @@ class ManagerExample extends Manager
     }
 
     public function aLoadExample($exampleId) {
-        $task = 'SELECT exam_code, exam_description FROM example WHERE id_example = ? LIMIT 1';
+        $task = 'SELECT exam_code, exam_description, exam_js FROM example WHERE id_example = ? LIMIT 1';
         return DBWrap::selectOne($task, [$exampleId]);
     }
 
@@ -127,11 +135,29 @@ class ManagerExample extends Manager
         return DBWrap::selectAll($task, [$exampleId]);
     }
 
-    private function checkValues($name, $desc, $code) {
+    public function aLoadExampleJs($exampleId) {
+        $task = 'SELECT exam_js FROM example WHERE id_example = ? LIMIT 1';
+        $output = DBWrap::selectOne($task, [$exampleId]);
+        return $output['exam_js'];
+    }
+
+    public function aLoadJsDesc($exampleId) {
+        $task = 'SELECT exam_js_description FROM example WHERE id_example = ? LIMIT 1';
+        $output = DBWrap::selectOne($task, [$exampleId]);
+        return $output['exam_js_description'];
+    }
+
+    private function checkValues($name, $desc, $code, $js, $jsDesc) {
         $this->checkLengthWException($name, EXAMPLE_NAME_MAX_LENGTH, EXAMPLE_NAME_MIN_LENGTH, EXAMPLE_NAME_LENGTH);
         $this->checkLengthWException($code, EXAMPLE_CODE_MAX_LENGTH, EXAMPLE_CODE_MIN_LENGTH, EXAMPLE_CODE_LENGTH);
         if($desc != "") {
             $this->checkLengthWException($desc, EXAMPLE_DESC_MAX_LENGTH, EXAMPLE_DESC_MIN_LENGTH, EXAMPLE_DESC_LENGTH);
+        }
+        if($js != "") {
+            $this->checkLengthWException($js, EXAMPLE_JS_MAX_LENGTH, EXAMPLE_JS_MIN_LENGTH, EXAMPLE_JS_LENGTH);
+        }
+        if($jsDesc != "") {
+            $this->checkLengthWException($jsDesc, EXAMPLE_JS_DESC_MAX_LENGTH, EXAMPLE_JS_DESC_MIN_LENGTH, EXAMPLE_JS_DESC_LENGTH);
         }
     }
 }

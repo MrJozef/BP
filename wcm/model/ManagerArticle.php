@@ -31,13 +31,13 @@ class ManagerArticle extends Manager
     }
 
     public function aLoadArticle($articleId) {
-        $task = 'SELECT id_author, id_example, title, text, importance, date_creation, date_edit FROM article WHERE id_article = ?';
+        $task = 'SELECT id_author, id_example, title, text, importance, date_creation, date_edit FROM article WHERE id_article = ? LIMIT 1';
         return DBWrap::selectOne($task, [$articleId]);
     }
 
     //tato funkcia sa pouziva pri editacii clankov v admin. rozhrani
     public function loadOneArticle($articleId) {
-        $task = 'SELECT id_category, id_example, title, text, importance FROM article WHERE id_article = ?';
+        $task = 'SELECT id_category, id_example, title, text, importance FROM article WHERE id_article = ? LIMIT 1';
         return DBWrap::selectOne($task, [$articleId]);
     }
 

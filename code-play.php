@@ -40,6 +40,9 @@
         <form id="css-form">
             <!-- sem sa vkladajú css vlastnosti -->
         </form>
+        <section id="js-section">
+            <!-- sem sa vkladá js kód -->
+        </section>
 
         <iframe id="result"></iframe>
     </main>

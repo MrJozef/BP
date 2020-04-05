@@ -1,32 +1,34 @@
 <?php $closedElement = true; $closedCategory = true;
 
-foreach ($propList as $key=>$prop) : ?>
-    <?php if($closedElement) { echo "<section><h1>{$prop['for_element']}</h1>"; $closedElement = false; } ?>
+if($propList != null) {     //môže byť aj príklad bez css vlastností, iba s JS kódom napr.
+    foreach ($propList as $key=>$prop) : ?>
+        <?php if($closedElement) { echo "<section><h1>{$prop['for_element']}</h1>"; $closedElement = false; } ?>
 
-        <?php if($closedCategory) { echo "<div><h2>{$prop['categ_name']}</h2>"; $closedCategory = false; } ?>
+            <?php if($closedCategory) { echo "<div><h2>{$prop['categ_name']}</h2>"; $closedCategory = false; } ?>
 
-            <div>
-                <button type="button" name="<?= $prop['for_element'] ?>" value="<?= $prop['id_prop'] ?>"><?= $prop['prop_name'] ?>:</button>
-                <?= $prop['prop_value'] ?>
-            </div>
+                <div>
+                    <button type="button" name="<?= $prop['for_element'] ?>" value="<?= $prop['id_prop'] ?>"><?= $prop['prop_name'] ?>:</button>
+                    <?= $prop['prop_value'] ?>
+                </div>
 
-            <?php
-                $existNextProp = array_key_exists($key+1, $propList);
-                if ($existNextProp) {
+                <?php
+                    $existNextProp = array_key_exists($key+1, $propList);
+                    if ($existNextProp) {
 
-                    ($prop['for_element'] !== $propList[$key+1]['for_element']) ? $endOfElement = true : $endOfElement = false;
+                        ($prop['for_element'] !== $propList[$key+1]['for_element']) ? $endOfElement = true : $endOfElement = false;
 
-                    ($prop['categ_name'] !== $propList[$key+1]['categ_name'] || $endOfElement) ? $endOfCat = true : $endOfCat = false;
-                }
-            ?>
+                        ($prop['categ_name'] !== $propList[$key+1]['categ_name'] || $endOfElement) ? $endOfCat = true : $endOfCat = false;
+                    }
+                ?>
 
-        <?php if($endOfCat) { echo "</div>"; $closedCategory = true; } ?>
+            <?php if($endOfCat) { echo "</div>"; $closedCategory = true; } ?>
 
-    <?php if($endOfElement) { echo "</section>"; $closedElement = true; } ?>
-<?php endforeach ?>
+        <?php if($endOfElement) { echo "</section>"; $closedElement = true; } ?>
+    <?php endforeach ?>
 
-<?= (!$closedCategory) ? "</div>" : "" ?>
-<?= (!$closedElement) ? "</section>" : "" ?>
+    <?= (!$closedCategory) ? "</div>" : "" ?>
+    <?= (!$closedElement) ? "</section>" : "" ?>
 
-<button type="button" value="showCode">Zobraz môj kód</button>
-<button type="reset" value="reset">Reset</button>
+    <button type="button" value="showCode">Zobraz môj kód</button>
+    <button type="reset" value="reset">Reset</button>
+<?php } ?>

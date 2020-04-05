@@ -5,11 +5,9 @@ $(document).ready(function () {
 
     const navButton = $('header nav button'),
         description = $('main section p'),
-        cssProperty = $('#css-form'),
-        iframe = $('#result'),
-        iframeBody = iframe.contents().find('body'),
-        iframeHead = iframe.contents().find('head').html("<style></style>");
-        iframeStyle = iframeHead.find('style');
+        cssSection = $('#css-form'),
+        jsSection = $('#js-section'),
+        iframe = document.querySelector('#result');
     let previousExampleId = "";
 
 
@@ -19,7 +17,6 @@ $(document).ready(function () {
         previousExampleId = urlParam.get('example');
         fOpenExample(previousExampleId);
     }
-
 
     //tu nemoze byt arrow function! bude blbnut this
     navButton.click(function() {
@@ -31,35 +28,64 @@ $(document).ready(function () {
         }
     });
 
+
     function fOpenExample(exampleId) {
 
         exampleControll.loadFullExample(exampleId).then(data => {
+            let jsCode = "";
+
             if (data.code !== null) {       //toto sa stane, ked napr. do url adresy napiseme neexistujuci priklad
-                iframeBody.html(data.code);
+
                 //!= je ok
                 if(data.desc != "") {
                     description.text(data.desc);
+                    description.removeClass('invisible');
                 }
                 else {
                     description.empty();
+                    description.addClass('invisible');
                 }
                 example.changeExample(data.propArray);
 
-                cssProperty.html(data.propertyList);
-                iframeStyle.text("");//musime vymazat style z pripadneho predchadzajuceho prikladu
+                if (data.propertyList !== "") {
+                    cssSection.html(data.propertyList);
+                    cssSection.removeClass('invisible');
+                }
+                else {
+                    cssSection.html("");
+                    cssSection.addClass('invisible');
+                }
 
-                const propSelect = cssProperty.find('select'),
-                    propInput = cssProperty.find('input'),
-                    propButton = cssProperty.find('div button'),    //tymto vyberieme vsetko okrem reset tlacidlo
-                    resetButton = cssProperty.find('[value="reset"]'),
-                    showCodeButton = cssProperty.find('[value="showCode"]');
+                if (data.jsArea !== "") {
+                    jsSection.html(data.jsArea);
+                    jsSection.removeClass('invisible');
+                    jsCode = jsSection.find('textarea').val();
+                }
+                else {
+                    jsSection.html("");
+                    jsSection.addClass('invisible');
+                }
+
+                //css == "" pretoze musime vymazat style z pripadneho predchadzajuceho prikladu
+                //vytvorenie blobu --> akoby injection kódu do ifram-u
+                iframe.src = fCreateBlob({html: data.code, css: "", js: jsCode});
+
+                const propSelect = cssSection.find('select'),
+                    propInput = cssSection.find('input'),
+                    propButton = cssSection.find('div button'),    //tymto vyberieme vsetko okrem reset tlacidla
+                    resetButton = cssSection.find('[value="reset"]'),
+                    showCodeButton = cssSection.find('[value="showCode"]'),
+                    jsTextarea = jsSection.find('textarea'),
+                    resetJsButton = jsSection.find('[value="resetJs"'),
+                    showJsDescButton = jsSection.find('[name="showJsDesc"]');
+
 
                 propSelect.change(function() {
-                    fMain($(this), iframeStyle);
+                    iframe.src = fCreateBlob({html: data.code, css: fCssMain($(this)), js: jsCode});
                 });
 
-                propInput.on('change keyup', function() {       //todo toto sa pusta 2x jak to
-                    fMain($(this), iframeStyle);
+                propInput.on('change keyup', function() {
+                    iframe.src = fCreateBlob({html: data.code, css: fCssMain($(this)), js: jsCode});
                 });
 
                 propButton.click(function () {
@@ -68,19 +94,55 @@ $(document).ready(function () {
 
                 resetButton.click(function () {
                     example.clearAll();
-                    iframeStyle.text("");
+                    iframe.src = fCreateBlob({html: data.code, css: "", js: jsCode});
                 });
 
                 showCodeButton.click(function () {
                     fShowCode(data.code);
                 });
+
+                jsTextarea.on('change keyup', function () {
+                    iframe.src = fCreateBlob({html: data.code, css: example.getHTMLStyle(), js: jsTextarea.val()});
+                });
+
+                resetJsButton.click(function () {
+                    jsTextarea.val(jsCode);
+                    iframe.src = fCreateBlob({html: data.code, css: example.getHTMLStyle(), js: jsCode});
+                });
+
+                showJsDescButton.click(function () {
+                    fShowJsDesc($(this));
+                });
             }
-        })//todo .catch(data => $('body').append(data));?
+        });
     }
 });
 
-//where to inject code
-function fMain(input, where) {
+
+//inšpirácia, bez ktorej by táto funkcia nevznikla: https://dev.to/pulljosh/how-to-load-html-css-and-js-code-into-an-iframe-2blc
+function fCreateBlob({ html, css, js }) {
+
+    const source = `
+        <html lang="sk">
+            <head>
+                <meta charset="UTF-8">
+                <title>Code-Play iframe (not iFrame)</title>
+                <style>${css}</style>
+                <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+                <script>${js}</script>
+            </head>
+            <body>
+                ${html}
+            </body>
+        </html>
+        `;
+
+    const blob = new Blob([source], { type: 'text/html' });
+    return URL.createObjectURL(blob);
+}
+
+
+function fCssMain(input) {
     //vyhľadáme všetky inputy CSS vlastnosti - button + select/input + {select/input}.n -> this.siblings vyhľadá všetky inputy okrem this -> na nič
     const allPropInputs = input.parent().children(),
         button = $(allPropInputs[0]);       //button bude vzdy prvy
@@ -103,8 +165,9 @@ function fMain(input, where) {
 
     //parametre budú vyzerať napr. takto: "h1", "padding-top", "2em"
     example.updateValue(button.attr('name'), button.text().replace(':', ''), value);
-    where.text(example.getHTMLStyle());
+    return example.getHTMLStyle();
 }
+
 
 function fShowPropDesc(propButton) {
     const propertyId = propButton.attr('value');
@@ -132,6 +195,18 @@ function fShowCode(HTMLCode) {
 
     $('#exit').click(function () {
         $('article').remove();
+    });
+}
+
+function fShowJsDesc(button) {
+    const exampleId = button.attr('value');
+
+    exampleControll.loadJsDesc(exampleId).then(data => {
+        $('body').append(data);
+
+        $('#exit').click(function () {
+            $('article').remove();
+        });
     });
 }
 
