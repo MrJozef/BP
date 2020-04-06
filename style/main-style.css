@@ -1,0 +1,152 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Koniec prevzatého obsahu */
+
+/* Kvôli safari, border-box do width a height započítava aj padding a border */
+* {
+    box-sizing: border-box;
+}
+
+input, textarea, select, a, button {
+    outline: 0;
+}
+
+@font-face {
+    font-family: 'jetbrains';
+    src: url('fonts/jetbrains/jetbrains-regular/jetbrainsmono-regular-webfont.eot');
+    src: url('fonts/jetbrains/jetbrains-regular/jetbrainsmono-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/jetbrains/jetbrains-regular/jetbrainsmono-regular-webfont.woff2') format('woff2'),
+    url('fonts/jetbrains/jetbrains-regular/jetbrainsmono-regular-webfont.woff') format('woff'),
+    url('fonts/jetbrains/jetbrains-regular/jetbrainsmono-regular-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'jetbrains';
+    src: url('fonts/jetbrains/jetbrains-italic/jetbrainsmono-italic-webfont.eot');
+    src: url('fonts/jetbrains/jetbrains-italic/jetbrainsmono-italic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/jetbrains/jetbrains-italic/jetbrainsmono-italic-webfont.woff2') format('woff2'),
+    url('fonts/jetbrains/jetbrains-italic/jetbrainsmono-italic-webfont.woff') format('woff'),
+    url('fonts/jetbrains/jetbrains-italic/jetbrainsmono-italic-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'jetbrains';
+    src: url('fonts/jetbrains/jetbrains-bold/jetbrainsmono-bold-webfont.eot');
+    src: url('fonts/jetbrains/jetbrains-bold/jetbrainsmono-bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/jetbrains/jetbrains-bold/jetbrainsmono-bold-webfont.woff2') format('woff2'),
+    url('fonts/jetbrains/jetbrains-bold/jetbrainsmono-bold-webfont.woff') format('woff'),
+    url('fonts/jetbrains/jetbrains-bold/jetbrainsmono-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'raleway';
+    src: url('fonts/raleway/raleway-black/raleway-black-webfont.eot');
+    src: url('fonts/raleway/raleway-black/raleway-black-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/raleway/raleway-black/raleway-black-webfont.woff2') format('woff2'),
+    url('fonts/raleway/raleway-black/raleway-black-webfont.woff') format('woff'),
+    url('fonts/raleway/raleway-black/raleway-black-webfont.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'raleway';
+    src: url('fonts/raleway/raleway-extrabold/raleway-extrabold-webfont.eot');
+    src: url('fonts/raleway/raleway-extrabold/raleway-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/raleway/raleway-extrabold/raleway-extrabold-webfont.woff2') format('woff2'),
+    url('fonts/raleway/raleway-extrabold/raleway-extrabold-webfont.woff') format('woff'),
+    url('fonts/raleway/raleway-extrabold/raleway-extrabold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'raleway';
+    src: url('fonts/raleway/raleway-extrabold-italic/raleway-extrabolditalic-webfont.eot');
+    src: url('fonts/raleway/raleway-extrabold-italic/raleway-extrabolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/raleway/raleway-extrabold-italic/raleway-extrabolditalic-webfont.woff2') format('woff2'),
+    url('fonts/raleway/raleway-extrabold-italic/raleway-extrabolditalic-webfont.woff') format('woff'),
+    url('fonts/raleway/raleway-extrabold-italic/raleway-extrabolditalic-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'raleway';
+    src: url('fonts/raleway/raleway-medium/raleway-medium-webfont.eot');
+    src: url('fonts/raleway/raleway-medium/raleway-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/raleway/raleway-medium/raleway-medium-webfont.woff2') format('woff2'),
+    url('fonts/raleway/raleway-medium/raleway-medium-webfont.woff') format('woff'),
+    url('fonts/raleway/raleway-medium/raleway-medium-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'raleway';
+    src: url('fonts/raleway/raleway-medium-italic/raleway-mediumitalic-webfont.eot');
+    src: url('fonts/raleway/raleway-medium-italic/raleway-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/raleway/raleway-medium-italic/raleway-mediumitalic-webfont.woff2') format('woff2'),
+    url('fonts/raleway/raleway-medium-italic/raleway-mediumitalic-webfont.woff') format('woff'),
+    url('fonts/raleway/raleway-medium-italic/raleway-mediumitalic-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+
+}
+
+code {
+    white-space: pre-line;
+}

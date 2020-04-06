@@ -14,6 +14,8 @@
 
     <title>Web Start Line</title>
 
+    <link rel="stylesheet" type="text/css" href="style/main-style.css">
+
     <script src="js/jq-library/jquery.js"></script>
     <script src="js/AjaxCrier.js"></script>
     <script src="js/FPController.js"></script>

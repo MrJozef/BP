@@ -187,9 +187,9 @@ function fShowCode(HTMLCode) {
 
     codeArticle =
         `<article><button type="button" id="exit">Exit</button>
-            <div><h1>CSS kód:</h1><p><code style="white-space: pre-line">${cssCode}</code></p></div>
-            <div><h1>HTML kód:</h1><p><code style="white-space: pre-line">${htmlCode}</code></p></div>
-        </article>`;//todo style dat do css code
+            <div><h1>CSS kód:</h1><p><code>${cssCode}</code></p></div>
+            <div><h1>HTML kód:</h1><p><code>${htmlCode}</code></p></div>
+        </article>`;
 
     $('body').append(codeArticle);
 

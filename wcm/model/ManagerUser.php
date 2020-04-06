@@ -44,7 +44,7 @@ class ManagerUser extends Manager
                 $emailSender = new EmailSender();
                 $hashNick = sha1($nick);
                 try {
-                    $emailSender->sendSignUpMail($mail, $hashNick);//todo zahashovat nick
+                    $emailSender->sendSignUpMail($mail, $hashNick);
                 }
                 catch (MyException $e) {
                     $this->adminRefuse($nick);      //ak sa nepodarilo odoslat mail, nema zmysel, mat takehoto uzivatela v db

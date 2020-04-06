@@ -18,7 +18,7 @@ abstract class Controller
         return null;
     }
 
-    //funkcia na obranu pred XSS - todo nie som uplne presvedceny, ci je toto dobre, este skontrolovat
+    //funkcia na obranu pred XSS
     protected function clearHTML($x) {
 
         if(isset($x)) {

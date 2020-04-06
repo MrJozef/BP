@@ -201,6 +201,7 @@
 
     <title>WSL - Administrátorské rozhranie</title>
 
+    <link rel="stylesheet" type="text/css" href="../../style/main-style.css">
     <script src="https://cdn.tiny.cloud/1/y5c3tk6y8gwt9pitzkk1ilg3xyaex53pkv4s1zdcyig9dj08/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
