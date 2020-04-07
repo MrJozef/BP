@@ -147,6 +147,52 @@ input, textarea, select, a, button {
 
 }
 
+:root {
+    --main-font: 'raleway';
+    --code-font: 'jetbrains';
+
+    --super-dark: #0d0d21;
+    --main-dark: #1d1d33;
+    --main-bright: #f7f4e0;
+    --important: #e40c31;
+    --bright: #b9b3b3;
+    --good: #438543;
+    --significant: #38b4c3;
+    --advanced: #623898;
+    --maybe: #eba63f;
+}
+
+html {
+    min-width: 310px;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--main-font), Arial, sans-serif;
+}
+
 code {
     white-space: pre-line;
+    font-family: var(--code-font);
+}
+
+a {
+    text-decoration: none;
+}
+
+strong {
+    color: var(--important);
+    font-weight: 700;
+}
+
+em {
+    color: var(--significant);
+    font-style: italic;
+}
+
+button {
+    font-family: var(--main-font);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
 }

@@ -15,6 +15,7 @@
     <title>Web Start Line</title>
 
     <link rel="stylesheet" type="text/css" href="style/main-style.css">
+    <link rel="stylesheet" type="text/css" href="style/index-style.css">
 
     <script src="js/jq-library/jquery.js"></script>
     <script src="js/AjaxCrier.js"></script>
@@ -24,10 +25,10 @@
 
 <body>
     <header>
-        <h1>Web Start Line</h1>
         <ul>
             <li><a href="code-play.php">Code-Play</a></li>
         </ul>
+        <h1>Web Start Line</h1>
         <nav>
             <?php $categControll->loadCatMenu() ?>
         </nav>
@@ -39,8 +40,10 @@
 
     <footer>
         <ul>
-            <li><a href="wcm/view/admin.php">Administrátorské rozhranie</a></li>
+            <li><a href="wcm/view/admin.php"><span>Administrátorské rozhranie</span></a></li>
         </ul>
+        <p>Made by Jozef Kubík with love <span>♥</span></p>
+        <p>2020</p>
     </footer>
 </body>
 </html>

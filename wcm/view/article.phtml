@@ -5,7 +5,7 @@
                 <?php $date = strtotime($article['date_creation']); echo date('d.m.Y', $date); ?></span></p>
 
         <?php if($article['date_edit'] !== null) { ?>
-            <p>Dátum poslednej úpravy: <?php $date = strtotime($article['date_edit']); echo date('d.m.Y', $date); ?></p>
+            <p>Dátum poslednej úpravy: <span><?php $date = strtotime($article['date_edit']); echo date('d.m.Y', $date); ?></span></p>
         <?php } ?>
     </div>
     <div>

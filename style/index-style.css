@@ -1,0 +1,184 @@
+header {
+    background-color: var(--main-dark);
+    padding: 7px 7px 0 7px;
+}
+
+header h1 {
+    color: var(--maybe);
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 180px 20px;
+    text-align: center;
+}
+
+header > ul li {
+    text-align: right;
+    padding: 15px 10px 10px;
+}
+
+header > ul a {
+    color: var(--super-dark);
+    background-color: var(--important);
+    letter-spacing: 2px;
+    font-weight: 700;
+    padding: 5px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 6px 12px;
+}
+
+nav button {
+    padding: 7px 12px;
+    background-color: var(--maybe);
+    color: var(--main-dark);
+    font-size: 95%;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+main > section {
+    color: var(--bright);
+    background-color: var(--super-dark);
+    padding: 25px 15px;
+}
+
+main > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: var(--main-dark);
+    padding: 10px;
+}
+
+main > ul li {
+    border-left-width: 9px;
+    border-left-style: solid;
+}
+
+main > ul li:not(:first-child) {
+    margin-top: 10px;
+}
+
+main > ul button {
+    color: var(--super-dark);
+    font-size: 95%;
+    letter-spacing: 1px;
+    background-color: var(--maybe);
+    width: 100%;
+    padding: 10px;
+}
+
+.importance-1 {
+    border-left-color: var(--good);
+}
+
+.importance-2 {
+    border-left-color: var(--important);
+}
+
+.importance-3 {
+    border-left-color: var(--advanced);
+}
+
+
+article {
+    background-color: var(--main-bright);
+    padding: 20px 10px;
+}
+
+article div:first-child {
+    margin-bottom: 25px;
+}
+
+article h1 {
+    color: var(--main-dark);
+    font-size: 170%;
+    font-weight: 900;
+    letter-spacing: 2px;
+    padding: 20px 0 25px;
+}
+
+article h2 {
+    color: var(--main-dark);
+    font-size: 150%;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 15px 0 15px 10px;
+}
+
+article h3 {
+    color: var(--main-dark);
+    font-size: 140%;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 10px 0 10px 20px;
+}
+
+article h4 {
+    color: var(--super-dark);
+    font-size: 130%;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 7px 0 7px 30px;
+}
+
+article h5 {
+    color: var(--super-dark);
+    font-size: 115%;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 7px 0 7px 40px;
+}
+
+article p {
+    color: var(--super-dark);
+    padding: 6px 14px;
+    font-size: 100%;
+    line-height: 1.4;
+}
+
+article span {
+    font-weight: 700;
+    font-style: italic;
+}
+
+footer {
+    background-color: var(--super-dark);
+    padding: 45px 20px;
+    font-family: var(--code-font);
+}
+
+footer li {
+    text-align: center;
+    padding: 15px;
+}
+
+footer a {
+    font-size: 90%;
+    padding: 15px;
+}
+
+footer a span {
+    color: var(--advanced);
+}
+
+footer p {
+    color: var(--main-bright);
+    font-size: 80%;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 25px;
+}
+
+footer p span {
+    color: var(--important);
+}
