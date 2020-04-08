@@ -202,6 +202,8 @@
     <title>WSL - Administrátorské rozhranie</title>
 
     <link rel="stylesheet" type="text/css" href="../../style/main-style.css">
+    <link rel="stylesheet" type="text/css" href="../../style/wcm-style.css">
+
     <script src="https://cdn.tiny.cloud/1/y5c3tk6y8gwt9pitzkk1ilg3xyaex53pkv4s1zdcyig9dj08/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -212,7 +214,12 @@
 
 <body>
     <header>
-        <?php if(isset($_SESSION['user'])) $categControll->loadCatMenu() ?>
+        <?php if(isset($_SESSION['user'])) { $categControll->loadCatMenu(); } else { ?>
+            <ul class="backNav">
+                <li><a href="../../index.php">Späť</a></li>
+            </ul>
+            <h1>Web Start Line</h1>
+        <?php } ?>
     </header>
 
     <main>
@@ -274,7 +281,7 @@
         <footer>
             <form method="post">
                 <ul>
-                    <li>Code-play</li>
+                    <li><p>Code-Play</p></li>
                     <li><button type="submit" name="subpage" value="manage-css-category">CSS kategórie</button></li>
                     <li><button type="submit" name="subpage" value="manage-css-property">CSS vlastnosti</button></li>
                     <li><button type="submit" name="subpage" value="show-examples">Spravovať príklady</button></li>

@@ -39,11 +39,13 @@
     </main>
 
     <footer>
+        <p>Pre optimálny 'zážitok' používajte, prosím, najaktuálnejšie verzie prehliadačov.</p>
+        <p>Niektoré funkcionality nemusia v mobilných prehliadačoch fungovať.</p>
         <ul>
             <li><a href="wcm/view/admin.php"><span>Administrátorské rozhranie</span></a></li>
         </ul>
-        <p>Made by Jozef Kubík with love <span>♥</span></p>
-        <p>2020</p>
+        <p><span>Made by Jozef Kubík with love <strong>♥</strong></span></p>
+        <p><span>2020</span></p>
     </footer>
 </body>
 </html>

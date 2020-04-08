@@ -10,7 +10,7 @@
 
     <?php if(isset($use['id_prop'])) unset($use['id_prop']); ?>
 
-    <form method="post">
+    <form method="post" class="unsaved">
         <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/code-play/css-property-select.phtml") ?>
         <input type="text" name="for-element" minlength="1" maxlength="60" value="<?php if(isset($_POST['for-element'])) echo $_POST['for-element'] ?>" required>
 

@@ -160,6 +160,7 @@ input, textarea, select, a, button {
     --significant: #38b4c3;
     --advanced: #623898;
     --maybe: #eba63f;
+    --white: #ffffff;
 }
 
 html {
@@ -173,6 +174,10 @@ body {
 
 code {
     white-space: pre-line;
+    font-family: var(--code-font);
+}
+
+pre {
     font-family: var(--code-font);
 }
 

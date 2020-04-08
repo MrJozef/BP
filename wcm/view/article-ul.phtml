@@ -1,5 +1,5 @@
-<?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "<form method=\"post\" id='aside-article'>" ?>
-    <ul id="nav-article">
+<?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "<form method=\"post\">" ?>
+    <ul>
         <?php foreach ($articleNames as $artic) : ?>
             <li <?php if(strpos($_SERVER['REQUEST_URI'], 'admin') === false) echo "class='importance-{$artic['importance']}'" ?>><button <?php if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false) echo "type='submit' name='article'" ?> value="<?=$artic['id_article']?>"><?=$artic['title']?></button></li>
         <?php endforeach ?>

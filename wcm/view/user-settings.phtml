@@ -1,4 +1,4 @@
-<div id="user-settings">
+<div>
     <h1>Nastavenia účtu</h1>
     <h2>Zmena hesla</h2>
     <form method="post">
@@ -41,12 +41,14 @@
         <input type="submit" value="Zmeniť E-mail">
     </form>
 
-    <h2>Vymazanie profilu</h2>
-    <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
-    <form method="post">
-        <label>Pre vymazanie profilu zadajte svoje heslo:
-            <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
-        </label>
-        <input type="submit" value="Vymazať môj profil">
-    </form>
+    <div class="delete">
+        <h2>Vymazanie profilu</h2>
+        <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
+        <form method="post">
+            <label>Pre vymazanie profilu zadajte svoje heslo:
+                <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
+            </label>
+            <input type="submit" value="Vymazať môj profil">
+        </form>
+    </div>
 </div>

@@ -7,7 +7,7 @@
         </label>
         <label for="article-category">Kategória:</label>
             <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/category-select.phtml"); ?>
-        <label for="article-importance">Zaradenie článku::</label>
+        <label for="article-importance">Zaradenie článku:</label>
             <?php require($_SERVER['DOCUMENT_ROOT']."/wcm/view/importance-select.phtml"); ?>
         <label>Text článku:
             <textarea class="tinyEditor" name="article-text" minlength="50" maxlength="65535" required><?= $article['text'] ?></textarea>
