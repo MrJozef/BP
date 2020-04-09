@@ -1,6 +1,8 @@
 <?php if($examJs != null) { ?>
-    <textarea><?= $examJs ?></textarea>
+    <textarea class="codeArea"><?= $examJs ?></textarea>
 
-    <button type="button" value="<?= $examId ?>" name="showJsDesc">Zobraz popis</button>
-    <button type="button" value="resetJs">Reset JS</button>
+    <div>
+        <button type="button" value="<?= $examId ?>" name="showJsDesc">Zobraz popis</button>
+        <button type="button" value="resetJs">Reset JS</button>
+    </div>
 <?php } ?>

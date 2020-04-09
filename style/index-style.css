@@ -99,63 +99,6 @@ article div:first-child {
     margin-bottom: 25px;
 }
 
-article h1 {
-    color: var(--main-dark);
-    font-size: 170%;
-    font-weight: 900;
-    letter-spacing: 2px;
-    padding: 20px 0 25px;
-}
-
-article h2 {
-    color: var(--main-dark);
-    font-size: 150%;
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 15px 0 15px 10px;
-}
-
-article h3 {
-    color: var(--main-dark);
-    font-size: 140%;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 10px 0 10px 20px;
-}
-
-article h4 {
-    color: var(--super-dark);
-    font-size: 130%;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 7px 0 7px 30px;
-}
-
-article h5 {
-    color: var(--super-dark);
-    font-size: 115%;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 7px 0 7px 40px;
-}
-
-article p {
-    color: var(--super-dark);
-    padding: 6px 14px;
-    font-size: 100%;
-    line-height: 1.4;
-}
-
-article span {
-    font-weight: 700;
-    font-style: italic;
-}
-
-article code {
-    background-color: var(--bright);
-    padding: 5px;
-}
-
 footer {
     background-color: var(--super-dark);
     padding: 25px 20px;

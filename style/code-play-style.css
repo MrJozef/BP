@@ -1,0 +1,229 @@
+.invisible {
+    display: none;
+}
+
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    padding: 7px;
+    background-color: var(--super-dark);
+}
+
+header > ul {
+    display: flex;
+    align-items: baseline;
+}
+
+header > ul li {
+    display: block;
+    width: 50%;
+}
+
+header > ul li:last-child {
+    padding-top: 5px;
+    text-align: right;
+}
+
+
+header > ul button, #exit {
+    color: var(--main-dark);
+    font-size: 110%;
+    font-weight: 700;
+    background-color: var(--important);
+    letter-spacing: 1px;
+    padding: 6px 8px;
+}
+
+header > ul a {
+    color: var(--important);
+    font-size: 110%;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border: 3px solid var(--important);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-dark);
+}
+
+nav h1, nav p {
+    text-align: center;
+    font-weight: 700;
+}
+
+nav h1 {
+    color: var(--important);
+    padding: 50px 0;
+    font-family: var(--code-font);
+    font-size: 150%;
+
+}
+nav p {
+    color: var(--maybe);
+    font-size: 110%;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 50px 12px;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 6px 12px;
+}
+
+nav button {
+    padding: 7px 12px;
+    background-color: var(--maybe);
+    color: var(--main-dark);
+    font-size: 95%;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#closeNav {
+    display: block;
+    background-color: var(--important);
+    margin: auto;
+}
+
+main {
+    border-width: 0 4px;
+    border-style: solid;
+    border-color: var(--super-dark);
+}
+
+main > div {
+    overflow: scroll;
+}
+
+main div > section:first-child {
+    background-color: var(--super-dark);
+}
+
+main div > section:first-child p {
+    padding: 7px;
+    background-color: var(--bright);
+}
+
+#css-form {
+    background-color: var(--main-dark);
+}
+
+#css-form h1 {
+    color: var(--good);
+    padding: 15px 0;
+    font-weight: 700;
+    font-size: 150%;
+}
+
+#css-form > section:not(:last-of-type) {
+    padding: 7px;
+    border-bottom: solid 3px var(--bright);
+}
+#css-form section {
+    padding: 7px;
+}
+
+#css-form section > div {
+    padding: 7px;
+}
+
+#css-form section > div > div {
+    padding: 7px;
+}
+
+#css-form h2 {
+    color: var(--bright);
+    padding: 7px 0;
+    font-weight: 700;
+    font-size: 120%;
+}
+
+#css-form select, #css-form input {
+    color: var(--bright);
+    background-color: var(--main-dark);
+    border: solid 3px var(--bright);
+}
+
+#css-form .unit {
+    margin: 0 0 0 -8px;
+    padding: 3px;
+}
+
+#css-form button {
+    color: var(--maybe);
+    background-color: var(--main-dark);
+    font-family: var(--code-font);
+    font-weight: 700;
+    padding: 2px;
+}
+
+#js-section textarea {
+    color: var(--bright);
+    background-color: var(--main-dark);
+    width: 100%;
+    height: 250px;
+    padding: 7px;
+}
+
+#css-form > div, #js-section > div {
+    display: flex;
+    padding: 15px;
+    background-color: var(--super-dark);
+}
+
+#css-form > div button[type='button'], #js-section > div button[type='button'] {
+    color: var(--super-dark);
+    font-family: var(--main-font);
+    background-color: var(--significant);
+    font-weight: 700;
+    padding: 6px 8px;
+}
+
+#css-form > div button[type='reset'], #js-section > div button[value='resetJs'] {
+    color: var(--super-dark);
+    font-family: var(--main-font);
+    background-color: var(--important);
+    padding: 6px 8px;
+    margin: auto 0 0 auto;
+}
+
+#result {
+    width: 100%;
+    border-bottom: solid 4px var(--super-dark);
+}
+
+article {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bright);
+    border: solid 7px var(--main-dark);
+}
+
+article > div:first-of-type {
+    padding-bottom: 7px;
+    background-color: var(--main-dark);
+}
+
+article > div:not(:first-of-type) {
+    padding: 20px 10px;
+    overflow: scroll;
+}

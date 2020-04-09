@@ -3,8 +3,9 @@ const example = new Styler(),
 
 $(document).ready(function () {
 
-    const navButton = $('header nav button'),
-        description = $('main section p'),
+    const nav= $('header nav'),
+        navButton = nav.find('ul button'),
+        description = $('main div section p'),
         cssSection = $('#css-form'),
         jsSection = $('#js-section'),
         iframe = document.querySelector('#result');
@@ -16,11 +17,13 @@ $(document).ready(function () {
     if(urlParam.has('example')) {
         previousExampleId = urlParam.get('example');
         fOpenExample(previousExampleId);
+        nav.addClass('invisible');
     }
 
     //tu nemoze byt arrow function! bude blbnut this
     navButton.click(function() {
         const actualExampleId = $(this).attr('value');
+        nav.addClass('invisible');
 
         if (previousExampleId !== actualExampleId) {
             previousExampleId = actualExampleId;
@@ -72,7 +75,7 @@ $(document).ready(function () {
 
                 const propSelect = cssSection.find('select'),
                     propInput = cssSection.find('input'),
-                    propButton = cssSection.find('div button'),    //tymto vyberieme vsetko okrem reset tlacidla
+                    propButton = cssSection.find('section div button'),    //tymto vyberieme vsetko okrem reset tlacidla
                     resetButton = cssSection.find('[value="reset"]'),
                     showCodeButton = cssSection.find('[value="showCode"]'),
                     jsTextarea = jsSection.find('textarea'),
@@ -186,7 +189,8 @@ function fShowCode(HTMLCode) {
         htmlCode = fSpecialChars(HTMLCode),
 
     codeArticle =
-        `<article><button type="button" id="exit">Exit</button>
+        `<article>
+            <div><button type="button" id="exit">Exit</button></div>
             <div><h1>CSS kód:</h1><p><code>${cssCode}</code></p></div>
             <div><h1>HTML kód:</h1><p><code>${htmlCode}</code></p></div>
         </article>`;

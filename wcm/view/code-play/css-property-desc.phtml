@@ -1,7 +1,9 @@
 <article>
-    <h1><?= $property['prop_name'] ?></h1>
-    <button type="button" id="exit">Exit</button>
     <div>
-        <?= $property['prop_description'] == "" ? "<p>Táto CSS vlastnosť nemá zatiaľ priradený popis.</p>" : $property['prop_description'] ?>
+        <button type="button" id="exit">Exit</button>
+    </div>
+    <div>
+        <h1><?= $property['prop_name'] ?></h1>
+        <?= $property['prop_description'] == "" ? "<p><strong>Táto CSS vlastnosť nemá zatiaľ priradený popis.</strong></p>" : $property['prop_description'] ?>
     </div>
 </article>

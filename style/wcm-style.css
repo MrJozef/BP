@@ -157,11 +157,9 @@ label {
 
 input:not([type='radio']), main ul button, textarea, select {
     color: var(--main-dark);
-    font-family: raleway;
     font-size: 90%;
     display: block;
     width: 100%;
-    padding: 4px;
     margin-top: 4px;
     border: 0;
 }
