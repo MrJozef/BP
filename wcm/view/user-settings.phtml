@@ -1,27 +1,27 @@
-<div>
-    <h1>Nastavenia účtu</h1>
-    <h2>Zmena hesla</h2>
+<div id="user-setting">
     <form method="post">
+        <h1>Nastavenia účtu</h1>
+        <h2>Zmena hesla</h2>
         <label>Aktuálne heslo:
             <input type="password" name="passwd-old" minlength="6" maxlength="30" required
-                   value="<?= $userControll->clearPost('passwd-old') ?>">
+                       value="<?= $userControll->clearPost('passwd-old') ?>">
         </label>
         <label>Nové heslo:
             <input type="password" name="passwd-new" minlength="6" maxlength="30" required
-                   value="<?= $userControll->clearPost('passwd-new') ?>">
+                       value="<?= $userControll->clearPost('passwd-new') ?>">
         </label>
         <label>Opakujte nové heslo:
             <input type="password" name="passwd-new2" minlength="6" maxlength="30" required
-                   value="<?= $userControll->clearPost('passwd-new2') ?>">
+                       value="<?= $userControll->clearPost('passwd-new2') ?>">
         </label>
         <input type="submit" value="Zmeniť heslo">
     </form>
 
-    <h2>Zmena nicku</h2>
     <form method="post">
+        <h2>Zmena nicku</h2>
         <label>Nový nick:
             <input type="text" name="nick-new" minlength="4" maxlength="30" required
-                   value="<?= $userControll->clearPost('nick-new') ?>">
+                       value="<?= $userControll->clearPost('nick-new') ?>">
         </label>
         <label>Zadajte aj svoje heslo:
             <input type="password" name="nick-passwd" minlength="6" maxlength="30" required>
@@ -29,11 +29,11 @@
         <input type="submit" value="Zmeniť nick">
     </form>
 
-    <h2>Zmena E-mailovej adresy</h2>
     <form method="post">
+        <h2>Zmena E-mailovej adresy</h2>
         <label>Nová E-mailová adresa:
             <input type="email" name="mail-new" minlength="6" maxlength="60" required
-                   value="<?= $userControll->clearPost('mail-new') ?>">
+                       value="<?= $userControll->clearPost('mail-new') ?>">
         </label>
         <label>Zadajte aj svoje heslo:
             <input type="password" name="mail-passwd" minlength="6" maxlength="30" required>
@@ -41,14 +41,14 @@
         <input type="submit" value="Zmeniť E-mail">
     </form>
 
-    <div class="delete">
-        <h2>Vymazanie profilu</h2>
-        <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
-        <form method="post">
-            <label>Pre vymazanie profilu zadajte svoje heslo:
-                <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
-            </label>
-            <input type="submit" value="Vymazať môj profil">
-        </form>
-    </div>
+    <form method="post">
+        <div class="delete">
+            <h2>Vymazanie profilu</h2>
+            <p>Túto akciu nie je možné zvrátiť a zmazaný profil nie je možné obnoviť!</p>
+                <label>Pre vymazanie profilu zadajte svoje heslo:
+                    <input type="password" name="delete-passwd" minlength="6" maxlength="30" required>
+                </label>
+                <input type="submit" value="Vymazať môj profil">
+        </div>
+    </form>
 </div>

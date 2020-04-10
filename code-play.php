@@ -32,10 +32,12 @@
             <li><a href="index.php">Späť</a></li>
         </ul>
         <nav>
-            <h1>Code-Play</h1>
-            <p>Zvoľte príklad:</p>
-            <?php $exampleControll->showExamples(false) ?>
-            <button id="closeNav">Zavrieť</button>
+            <div>
+                <h1>Code-Play</h1>
+                <p>Zvoľte príklad:</p>
+                <?php $exampleControll->showExamples(false) ?>
+                <button id="closeNav">Zavrieť</button>
+            </div>
         </nav>
     </header>
 

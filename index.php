@@ -21,6 +21,7 @@
     <script src="js/AjaxCrier.js"></script>
     <script src="js/FPController.js"></script>
     <script src="js/FPViewHandler.js"></script>
+    <script src="js/FPdesign.js"></script>
 </head>
 
 <body>

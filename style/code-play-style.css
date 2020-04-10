@@ -50,6 +50,7 @@ header > ul a {
 
 nav {
     position: fixed;
+    z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
@@ -76,14 +77,14 @@ nav p {
 
 nav ul {
     display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+    flex-direction: column;
     padding: 50px 12px;
 }
 
 nav li {
-    display: inline-block;
-    margin: 0 6px 12px;
+    display: block;
+    width: 100%;
+    margin: 0 0 12px;
 }
 
 nav button {
@@ -93,12 +94,14 @@ nav button {
     font-size: 95%;
     font-weight: 700;
     letter-spacing: 1px;
+    width: 100%;
 }
 
 #closeNav {
     display: block;
     background-color: var(--important);
     margin: auto;
+    max-width: 250px;
 }
 
 main {
@@ -108,7 +111,8 @@ main {
 }
 
 main > div {
-    overflow: scroll;
+    background-color: var(--super-dark);
+    overflow: auto;
 }
 
 main div > section:first-child {
@@ -116,8 +120,8 @@ main div > section:first-child {
 }
 
 main div > section:first-child p {
+    color: var(--maybe);
     padding: 7px;
-    background-color: var(--bright);
 }
 
 #css-form {
@@ -133,7 +137,7 @@ main div > section:first-child p {
 
 #css-form > section:not(:last-of-type) {
     padding: 7px;
-    border-bottom: solid 3px var(--bright);
+    border-bottom: solid 4px var(--bright);
 }
 #css-form section {
     padding: 7px;
@@ -171,6 +175,10 @@ main div > section:first-child p {
     font-family: var(--code-font);
     font-weight: 700;
     padding: 2px;
+}
+
+#js-section {
+    background-color: var(--main-dark);
 }
 
 #js-section textarea {
@@ -212,18 +220,51 @@ article {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 2;
     width: 100%;
     height: 100%;
     background-color: var(--main-bright);
-    border: solid 7px var(--main-dark);
+    border: solid 7px var(--super-dark);
 }
 
 article > div:first-of-type {
     padding-bottom: 7px;
-    background-color: var(--main-dark);
+    background-color: var(--super-dark);
 }
 
 article > div:not(:first-of-type) {
     padding: 20px 10px;
-    overflow: scroll;
+}
+
+@media only screen and (min-width: 900px) {
+
+    header {
+        padding: 8px;
+    }
+
+    header > ul li {
+        padding: 0 40px;
+    }
+
+    nav {
+        background-color: var(--super-dark);
+    }
+
+    nav > div {
+        width: 700px;
+        height: 100%;
+        background-color: var(--main-dark);
+        margin: auto;
+        padding: 0 20px;
+    }
+
+    main > div {
+        border-style: solid;
+        border-width: 0 4px 4px 0;
+        border-color: var(--main-dark);
+    }
+
+    article > div:first-of-type {
+        padding: 0 40px 7px 40px;
+    }
 }

@@ -1,12 +1,13 @@
+const BORDER_WIDTH = 4,
+    DESKTOP_MIN_WIDTH = 900;    //px
+
 $(document).ready(function () {
     let nav = $('nav'),
         showNavButton = $('#showNav'),
         closeNavButton = $('#closeNav'),
         mainDiv = $('main > div:first-child'),
         iframe = $('#result'),
-        browser = $(window),
-        browserWidth,
-        browserHeight;
+        browser = $(window);
 
     showNavButton.click(function () {
         nav.removeClass('invisible');
@@ -18,16 +19,30 @@ $(document).ready(function () {
 
 
     browser.on('resize', function() {
-        browserWidth = browser.width();
-        browserHeight = browser.height();
+        let browserWidth = browser.width(),
+            browserHeight = browser.height(),
+            headerHeight = $('header').outerHeight();
 
-        if (browserWidth < 980) {
-            let resultHeight = (browserHeight - $('header').outerHeight()) / 2;
+        if (browserWidth < DESKTOP_MIN_WIDTH) {
+            let resultHeight = (browserHeight - headerHeight) / 2;
+
             mainDiv.outerHeight(resultHeight);
+            mainDiv.outerWidth(browserWidth - BORDER_WIDTH * 2);
             iframe.outerHeight(resultHeight);
+            iframe.outerWidth(browserWidth - BORDER_WIDTH * 2);
+
+            iframe.offset({ top: (headerHeight + resultHeight), left: BORDER_WIDTH });
         }
         else {
-            alert("nie ok");
+            let resultHeight = browserHeight - headerHeight,
+                resultWidth = browserWidth / 2;
+
+            mainDiv.outerHeight(resultHeight);
+            mainDiv.outerWidth(resultWidth - BORDER_WIDTH);
+            iframe.outerHeight(resultHeight);
+            iframe.outerWidth(resultWidth - BORDER_WIDTH);
+
+            iframe.offset({ top: headerHeight, left: resultWidth });
         }
     }).trigger('resize');
 });

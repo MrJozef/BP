@@ -268,3 +268,174 @@ footer ul:last-child li:nth-last-child(2) button {
 footer ul:last-child li:last-child a {
     color: var(--important);
 }
+
+@media only screen and (min-width: 900px) {
+    html {
+        background-color: var(--main-bright);
+    }
+
+    header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 2;
+    }
+
+    header h1 {
+        padding: 0 0 60px;
+    }
+
+    #login, #signup {
+        display: inline-block;
+        width: 50%;
+    }
+
+    div.delete {
+        margin: 120px auto 0 auto;
+        padding: 7px;
+        max-width: 600px;
+        background-color: var(--bright);
+    }
+
+    main {
+        overflow: auto;
+        display: flex;
+    }
+
+    main > form:first-of-type {
+        width: 500px;
+        padding: 24px;
+    }
+
+    .uses {
+        width: 600px;
+    }
+
+    main > div {
+        padding: 24px;
+        width: 100%;
+    }
+
+    main select {
+        max-width: 400px;
+    }
+
+    main > div form:last-of-type {
+        margin-bottom: 24px;
+    }
+
+    main input[type='submit'], main ul button {
+        width: 300px;
+        margin: 20px auto 0 auto;
+    }
+
+    #user-setting {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    #user-setting > form {
+        padding: 24px;
+        width: 50%;
+    }
+
+    #user-setting .delete {
+        width: 100%;
+        margin: auto;
+    }
+
+    footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 0;
+        z-index: 2;
+    }
+
+    footer ul:first-of-type {
+        background-color: var(--significant);
+    }
+
+    footer ul:nth-of-type(2) {
+        background-color: var(--main-dark);
+    }
+
+    footer ul p {
+        padding: 8px 12px;
+        background-color: var(--main-dark);
+    }
+
+    footer ul a {
+        padding: 7px 12px;
+        background-color: var(--main-dark);
+    }
+
+    footer li {
+        display: inline-block;
+        width: auto;
+        padding: 0;
+        margin-left: -5px;
+    }
+
+    footer ul:last-child button {
+        color: var(--maybe);
+        background-color: var(--main-dark);
+    }
+
+    footer ul:last-child p {
+        color: var(--bright);
+    }
+
+    footer ul:last-child li:nth-last-child(2) button {
+        color: var(--main-dark);
+    }
+
+    /*  HOVER  */
+
+    header a:hover {
+        background-color: var(--hover-important);
+    }
+
+    table button[name='admin-delete']:hover {
+        background-color: var(--hover-important);
+    }
+
+    div.delete input[type='submit']:hover {
+        background-color: var(--hover-important);
+    }
+
+    .saved button[name="use-delete"]:hover {
+        background-color: var(--hover-important);
+    }
+
+    footer ul:last-child li:nth-last-child(2) button:hover {
+        background-color: var(--hover-important);
+    }
+
+    footer ul:last-child li:last-child a:hover {
+        color: var(--hover-important);
+    }
+
+    button:hover {
+        background-color: var(--hover-maybe);
+    }
+
+    main input[type='submit']:hover, main ul button:hover {
+        background-color: var(--hover-maybe);
+    }
+
+    footer ul:last-child button:hover {
+        color: var(--hover-maybe);
+    }
+
+    footer ul:first-child button:hover {
+        background-color: var(--hover-significant);
+    }
+
+    .newButton:hover {
+        background-color: var(--hover-good);
+    }
+}

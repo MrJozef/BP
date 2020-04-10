@@ -10,10 +10,10 @@
             <textarea name="example-description" minlength="20" maxlength="1000" placeholder="Sem môžete napísať krátky popis (max. 1000 znakov) príkladu. Nepoužívajte HTML značky."><?=$example['exam_description']?></textarea>
         </label>
         <label>HTML kód:
-            <textarea name="example-code" minlength="10" maxlength="3000" placeholder="<h1>Nadpis</h1><p>Popis...</p>"><?=$example['exam_code']?></textarea>
+            <textarea class="codeArea" name="example-code" minlength="10" maxlength="3000" placeholder="<h1>Nadpis</h1><p>Popis...</p>"><?=$example['exam_code']?></textarea>
         </label>
         <label>JS kód/jQuery kód (voliteľný):
-            <textarea name="example-js" minlength="30" maxlength="4000" placeholder="window.onload = function() { ... };"><?=$example['exam_js']?></textarea>
+            <textarea class="codeArea" name="example-js" minlength="30" maxlength="4000" placeholder="window.onload = function() { ... };"><?=$example['exam_js']?></textarea>
         </label>
         <label>Popis JS/jQuery kódu (voliteľný):
             <textarea class="tinyEditor" name="example-js-desc" minlength="20" maxlength="65535" placeholder="Sem napíšte popis JS kódu. HTML značky sú povolené."><?=$example['exam_js_description']?></textarea>

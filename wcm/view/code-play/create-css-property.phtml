@@ -26,7 +26,7 @@
                    value="<?= $cssProp['prop-name'] ?>">
         </label>
         <label>Hodnoty vlastnosti:
-            <textarea name="prop-value" minlength="10" maxlength="2000" placeholder="Sem napíšte hodnoty, ktoré môže CSS vlastnosť nadobúdať. Musíte používať HTML značky." required><?= $cssProp['prop-value'] ?></textarea>
+            <textarea class="codeArea" name="prop-value" minlength="10" maxlength="2000" placeholder="Sem napíšte hodnoty, ktoré môže CSS vlastnosť nadobúdať. Musíte používať HTML značky." required><?= $cssProp['prop-value'] ?></textarea>
         </label>
         <label for="prop-category">Zaradenie vlastnosti:</label>
             <?php require($_SERVER['DOCUMENT_ROOT'] . "/wcm/view/code-play/css-category-select.phtml"); ?>

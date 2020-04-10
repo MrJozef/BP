@@ -210,6 +210,8 @@
             selector: '.tinyEditor'
         });
     </script>
+    <script src="../../js/jq-library/jquery.js"></script>
+    <script src="../../js/WCMdesign.js"></script>
 </head>
 
 <body>
