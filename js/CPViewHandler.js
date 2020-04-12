@@ -177,6 +177,7 @@ function fShowPropDesc(propButton) {
 
     exampleControll.loadPropDesc(propertyId).then(data => {
         $('body').append(data);
+        setHeightOfArticle($('article'));       //definovane v CPdesign.js
 
         $('#exit').click(function () {
             $('article').remove();
@@ -191,11 +192,14 @@ function fShowCode(HTMLCode) {
     codeArticle =
         `<article>
             <div><button type="button" id="exit">Exit</button></div>
-            <div><h1>CSS kód:</h1><p><code>${cssCode}</code></p></div>
-            <div><h1>HTML kód:</h1><p><code>${htmlCode}</code></p></div>
+            <div id="myCode">
+                <div><h1>CSS kód:</h1><p><code>${cssCode}</code></p></div>
+                <div><h1>HTML kód:</h1><p><code>${htmlCode}</code></p></div>
+            </div>
         </article>`;
 
     $('body').append(codeArticle);
+    setHeightOfArticle($('article'));       //definovane v CPdesign.js
 
     $('#exit').click(function () {
         $('article').remove();
@@ -207,6 +211,7 @@ function fShowJsDesc(button) {
 
     exampleControll.loadJsDesc(exampleId).then(data => {
         $('body').append(data);
+        setHeightOfArticle($('article'));       //definovane v CPdesign.js
 
         $('#exit').click(function () {
             $('article').remove();

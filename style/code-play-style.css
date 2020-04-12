@@ -54,8 +54,11 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     background-color: var(--main-dark);
+}
+
+nav > div {
+    overflow: auto;
 }
 
 nav h1, nav p {
@@ -100,7 +103,7 @@ nav button {
 #closeNav {
     display: block;
     background-color: var(--important);
-    margin: auto;
+    margin: 0 auto 50px auto;
     max-width: 250px;
 }
 
@@ -232,14 +235,54 @@ article > div:first-of-type {
     background-color: var(--super-dark);
 }
 
-article > div:not(:first-of-type) {
+article > div:nth-of-type(2) {
+    overflow: auto;
     padding: 20px 10px;
+}
+
+#myCode code {
+    background-color: var(--white);
+}
+
+#myCode span {
+    font-style: normal;
+}
+
+#myCode span.prop {
+    padding-left: 12px;
+    color: var(--important);
+    font-style: italic;
+}
+
+.number {
+    color: var(--significant);
+}
+
+.unit {
+    color: var(--good);
+}
+
+.color {
+    color: var(--advanced);
+}
+
+.tag {
+    color: var(--important);
 }
 
 @media only screen and (min-width: 900px) {
 
     header {
         padding: 8px;
+    }
+
+    header > ul button:hover, #exit:hover, #closeNav:hover {
+        background-color: var(--hover-important);
+    }
+
+    header > ul a:hover {
+        color: var(--hover-important);
+        border-color: var(--hover-important);
     }
 
     header > ul li {
@@ -252,7 +295,6 @@ article > div:not(:first-of-type) {
 
     nav > div {
         width: 700px;
-        height: 100%;
         background-color: var(--main-dark);
         margin: auto;
         padding: 0 20px;
@@ -261,7 +303,23 @@ article > div:not(:first-of-type) {
     main > div {
         border-style: solid;
         border-width: 0 4px 4px 0;
-        border-color: var(--main-dark);
+        border-color: var(--super-dark);
+    }
+
+    #css-form button:hover {
+        color: var(--hover-maybe);
+    }
+
+    #css-form > div button[type='button']:hover, #js-section > div button[type='button']:hover {
+        background-color: var(--hover-significant);
+    }
+
+    #css-form > div button[type='reset']:hover, #js-section > div button[value='resetJs']:hover {
+        background-color: var(--hover-important);
+    }
+
+    #js-section textarea {
+        height: 400px;
     }
 
     article > div:first-of-type {

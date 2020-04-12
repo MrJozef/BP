@@ -153,10 +153,22 @@ footer p strong {
         font-size: 2.5em;
     }
 
+    header > ul a {
+        font-size: 110%;
+    }
+
+    header > ul a:hover {
+        background-color: var(--hover-important);
+    }
+
     nav ul {
         position: absolute;
         bottom: 0;
         left: 0;
+    }
+
+    nav button {
+        font-size: 110%;
     }
 
     main > ul {
@@ -167,8 +179,26 @@ footer p strong {
         border-left-width: 12px;
     }
 
+    main > ul button {
+        text-align: left;
+        font-size: 105%;
+    }
+
     .linkOfImportance a {
         max-width: 600px;
         margin: auto;
+    }
+
+    .linkOfImportance a:hover {
+        background-color: var(--hover-maybe);
+    }
+
+    footer p {
+        font-size: 90%;
+        padding: 10px 0;
+    }
+
+    footer li {
+        padding: 10px;
     }
 }

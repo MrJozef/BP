@@ -419,10 +419,6 @@ footer ul:last-child li:last-child a {
         color: var(--hover-important);
     }
 
-    button:hover {
-        background-color: var(--hover-maybe);
-    }
-
     main input[type='submit']:hover, main ul button:hover {
         background-color: var(--hover-maybe);
     }

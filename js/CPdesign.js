@@ -1,8 +1,10 @@
 const BORDER_WIDTH = 4,
+    ARTICLE_BORDER = 7,
     DESKTOP_MIN_WIDTH = 900;    //px
 
 $(document).ready(function () {
     let nav = $('nav'),
+        navDiv = nav.find('div'),
         showNavButton = $('#showNav'),
         closeNavButton = $('#closeNav'),
         mainDiv = $('main > div:first-child'),
@@ -23,6 +25,10 @@ $(document).ready(function () {
             browserHeight = browser.height(),
             headerHeight = $('header').outerHeight();
 
+        //velkost + pozicia menu
+        navDiv.outerHeight(browserHeight);
+
+        //pozicovanie iframu, #css-form a js-section
         if (browserWidth < DESKTOP_MIN_WIDTH) {
             let resultHeight = (browserHeight - headerHeight) / 2;
 
@@ -46,3 +52,13 @@ $(document).ready(function () {
         }
     }).trigger('resize');
 });
+
+function setHeightOfArticle(thisArticle) {
+
+    $(window).on('resize', function() {
+        const articleMenu = thisArticle.find('> div:first-of-type'),
+            articleMain = thisArticle.find('> div:nth-of-type(2)');
+
+        articleMain.outerHeight($(window).outerHeight() - articleMenu.outerHeight() - 2 * ARTICLE_BORDER);
+    }).trigger('resize');
+}
