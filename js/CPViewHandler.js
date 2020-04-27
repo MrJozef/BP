@@ -123,25 +123,26 @@ $(document).ready(function () {
 
 
 //inšpirácia, bez ktorej by táto funkcia nevznikla: https://dev.to/pulljosh/how-to-load-html-css-and-js-code-into-an-iframe-2blc
-function fCreateBlob({ html, css, js }) {
+function fCreateBlob({html, css, js}) {
 
-    const source = `
-        <html lang="sk">
+    const jsBlob = new Blob([js], {type: 'text/javascript'}),
+        jsBlobUrl = URL.createObjectURL(jsBlob),
+        source = `
+            <html lang="sk">
             <head>
                 <meta charset="UTF-8">
                 <title>Code-Play iframe (not iFrame)</title>
                 <style>${css}</style>
                 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-                <script>${js}</script>
+                ${js && `<script src="${jsBlobUrl}"></script>`}
             </head>
             <body>
                 ${html}
             </body>
         </html>
         `;
-
-    const blob = new Blob([source], { type: 'text/html' });
-    return URL.createObjectURL(blob);
+    const mainBlob = new Blob([source], {type: 'text/html'});
+    return URL.createObjectURL(mainBlob);
 }
 
 
@@ -152,7 +153,7 @@ function fCssMain(input) {
     let value = "",
         actualInput;
 
-    for(i = 1; i < allPropInputs.length; i++) {
+    for(let i = 1; i < allPropInputs.length; i++) {
         actualInput = $(allPropInputs[i]);
 
         if (!actualInput.hasClass('unit')) {
@@ -172,18 +173,18 @@ function fCssMain(input) {
 }
 
 
-function fShowPropDesc(propButton) {
-    const propertyId = propButton.attr('value');
+    function fShowPropDesc(propButton) {
+        const propertyId = propButton.attr('value');
 
-    exampleControll.loadPropDesc(propertyId).then(data => {
-        $('body').append(data);
-        setHeightOfArticle($('article'));       //definovane v CPdesign.js
+        exampleControll.loadPropDesc(propertyId).then(data => {
+            $('body').append(data);
+            setHeightOfArticle($('article'));
 
-        $('#exit').click(function () {
-            $('article').remove();
+            $('#exit').click(function () {
+                $('article').remove();
+            });
         });
-    });
-}
+    }
 
 function fShowCode(HTMLCode) {
     let cssCode = example.getTextStyle(),
@@ -199,7 +200,7 @@ function fShowCode(HTMLCode) {
         </article>`;
 
     $('body').append(codeArticle);
-    setHeightOfArticle($('article'));       //definovane v CPdesign.js
+    setHeightOfArticle($('article'));       //definované v CPdesign.js
 
     $('#exit').click(function () {
         $('article').remove();
@@ -211,7 +212,7 @@ function fShowJsDesc(button) {
 
     exampleControll.loadJsDesc(exampleId).then(data => {
         $('body').append(data);
-        setHeightOfArticle($('article'));       //definovane v CPdesign.js
+        setHeightOfArticle($('article'));       //definované v CPdesign.js
 
         $('#exit').click(function () {
             $('article').remove();

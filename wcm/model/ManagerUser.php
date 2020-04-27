@@ -141,15 +141,10 @@ class ManagerUser extends Manager
 
             if (sha1($thisUser['nick']) === $hashNick) {
                 $this->setVerifiedMail($thisUser['nick']);
-               return true;
+                return true;
             }
         }
         return false;
-    }
-
-    private function setVerifiedMail($nick) {
-        $task = 'UPDATE user SET verified_mail = 1 WHERE nick = ?';
-        $this->tryQueryDb($task, [$nick], ERROR_DB);
     }
 
     //prihlaseny administrator schvaluje novo-prihlaseneho admina, kt. si uz potvrdil mail
@@ -171,10 +166,15 @@ class ManagerUser extends Manager
         return DBWrap::selectAll($task, []);
     }
 
-    public function aGetNameById($userId) {
+    public function getNameById($userId) {
         $task = 'SELECT nick FROM user WHERE id_user = ? LIMIT 1';
         $nickArray = DBWrap::selectOne($task, [$userId]);
         return $nickArray['nick'];
+    }
+
+    private function setVerifiedMail($nick) {
+        $task = 'UPDATE user SET verified_mail = 1 WHERE nick = ?';
+        $this->tryQueryDb($task, [$nick], ERROR_DB);
     }
 
     //overi ci uzivatel s danym nickom ma naozaj take heslo, ake zadal - toto sa NEpouziva pre login, preto netreba kontrolu ci existuje nick

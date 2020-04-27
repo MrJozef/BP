@@ -13,10 +13,10 @@ abstract class Manager
         }
     }
 
-    protected function checkLengthWException($x, $maxLength, $minLength, $errorMsg) {
+    protected function checkLengthWException($x, $maxLength, $minLength, $errMsg) {
 
         if (!$this->checkLength($x, $maxLength, $minLength)) {
-            throw new MyException($errorMsg);
+            throw new MyException($errMsg);
         }
     }
 

@@ -6,12 +6,12 @@ class Styler {
         this.propList = {};
     }
 
-    changeExample(newPropArray) {
-        this.propList = newPropArray;
+    changeExample(newPropObj) {
+        this.propList = newPropObj;
     }
 
     updateValue(elemName, propName, propValue) {
-        this.propList[elemName][propName] = propValue;      //todo aby sme nemohli zmenit value a aj tak nam to insertne do propList
+        this.propList[elemName][propName] = propValue;
     }
 
     clearAll() {

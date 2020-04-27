@@ -7,6 +7,8 @@ class AjaxCrier {
     }
 
     //dataForPhp - musí to byť objekt!
+
+
     async _callAjax(outputDataType, urlToPhpHandler, dataForPhp) {
         return $.ajax ({
             type: 'post',

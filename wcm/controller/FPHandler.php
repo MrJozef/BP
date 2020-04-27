@@ -19,7 +19,7 @@ if(isset($_POST['aArticleId'])) {
 
     $article = $articControll->aLoadArticle($_POST['aArticleId']);
     if($article !== null) {
-        $article['nick'] = $userControll->aGetUserNameById($article['id_author']);
+        $article['nick'] = $userControll->getUserNameById($article['id_author']);
 
         extract($article);
         require($_SERVER['DOCUMENT_ROOT']."/wcm/view/article.phtml");

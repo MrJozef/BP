@@ -44,9 +44,10 @@ class ControllerUser extends Controller
 
     public function changeNick() {
         try {
-            $this->myManager->userChangeNick($_SESSION['user'], $_POST['nick-new'], $_POST['nick-passwd']);
-            $this->throwSuccMsg(SUCCESS_NICK);
+            $this->myManager->userChangeNick($_SESSION['user'], $_POST['nick-new'],
+                                                $_POST['nick-passwd']);
             $_SESSION['user'] = $_POST['nick-new'];
+            $this->throwSuccMsg(SUCCESS_NICK);
         }
         catch(MyException $e) {
             $this->throwErrorMsg($e->errorMessage());
@@ -56,7 +57,7 @@ class ControllerUser extends Controller
 
     public function changeMail() {
         try {
-            $this->myManager->userChangeMail($_SESSION['user'], $_POST['mail-new'], $_POST['mail-passwd']);
+            $this->myManager->userChangeMail($_SESSION['user'], $_POST['mail-new'],$_POST['mail-passwd']);
             $this->throwSuccMsg(SUCCESS_MAIL);
         }
         catch(MyException $e) {
@@ -116,9 +117,8 @@ class ControllerUser extends Controller
         }
     }
 
-    //toto je tiez funkcia pre ajax
-    public function aGetUserNameById($userId) {
-        $userNick = $this->myManager->aGetNameById($userId);
+    public function getUserNameById($userId) {
+        $userNick = $this->myManager->getNameById($userId);
         return $this->clearHTML($userNick);
     }
 
