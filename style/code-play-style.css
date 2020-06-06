@@ -125,6 +125,7 @@ main div > section:first-child {
 main div > section:first-child p {
     color: var(--maybe);
     padding: 7px;
+    line-height: 1.3;
 }
 
 #css-form {

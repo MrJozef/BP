@@ -258,7 +258,7 @@ footer ul:last-child button {
 }
 
 footer ul:last-child p {
-    color: var(--maybe);
+    color: var(--bright);
 }
 
 footer ul:last-child li:nth-last-child(2) button {
@@ -275,7 +275,7 @@ footer ul:last-child li:last-child a {
     }
 
     header {
-        position: fixed;
+        position: absolute;
         left: 0;
         right: 0;
         width: 100%;
@@ -313,7 +313,7 @@ footer ul:last-child li:last-child a {
     }
 
     main > div {
-        padding: 24px;
+        padding: 24px 24px 0 24px;
         width: 100%;
     }
 

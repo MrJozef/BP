@@ -11,15 +11,17 @@ $(document).ready(function () {
         const browserHeight = browser.outerHeight(),
             browserWidth = browser.outerWidth(),
             headerHeight = header.outerHeight(),
-            footerHeight = footer.outerHeight();
+            footerHeight = footer.outerHeight(),
+            errorHeight = $('.error').length ? $('.error').outerHeight() : 0,
+            successHeight = $('.success').length ? $('.success').outerHeight() : 0;
 
-        if(browserWidth >= DESKTOP_MIN_WIDTH) {
-            main.outerHeight(browserHeight - headerHeight - footerHeight);
-            main.offset({ top: headerHeight, left: 0 });
+        main.offset({ top: headerHeight + errorHeight + successHeight, left: 0 });
+        if (browserWidth >= DESKTOP_MIN_WIDTH) {
+            main.css('padding-bottom', footerHeight);
         }
         else {
-            main.css('height', 'auto');
-            main.offset({ top: headerHeight, left: 0 });
+            main.css('padding-bottom', 0);
         }
+
     }).trigger('resize');
 });

@@ -38,13 +38,17 @@ class ControllerExample extends Controller
 
     public function manageExample($propArrayForSelect) {
         try {
-            if(isset($_SESSION['example'])) {
+            if (isset($_SESSION['example'])) {
                 $dataFromManager = $this->myManager->loadExample($_SESSION['example']);
                 $this->dataForView['example'] = $dataFromManager['example'];
                 $this->dataForView['cssUse'] = $dataFromManager['cssUse'];
-            }
-            else {
-                $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => "", 'exam_js' => "", 'exam_js_description' => ""];
+            } else {
+                if (isset($_POST['example-name'])) {
+                    $this->dataForView['example'] = ['exam_name' => $_POST['example-name'], 'exam_description' => $_POST['example-description'], 'exam_code' => $_POST['example-code'], 'exam_js' => $_POST['example-js'], 'exam_js_description' => $_POST['example-js-desc']];
+                }
+                else {
+                    $this->dataForView['example'] = ['exam_name' => "", 'exam_description' => "", 'exam_code' => "", 'exam_js' => "", 'exam_js_description' => ""];
+                }
                 $this->dataForView['cssUse'] = [];
             }
 

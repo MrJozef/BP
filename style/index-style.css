@@ -139,6 +139,7 @@ footer p strong {
     color: var(--main-dark);
     display: block;
     background-color: var(--maybe);
+    text-decoration: none;
     letter-spacing: 2px;
     font-weight: 900;
     text-align: center;
@@ -190,6 +191,7 @@ footer p strong {
     }
 
     .linkOfImportance a:hover {
+        color: var(--main-dark);
         background-color: var(--hover-maybe);
     }
 
